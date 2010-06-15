@@ -11,7 +11,7 @@
 <a href="<%= @image.path %>" target="_blank"><img width="875px" src="<%= @image.path %>" />
 
 </div>
-
+<p>(Keyboard shortcuts: 1 = good, 2 = ok, 3 = not useful)</p>
 <script>
 shortcut.add("1",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=10" });
 shortcut.add("2",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=5" });
