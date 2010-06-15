@@ -5,10 +5,24 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>MapMill: Crowdsourced map processing</title>
-  <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <link rel="stylesheet" href="/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
 </head>
 <body>
 
+  <div id="header">
+	<a href="/">Start sorting</a> | 
+	<a href="/mapper/sites">Sites</a> 
+  </div>
+
+  <a style="float:right;margin:10px;" href='http://kck.st/cj3Anh'><img border='0' src='http://www.kickstarter.com/projects/jywarren/grassroots-mapping-the-gulf-oil-spill-with-balloon/widget/card.jpg' /></a>
+
   <%= yield %>
+
+  <div id="footer">
+	<a href="/">Start sorting</a> | 
+	<a href="/mapper/sites">Sites</a> | 
+	<a href="http://grassrootsmapping.org/mapmill">About</a> | 
+	<a href="http://github.com/jywarren/mapmill">Source</a>
+  </div>
 
 </body>

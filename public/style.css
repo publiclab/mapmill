@@ -3,6 +3,10 @@ body { font-family:georgia,serif; width:900px; padding:20px; margin:20px; backgr
 
 img { border:0; }
 
+#footer {
+	margin-top:8px;
+}
+
 #image {
 	background:#ccc;
 	border-top:2px solid #333;

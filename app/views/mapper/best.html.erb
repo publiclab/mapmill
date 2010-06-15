@@ -1,7 +1,7 @@
 <h1>Images from "<%= @path %>"</h1>
 <h3>Sorted best to worst</h3>
 
-<p><b>Points | Image Name | Thumbnail</p>
+<p><b>Score | # of reviewers | Image Name | Thumbnail</p>
 <% for image in @images %>
-<% if image.hits > 0 %><%= image.points/image.hits %> <% else %>0<% end %> | <%= image.path.split('/').last %> | <a href="/<%= image.path %>"><img width="50px" src="/<%= image.thumb %>" /></a><br />
+<% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> | <%= image.hits %> | <a href="<%= image.path %>"><%= image.path.split('/').last %></a> | <a href="/<%= image.path %>"><img width="180px" src="/<%= image.thumb %>" /></a><br />
 <% end %>

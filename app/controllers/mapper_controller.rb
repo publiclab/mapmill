@@ -16,13 +16,10 @@ class MapperController < ApplicationController
 
 	def best
 		@path = params[:path][0..(-1*params[:path].split('/').last.length)]
-		@images = Image.find :all, :conditions => ['path LIKE ?',@path+'%']
-		def sorter(a,b)
-		
-		end
-		@images.sort_by do |i| 
+		images = Image.find :all, :conditions => ['path LIKE ?',@path+'%']
+		@images = images.sort_by do |i| 
 			if (i.hits > 0)
-				i.points/i.hits
+				-1*i.points/i.hits
 			else
 				0
 			end
