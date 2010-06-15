@@ -11,7 +11,7 @@ class MapperController < ApplicationController
 			d = Dir.new(RAILS_ROOT+'/public/'+site)	
 			images = []
 			d.each do |file|
-				images << file if file[-3..-1] == 'jpg'
+				images << file if file[-3..-1] && file[-3..-1].downcase == 'jpg'
 			end
 			@sites << [site,images.length]
 		end
