@@ -6,7 +6,7 @@ class MillerController < ApplicationController
 			if site[-6..-1] != '_thumb' && File.directory?('public/sites/'+site)
 				d = Dir.new(RAILS_ROOT+'/public/sites/'+site)
 				d.each do |image|
-					if image[-3..-1] == 'jpg' && site+'/'+image != params[:last]
+					if image[-3..-1].downcase == 'jpg' && site+'/'+image != params[:last]
 						pool << 'sites/'+site+'/'+image
 					end
 				end
