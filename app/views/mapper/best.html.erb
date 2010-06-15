@@ -1,7 +1,13 @@
 <h2>Images from "<%= @path %>"</h2>
 <h3>Sorted best to worst</h3>
 
+<style>
+#kickstarter {display:none;}
+</style>
+
 <p><b>Score | # of reviewers | Image Name | Thumbnail</p>
 <% for image in @images %>
-<% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> | <%= image.hits %> | <a href="<%= image.path %>"><%= image.path.split('/').last %></a> | <a href="/<%= image.path %>"><img width="180px" src="/<%= image.thumb %>" /></a><br />
+<% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> | <%= image.hits %> | <a href="<%= image.path %>"><%= image.path.split('/').last %></a> | <a href="/<%= image.path %>"><img width="180px" src="/<%= image.thumb %>" /></a> | 
+<div class="votewrap"><div class="voting buttons">Is it <a class="green"  href="/miller/vote/?path=<%= image.path %>&points=10">really good</a>, <a class="yellow" href="/miller/vote/?path=<%= image.path %>&points=5">just ok</a>, or <a href="/miller/vote/?path=<%= image.path %>&points=0">not useful</a>?</div></div>
+<br />
 <% end %>

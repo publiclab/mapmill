@@ -3,6 +3,12 @@ body { font-family:georgia,serif; width:900px; padding:20px; margin:20px; backgr
 
 img { border:0; }
 
+#kickstarter {
+	float:right;
+	margin:10px;
+	clear:right
+}
+
 #footer {
 	margin-top:8px;
 }
@@ -13,26 +19,33 @@ img { border:0; }
 	padding:12px;
 }
 
-#buttons a {
+.buttons a, #buttons a {
 	padding:8px;
 	background:#a00;
 	color:#fff;
 	border:2px solid #500;
 }
-#buttons a:hover {
+.buttons a:hover, #buttons a:hover {
 	background:#800;
 }
-#buttons a.green {
+.buttons a.green, #buttons a.green {
 	background:#8a5;
 	border-color:#530;
 }
-#buttons a:hover.green {
+.buttons a:hover.green, #buttons a:hover.green {
 	background:#693;
 }
-#buttons a.yellow {
+.buttons a.yellow, #buttons a.yellow {
 	background:#cc0;
 	border-color:#a80;
 }
-#buttons a:hover.yellow {
+.buttons a:hover.yellow, #buttons a:hover.yellow {
 	background:#aa0;
+}
+
+div.voting {
+	display:inline;
+}
+div.votewrap {
+	display:inline;
 }
