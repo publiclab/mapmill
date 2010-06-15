@@ -11,3 +11,9 @@
 <a href="<%= @image.path %>" target="_blank"><img width="875px" src="<%= @image.path %>" />
 
 </div>
+
+<script>
+shortcut.add("1",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=10" });
+shortcut.add("2",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=5" });
+shortcut.add("3",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=0" });
+</script>
