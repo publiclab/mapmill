@@ -3,7 +3,7 @@ class MillerController < ApplicationController
 	def index
 		pool = []
 		Dir.new('public/sites').each do |site|
-			if site[-6..-1] != '_thumb'
+			if site[-6..-1] != '_thumb' && File.directory?('sites/'+site)
 				d = Dir.new(RAILS_ROOT+'/public/sites/'+site)
 				d.each do |image|
 					if image[-3..-1] == 'jpg' && site+'/'+image != params[:last]
