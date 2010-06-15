@@ -1,11 +1,13 @@
 ## MapMill ##
 
+Enlist others in rating images from 1-10 based on criteria such as extent, resolution, color, sharpness, etc. View the sorted results.
+
 ## Requires ##
 
 mini_magick gem
 
 ## Setup ##
 
-Edit the /public/sites.txt file to add new directories of images. These should be web-accessible, a good convention is to just drop them in the /public/sites/ directory.
+Add new directories of images to /public/sites. 
 
 Thumbnails are generated and dropped in matching 'foo_thumb' folders.

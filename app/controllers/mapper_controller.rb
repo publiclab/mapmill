@@ -1,8 +1,11 @@
 class MapperController < ApplicationController
 
 	def sites
-		f = File.new('public/sites.txt')
-		sites = f.read.split("\n")
+		sites = []
+		dirs = Dir.new('public/sites')
+		dirs.each do |dir|
+			sites << 'sites/'+dir if dir[-6..-1] != '_thumb' && dir[0..0] != '.' 
+		end
 		@sites = []
 		sites.each do |site|
 			d = Dir.new(RAILS_ROOT+'/public/'+site)	

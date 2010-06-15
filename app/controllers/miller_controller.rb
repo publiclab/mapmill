@@ -2,13 +2,13 @@ class MillerController < ApplicationController
 
 	def index
 		pool = []
-		f = File.new('public/sites.txt')
-		sites = f.read.split("\n")
-		sites.each do |site|
-			d = Dir.new(RAILS_ROOT+'/public/'+site)
-			d.each do |image|
-				if image[-3..-1] == 'jpg' && site+'/'+image != params[:last]
-					pool << site+'/'+image
+		Dir.new('public/sites').each do |site|
+			if site[-6..-1] != '_thumb'
+				d = Dir.new(RAILS_ROOT+'/public/sites/'+site)
+				d.each do |image|
+					if image[-3..-1] == 'jpg' && site+'/'+image != params[:last]
+						pool << 'sites/'+site+'/'+image
+					end
 				end
 			end
 		end
@@ -18,10 +18,12 @@ class MillerController < ApplicationController
 			rand_index = ((pool.length-1)*rand).to_i
 			puts pool.length.to_s+' images, selected '+rand_index.to_s
 			image = pool.slice(rand_index,1).first
-			small_pool << image if Image.find_by_path(image).hits > 5
 			unless Image.find_by_path(image)
 				i = Image.new({:path => image,:filename => image.split('/').last})
 				i.save
+			end
+			if i = Image.find_by_path(image)
+				small_pool << image if i.hits < 5
 			end
 		end
 		small_pool << pool[((pool.length-1)*rand).to_i] if small_pool.length < 1
