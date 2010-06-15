@@ -39,7 +39,7 @@ class MillerController < ApplicationController
 			# this should be unnecessary:
 			# i = Image.new({:path => params[:path],:filename => params[:filename],:points => params[:points]})
 		end
-		redirect_to 'index?last='+i.path
+		redirect_to '/?last='+i.path
 	end
 
 end
