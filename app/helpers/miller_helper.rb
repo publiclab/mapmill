@@ -1,0 +1,2 @@
+module MillerHelper
+end

@@ -1,0 +1,11 @@
+## MapMill ##
+
+## Requires ##
+
+mini_magick gem
+
+## Setup ##
+
+Edit the /public/sites.txt file to add new directories of images. These should be web-accessible, a good convention is to just drop them in the /public/sites/ directory.
+
+Thumbnails are generated and dropped in matching 'foo_thumb' folders.

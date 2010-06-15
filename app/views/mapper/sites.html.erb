@@ -1,0 +1,7 @@
+<h1>Sites</h1>
+
+<p>Click a site below to view the best images from that set:</p>
+
+<% for site in @sites %>
+<a href="/mapper/best/?path=<%= site[0] %>"><%= site[0] %></a> (<%= site[1] %> images)<br />
+<% end %>
