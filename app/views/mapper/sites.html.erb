@@ -3,5 +3,5 @@
 <p>Click a site below to view the best images from that set:</p>
 
 <% for site in @sites %>
-<a href="/mapper/best/?path=<%= site[0] %>"><%= site[0] %></a> (<%= site[1] %> images)<br />
+<a href="/mapper/best/?path=<%= site[0] %>"><%= site[0] %></a> (<%= site[1] %> images) | <a href="/site/<%= site[0][6..site[0].length] %>">sort only this site</a><br />
 <% end %>
