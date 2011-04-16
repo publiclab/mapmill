@@ -1,17 +1,27 @@
-<h2>"Oil Spill Hot or Not": Help us sort images of the oil spill</h2>
 
+
+<div id="overlay" <% if params[:o] == 'x' %> style='display:none;'<% end %>>
+
+<h2>"Oil Spill Hot or Not": Help us sort images of the oil spill</h2>
 <p><i>It takes hours to go through the thousands of images we're capturing <a href="http://grassrootsmapping.org/gulf-oil-spill">from balloons and kites</a>, to pick out the best ones for inclusion in our <a href="http://grassrootsmapping.org/gulf-oil-spill/#data">free and open source maps</a>. Help us by choosing the sharpest, clearest, best images.</i></p>
 
+<p>We want images that are aimed straight down and are not blurry. We also want images of as large an area as possible. The rest are not useful! If you're not sure, mark it OK. <a href="http://farm2.static.flickr.com/1276/4703515530_4482bc2f15_o.png">Click here to learn what makes a good image</a></p>
 <p><i>Confused? Watch a video about the project at our <a href="http://www.kickstarter.com/projects/jywarren/grassroots-mapping-the-gulf-oil-spill-with-balloon/">Kickstarter project page</a>. 
 
+<p>(Keyboard shortcuts: 1 = good, 2 = ok, 3 = not useful)</p>
+</div>
+
+
 <div id="image">
-<p>How's this image? Click to see it full-size.</p>
-<h3 id="buttons">Is it <a class="green"  href="/miller/vote/?path=<%= @image.path %>&points=10">really good</a>, <a class="yellow" href="/miller/vote/?path=<%= @image.path %>&points=5">just ok</a>, or <a href="/miller/vote/?path=<%= @image.path %>&points=0">not useful</a>?</h3>
-<p>We want images that are aimed straight down and are not blurry. We also want images of as large an area as possible. The rest are not useful! If you're not sure, mark it OK. <a href="http://farm2.static.flickr.com/1276/4703515530_4482bc2f15_o.png">Click here to learn what makes a good image</a></p>
-<a href="<%= @image.path %>" target="_blank"><img width="875px" src="<%= @image.path %>" /></a>
+
+<a href="<%= @image.path %>" target="_blank"><img src="<%= @image.path %>" /></a>
 
 </div>
-<p>(Keyboard shortcuts: 1 = good, 2 = ok, 3 = not useful)</p>
+<h3 id="buttons">
+<a class="green"  href="/miller/vote/?path=<%= @image.path %>&points=10">really good</a>
+<a class="yellow" href="/miller/vote/?path=<%= @image.path %>&points=5">just ok</a>
+<a href="/miller/vote/?path=<%= @image.path %>&points=0">not useful</a>
+</h3>
 <script>
 shortcut.add("1",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=10" });
 shortcut.add("2",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=5" });
