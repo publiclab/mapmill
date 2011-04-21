@@ -39,7 +39,23 @@ img { border:0; }
 #sites-list {
 	padding:10px;
 	border-bottom:1px solid white;		
-} 
+}
+#site {
+	padding:5% 3%;
+}
+#site .picture {
+	width:15%;
+	float:left;
+	background:black;
+	padding:30px 20px;
+	margin:15px;
+	display:block;
+}
+#site .picture .buttons {
+	clear:both;
+	padding-top:16px;
+}
+ 
 #footer {
 	margin-top:8px;
 }
@@ -84,9 +100,3 @@ img { border:0; }
 	background:#aa0;
 }
 
-div.voting {
-	display:inline;
-}
-div.votewrap {
-	display:inline;
-}
