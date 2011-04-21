@@ -7,28 +7,26 @@
   <title>MapMill: Crowdsourced map processing</title>
   <link rel="stylesheet" href="/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
   <script type="text/javascript" src="/javascripts/shortcut.js"></script>
+  <script type="text/javascript" src="/javascripts/prototype.js"></script>
 </head>
 <body>
 
   <div id="header">
+  <b>MapMill: <small><i>Help map the oil spill</i></small></b>
 	<a href="/">Start sorting</a> | 
 	<a href="/mapper/sites">Sites</a> | 
-	<a style="float:right;margin-left:8px;" name="fb_share" type="button_count" href="http://www.facebook.com/sharer.php">Share</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script> 
-	<a style="padding-top:8px;" href="http://twitter.com/home?status=Crowdsourcing: Hot or Not the Oil Spill:http://hotoil.org"><img style="display:block;float:right;" src="/images/twitter.png" /></a>
+
+	<span style="display:block;float:right;margin-right:8px;">
+		<a href='javascript:void(0);' onClick="$('overlay').toggle()" >Help</a> 
+		<a style="margin-left:8px;" name="fb_share" type="button_count" href="http://www.facebook.com/sharer.php">Share</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script> 
+		<a style="padding-top:8px;" href="http://twitter.com/home?status=Crowdsourcing: Hot or Not the Oil Spill:http://hotoil.org"><img src="/images/twitter.png" /></a>
+        </span>
   </div>
 
-  <a id="kickstarter" href='http://kck.st/cj3Anh'><img border='0' src='http://www.kickstarter.com/projects/jywarren/grassroots-mapping-the-gulf-oil-spill-with-balloon/widget/card.jpg' /></a>
 
-  <h1>MapMill: <small><i>Help map the oil spill</i></small></h1>
 
   <%= yield %>
 
-  <div id="footer" style="clear:both;">
-	<a href="/">Start sorting</a> | 
-	<a href="/mapper/sites">Sites</a> | 
-	<a href="http://grassrootsmapping.org/mapmill">About</a> | 
-	<a href="http://github.com/jywarren/mapmill">Source</a>
-  </div>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];

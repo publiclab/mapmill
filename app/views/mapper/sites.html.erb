@@ -1,7 +1,13 @@
-<h2>Sites</h2>
+<div id="sites-page">
 
+<h2>Sites</h2>
 <p>Click a site below to view the best images from that set:</p>
+
+<div id="sites-list"> 
 
 <% for site in @sites %>
 <a href="/mapper/best/?path=<%= site[0] %>"><%= site[0] %></a> (<%= site[1] %> images) | <a href="/site/<%= site[0][6..site[0].length] %>">sort only this site</a><br />
 <% end %>
+
+</div>
+</div>

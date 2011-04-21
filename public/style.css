@@ -1,5 +1,12 @@
-html { background:#222; margin:0; padding:0;}
+html { background:#222; color:white; margin:0; padding:0;}
 body { font-family:georgia,serif; padding:0; margin:0;  }
+
+a {
+	color:blue;
+}
+a:hover {
+	color:#00C;
+}
 
 img { border:0; }
 
@@ -25,6 +32,14 @@ img { border:0; }
 	left:25%;
 }
 
+#sites-page {
+	font-size:120%;
+}
+
+#sites-list {
+	padding:10px;
+	border-bottom:1px solid white;		
+} 
 #footer {
 	margin-top:8px;
 }
