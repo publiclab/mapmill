@@ -7,9 +7,9 @@
 <p> <% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> out of 10 | <%= image.hits %> reviewers</p>
 <a class="image"  href="/<%= image.path %>"><img width="180px" src="/<%= image.thumb %>" /></a> 
 <div class="voting buttons">
-	<a class="green"  href="/miller/vote/?path=<%= image.path %>&points=10">really good</a>
-	<a class="yellow" href="/miller/vote/?path=<%= image.path %>&points=5">just ok</a>
-	<a href="/miller/vote/?path=<%= image.path %>&points=0">not useful</a>
+	<a class="green"  href="/miller/vote/?path=<%= image.path %>&points=10">+</a>
+	<a class="yellow" href="/miller/vote/?path=<%= image.path %>&points=5">~</a>
+	<a href="/miller/vote/?path=<%= image.path %>&points=0">-</a>
 </div>
 </div>
 <% end %>
