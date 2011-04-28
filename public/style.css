@@ -44,17 +44,17 @@ img { border:0; }
 	padding:5% 3%;
 }
 #site .picture {
-	width:15%;
+	width:200px;
 	float:left;
 	background:black;
 	padding:10px 10px;
-	margin:30px;
+	margin:12px 12px 0 0;
+        height:255px;
 	display:block;
 	text-align:center;
 }
 #site .picture .buttons {
-	clear:both;
-	padding-top:16px;
+	padding:5px 10px 20px 10px;
 }
 
 #footer {
@@ -78,26 +78,41 @@ img { border:0; }
 }
 
 .buttons a, #buttons a {
-	padding:14px 22px;
+	float:left;
+	padding:14px 21px;
 	background:#a00;
 	color:#fff;
-	border:2px solid #500;
+	width:18px;
+	display:block;
+	height:30px;
 }
 .buttons a:hover, #buttons a:hover {
 	background:#800;
 }
 .buttons a.green, #buttons a.green {
 	background:#8a5;
-	border-color:#530;
 }
 .buttons a:hover.green, #buttons a:hover.green {
 	background:#693;
 }
 .buttons a.yellow, #buttons a.yellow {
 	background:#cc0;
-	border-color:#a80;
 }
 .buttons a:hover.yellow, #buttons a:hover.yellow {
 	background:#aa0;
+}
+
+#mainpage #buttons {
+	width:100%
+}
+#mainpage .buttons a, #mainpage #buttons a {
+	width:33%;
+	padding:20px 0;
+	height:30px;
+	text-align:center;
+	font-size:1.4em;
+}
+#mainpage .buttons a.green, #mainpage #buttons a.green {
+	width:34%;
 }
 
