@@ -23,13 +23,22 @@ img { border:0; }
 	position:absolute;
 	z-index:3;
 	width:50%;
-	height:50%;
 	background:black;
+	font-size:0.9em;
 	color:white;
 	padding:20px;
 	text-align:center;
 	top:25%;
 	left:25%;
+}
+#expand {
+	position:absolute;
+	top:80px;
+	right:10px;
+	z-index:6;
+	padding:20px;
+	background:black;
+	color:white;
 }
 
 #sites-page {
