@@ -47,15 +47,16 @@ img { border:0; }
 	width:15%;
 	float:left;
 	background:black;
-	padding:30px 20px;
-	margin:15px;
+	padding:10px 10px;
+	margin:30px;
 	display:block;
+	text-align:center;
 }
 #site .picture .buttons {
 	clear:both;
 	padding-top:16px;
 }
- 
+
 #footer {
 	margin-top:8px;
 }
@@ -77,7 +78,7 @@ img { border:0; }
 }
 
 .buttons a, #buttons a {
-	padding:8px;
+	padding:14px 22px;
 	background:#a00;
 	color:#fff;
 	border:2px solid #500;
