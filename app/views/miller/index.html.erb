@@ -27,5 +27,7 @@
 shortcut.add("1",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=10&site=<%= @site %>" });
 shortcut.add("2",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=5&site=<%= @site %>" });
 shortcut.add("3",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=0&site=<%= @site %>" });
+
+if (location.hash == "#slideshow") setInterval(function() {window.location.reload();},10000)
 </script>
 </div>
