@@ -12,7 +12,7 @@ img { border:0; }
 
 #header {
 	color:white;
-	padding:20px 0;
+	padding:20px 0 16px 0;
 	position:absolute;
 	top:0;
 	z-index:3;
@@ -23,22 +23,38 @@ img { border:0; }
 	position:absolute;
 	z-index:3;
 	width:50%;
-	height:50%;
 	background:black;
+	font-size:0.9em;
 	color:white;
 	padding:20px;
 	text-align:center;
 	top:25%;
 	left:25%;
 }
+#expand {
+	position:absolute;
+	top:80px;
+	right:10px;
+	z-index:6;
+	padding:20px;
+	background:black;
+	color:white;
+}
 
 #sites-page {
 	font-size:120%;
+	padding:10px;
+	padding-top:50px;
 }
 
 #sites-list {
+	line-height:1.4em;
+}
+#sites-list div {
+	border-bottom:1px solid #555;
+	background:#333;
 	padding:10px;
-	border-bottom:1px solid white;		
+	line-height:1.4em;
 }
 #site {
 	padding:5% 3%;

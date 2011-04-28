@@ -10,3 +10,6 @@ public/api/0.6/*
 config/database.yml
 config/amazon_s3.yml
 *.swp
+public/sites
+sites-done
+backup
