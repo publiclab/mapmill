@@ -12,7 +12,7 @@ img { border:0; }
 
 #header {
 	color:white;
-	padding:20px 0;
+	padding:20px 0 16px 0;
 	position:absolute;
 	top:0;
 	z-index:3;
@@ -44,6 +44,7 @@ img { border:0; }
 #sites-page {
 	font-size:120%;
 	padding:10px;
+	padding-top:50px;
 }
 
 #sites-list {
