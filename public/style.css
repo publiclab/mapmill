@@ -43,11 +43,17 @@ img { border:0; }
 
 #sites-page {
 	font-size:120%;
+	padding:10px;
 }
 
 #sites-list {
+	line-height:1.4em;
+}
+#sites-list div {
+	border-bottom:1px solid #555;
+	background:#333;
 	padding:10px;
-	border-bottom:1px solid white;		
+	line-height:1.4em;
 }
 #site {
 	padding:5% 3%;
