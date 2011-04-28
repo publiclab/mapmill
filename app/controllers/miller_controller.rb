@@ -60,6 +60,7 @@ class MillerController < ApplicationController
 		@image = Image.find(:all,:conditions => ['path IN (?)',small_pool],:order => 'hits DESC',:limit => 1).first
 		@image.thumb
 		@site = site
+		render "index"
 	end
 
 	def vote
@@ -71,7 +72,7 @@ class MillerController < ApplicationController
 			# i = Image.new({:path => params[:path],:filename => params[:filename],:points => params[:points]})
 		end
 		puts params
-		if params[:site]
+		if params[:site] != ""
 			path = '/site/'+params[:site]+'/?o=x&last='+i.path
 		else
 			path = '/?o=x&last='+i.path

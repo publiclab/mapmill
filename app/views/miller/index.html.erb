@@ -11,21 +11,21 @@
 <p>(Keyboard shortcuts: 1 = good, 2 = ok, 3 = not useful)</p>
 </div>
 
-<a href="<%= @image.path %>" target="_blank" id="expand">full resolution</a>
+
+<a target="_blank" href="/<%= @image.path %>" id="expand">full resolution</a>
 
 <div id="image">
-
-<img src="<%= @image.path %>" />
-
+<img src="/<%= @image.path %>" />
 </div>
+
 <div id="buttons">
-<a class="green"  href="/miller/vote/?path=<%= @image.path %>&points=10">really good</a>
-<a class="yellow" href="/miller/vote/?path=<%= @image.path %>&points=5">just ok</a>
-<a href="/miller/vote/?path=<%= @image.path %>&points=0">not useful</a>
+<a class="green"  href="/miller/vote/?path=<%= @image.path %>&points=10&site=<%= @site %>">really good</a>
+<a class="yellow" href="/miller/vote/?path=<%= @image.path %>&points=5&site=<%= @site %>">just ok</a>
+<a href="/miller/vote/?path=<%= @image.path %>&points=0&site=<%= @site %>">not useful</a>
 </div>
 <script>
-shortcut.add("1",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=10" });
-shortcut.add("2",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=5" });
-shortcut.add("3",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=0" });
+shortcut.add("1",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=10&site=<%= @site %>" });
+shortcut.add("2",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=5&site=<%= @site %>" });
+shortcut.add("3",function() { window.location = "/miller/vote/?path=<%= @image.path %>&points=0&site=<%= @site %>" });
 </script>
 </div>
