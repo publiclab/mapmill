@@ -71,7 +71,7 @@ class MillerController < ApplicationController
 			# this should be unnecessary:
 			# i = Image.new({:path => params[:path],:filename => params[:filename],:points => params[:points]})
 		end
-		puts params
+		params[:site] = params[:site] || ""
 		if params[:site] != ""
 			path = '/site/'+params[:site]+'/?o=x&last='+i.path
 		else

@@ -16,8 +16,10 @@
 	<a href="/mapper/sites">Sites</a> | 
 
 	<span style="display:block;float:right;margin-right:8px;">
+		<% unless params[:debug] %>
 		<a style="display:block;float:right;margin-left:8px;" name="fb_share" type="button_count" href="http://www.facebook.com/sharer.php">Share</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script> 
 		<a style="display:block;float:right;padding-left:8px;" href="http://twitter.com/home?status=Crowdsourcing: Hot or Not the Oil Spill:http://hotoil.org"><img src="/images/twitter.png" /></a>
+		<% end %>
 		<a style="display:block;float:right;padding-left:8px;" href='javascript:void(0);' onClick="$('overlay').toggle()" >Help</a> 
 		<a style="display:block;float:right;padding-left:8px;" href='http://farm2.static.flickr.com/1276/4703515530_4482bc2f15_o.png'>Learn how</a> 
 		<a style="display:block;float:right;" href='#slideshow'>Slideshow</a> 
@@ -28,6 +30,7 @@
 
   <%= yield %>
 
+<% unless params[:debug] %>
 <script type="text/javascript">
 
   var _gaq = _gaq || [];
@@ -41,4 +44,5 @@
   })();
 
 </script>
+<% end %>
 </body>
