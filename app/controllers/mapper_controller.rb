@@ -1,5 +1,4 @@
 class MapperController < ApplicationController
-
 	def sites
 		sites = []
 		dirs = Dir.new('public/sites')
@@ -19,14 +18,14 @@ class MapperController < ApplicationController
 
 	def best
 		@path = params[:path]
-		images = Image.find :all, :conditions => ['path LIKE ?',@path+'%']
-		@images = images.sort_by do |i| 
-			if (i.hits > 0)
-				-1*i.points/i.hits
-			else
-				0
-			end
-		end
+		@images = Image.paginate :all, :conditions => ['path LIKE ?',@path+'%'], :per_page => 20, :page => params[:page]
+	#	@images = images.sort_by do |i| 
+	#		if (i.hits > 0)
+	#			-1*i.points/i.hits
+	#		else
+	#			0
+	#		end
+	#	end
 	end
 
 end
