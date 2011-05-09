@@ -6,29 +6,46 @@
   <meta http-equiv="content-type" content="text/html;charset=UTF-8" />
   <title>MapMill: Crowdsourced map processing</title>
   <link rel="stylesheet" href="/style.css" type="text/css" media="screen" title="no title" charset="utf-8">
+  <% if params[:style] == "embed" %><link rel="stylesheet" href="/embed.css" type="text/css" media="screen" title="no title" charset="utf-8"><% end %>
   <script type="text/javascript" src="/javascripts/shortcut.js"></script>
   <script type="text/javascript" src="/javascripts/prototype.js"></script>
+
 </head>
 <body>
 
   <div id="header">
-	<a href="/" style="padding-left:8px;"><b>MapMill:</a> <small><i>Help map the oil spill</i></small></b> | 
-	<a href="/mapper/sites">Sites</a> | 
+	<a href="/" style="padding-left:8px;">MapMill</a>: <small><i>Help map the oil spill</i></small> 
+	<% unless params[:style] == "embed" %> | 
+	<a href="/">Home</a> | 
+	<a href="/sites">Sites</a> | 
+	<% if params[:action] == "index" || params[:action] == "sort" %><a href='/images/<%= @image.site %>'>More images from <i><%= @image.site %></i></a> | <% end %> 
+	<% end %>
 
-	<span style="display:block;float:right;margin-right:8px;">
-		<a style="display:block;float:right;margin-left:8px;" name="fb_share" type="button_count" href="http://www.facebook.com/sharer.php">Share</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script> 
-		<a style="display:block;float:right;padding-left:8px;" href="http://twitter.com/home?status=Crowdsourcing: Hot or Not the Oil Spill:http://hotoil.org"><img src="/images/twitter.png" /></a>
-		<a style="display:block;float:right;padding-left:8px;" href='javascript:void(0);' onClick="$('overlay').toggle()" >Help</a> 
-		<a style="display:block;float:right;padding-left:8px;" href='http://farm2.static.flickr.com/1276/4703515530_4482bc2f15_o.png'>Learn how</a> 
-		<a style="display:block;float:right;" href='#slideshow'>Slideshow</a> 
+	<span class="links">
+		<a name="fb_share" type="button_count" href="http://www.facebook.com/sharer.php">Share</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script> 
+		<a href="http://twitter.com/home?status=Crowdsourcing: Hot or Not the Oil Spill:http://hotoil.org"><img src="/images/twitter.png" /></a>
+		<a href='javascript:void(0);' onClick="$('overlay').toggle()">Help</a> 
+		<a href='javascript:void(0);' onClick="$('extras').toggle();">Extras</a> 
+		<a href='http://farm2.static.flickr.com/1276/4703515530_4482bc2f15_o.png'>Learn how</a> 
         </span>
   </div>
-
+  <div id="embed" class="overlay" style="display:none;">
+	<h3>Copy this code onto your blog or website to display a MapMill sorting box:</h3>
+	<textarea rows="4"><iframe border="0" src="http://mapmill.org/embed/<%= @embed || "" %>"></iframe></textarea>
+	<p><a href="javascript:void(0);" onClick="$('embed').hide();">close</a></p>
+  </div>
+  <div id="extras" class="overlay" style="display:none;">
+	<% if params[:action] == "index" || params[:action] == "sort" %><p><a href='#slideshow'>Slideshow</a></p><% end %>
+	<p><a href='javascript:void(0);' onClick="$('extras').hide();$('embed').show();">Embed</a></p> 
+	<p><a href="javascript:void(0);" onClick="$('extras').hide()">close</a></p>
+  </div>
 
 
   <%= yield %>
 
 <script type="text/javascript">
+	
+  /* Google Analytics: */
 
   var _gaq = _gaq || [];
   _gaq.push(['_setAccount', 'UA-180781-32']);

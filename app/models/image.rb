@@ -3,9 +3,15 @@ class Image < ActiveRecord::Base
 	before_save :hit_increment
 
 	def hit_increment
-
 		self.hits += 1
+	end
 
+	def site
+		self.path.split("/")[1]
+	end
+
+	def filename
+		self.path.split("/").last
 	end
 
 	def thumb

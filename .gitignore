@@ -13,3 +13,4 @@ config/amazon_s3.yml
 public/sites
 sites-done
 backup
+db/*.sqlite3
