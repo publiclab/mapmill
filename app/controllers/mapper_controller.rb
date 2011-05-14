@@ -95,5 +95,15 @@ class MapperController < ApplicationController
 		end
 		redirect_to path
 	end
+	
+	def place_site
+		
+		render "place"
+	end
+
+	def place_image
+
+		render "place"
+	end
 
 end
