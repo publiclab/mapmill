@@ -94,7 +94,6 @@ class MapperController < ApplicationController
 			path = '/?o=x&last='+i.path
 		end
 		redirect_to path
->>>>>>> f53644d8b0d0854537349d15d0ec73128265c5ca
 	end
 	
 	def place_site
