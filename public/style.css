@@ -116,6 +116,14 @@ img { border:0; }
 #site {
 	padding:5% 3%;
 }
+#site .pagination { 
+	margin-top:30px;
+}
+#site .pagination a, #site .pagination span{
+	padding:12px;
+	background:#333;
+	font-size:30px;	
+}
 #site .picture {
 	width:200px;
 	float:left;
@@ -270,4 +278,3 @@ img { border:0; }
 	width:34%;
 	padding-right:1px;
 }
-
