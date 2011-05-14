@@ -7,7 +7,9 @@
 
 <% for site in @sites %>
 <div>
-	<a href="/mapper/best/?path=<%= site[0] %>"><%= site[0] %></a> (<%= site[1] %> images) | <a href="/site/<%= site[0][6..site[0].length] %>">sort only this site</a>
+	<a href="/images/<%= site[0] %>"><%= site[0] %></a> 
+	(<%= site[1] %> images)
+	 | <a href="/sort/<%= site[0] %>">sort only this site</a>
 </div>
 <% end %>
 

@@ -14,4 +14,4 @@ public/sites
 sites-done
 backup
 config/environment.rb
-
+db/*.sqlite3

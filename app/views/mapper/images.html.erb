@@ -1,0 +1,19 @@
+<div id="site">
+<h2>Images from "<%= params[:site] %>"</h2>
+<p>
+	<i>Sorted best to worst</i> | 
+	<a href="/site/<%= params[:site] %>">sort only this site</a>
+</p>
+
+<% for image in @images %>
+<div class="picture">
+<p> <% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> out of 10 | <%= image.hits %> reviewers</p>
+<a class="image"  href="/<%= image.path %>"><img width="180px" src="/<%= image.thumb %>" /></a> 
+<div class="voting buttons">
+	<a class="green"  href="/vote/<%= image.id %>/10/<%= params[:site] %>">+</a>
+	<a class="yellow" href="/vote/<%= image.id %>/5/<%= params[:site] %>">~</a>
+	<a href="/vote/<%= image.id %>/0/<%= params[:site] %>">-</a>
+</div>
+</div>
+<% end %>
+</div>
