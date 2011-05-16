@@ -28,7 +28,7 @@ class Site < ActiveRecord::Base
 				points += image.points
 			end
 		end
-		points/votes
+		(10.00*points/votes).to_s.to(3)
 	end
 
 	def image_count

@@ -16,6 +16,9 @@ class MapperController < ApplicationController
 		#@images.paginate :page => params[:page], :per_page => 21
 	end
 
+	## use actual sites, but import new ones first.
+	# stop f-ing around with bad randomness
+
 	def index
 		pool = []
 		Dir.new('public/sites').each do |site|
