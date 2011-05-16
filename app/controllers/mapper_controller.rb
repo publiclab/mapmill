@@ -105,13 +105,25 @@ class MapperController < ApplicationController
 	end
 
 	def locate_site
-		
+
+		@site = Site.find_by_name(params[:site])
+		@image = @site.images.first
 		render "locate"
 	end
 
 	def locate_image
 
 		render "locate"
+	end
+
+	def geolocate
+		begin
+        		location = GeoKit::GeoLoc.geocode(params[:id])
+			
+        		render :text => location.lat.to_s+","+location.lng.to_s
+		rescue
+			render :text => "No results"
+		end
 	end
 
 end

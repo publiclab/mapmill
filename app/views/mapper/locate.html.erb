@@ -8,7 +8,35 @@
 <div id="map-header">
 	<% if params[:action] == 'place_site' %><h2>Geolocate this site</h2><% end %>
 	<% if params[:action] == 'place_image' %><h2>Geolocate this image</h2><% end %>
+	<img src="<%= @image.thumb %>" />
+
 	<p>Line up the map below with where you began mapping and press "Save". Repeat for your endpoint if possible.</p>
+
+	<p>
+		Search for a location:
+		<script>
+			function geocode() {
+				new Ajax.Request("/geolocate/"+$('map-input-location').value, 
+				{	method: "get", 
+					onSuccess: function(response) {
+						console.log(new OpenLayers.LonLat(response.responseText.split(',')[1],response.responseText.split(',')[0]))
+						map.panTo(new OpenLayers.LonLat(response.responseText.split(',')[1],response.responseText.split(',')[0]).transform(spher_merc,latlon))
+						map.setCenter(new OpenLayers.LonLat(response.responseText.split(',')[1],response.responseText.split(',')[0]).transform(spher_merc,latlon),5)
+					}
+				})
+			}
+			function clear_input() {
+				if ($('map-input-location').value == "enter a location") {
+					$('map-input-location').value = ""
+					$('map-input-location').style.color = "black"
+				}
+			}
+		</script>
+		<form id="geolocate" onSubmit="geocode()" action="javascript:void(0);">
+
+			<input id="map-input-location" onClick="clear_input()" value="enter a location" style="color:#aaa;" name="location" type="text" />
+		</form>
+	</p>
 
 	<div id="map-buttons">
 		<p>
@@ -23,8 +51,10 @@
 
 <div id="map"></div>
 
-<img id="map-start" src="/images/start.png" />
-<img style="display:none;" id="map-end" src="/images/end.png" />
+<div id="map-marker">
+	<img id="map-start" src="/images/start.png" />
+	<img style="display:none;" id="map-end" src="/images/end.png" />
+</div>
 
 <script>
 	var map;
@@ -42,10 +72,10 @@
 		tileOrigin: new OpenLayers.LonLat(0,0).transform(latlon,spher_merc),
 		units: "m",
 		theme: "/theme/mapmill.css",
-		projection: new OpenLayers.Projection("EPSG:900913"),
-		displayProjection: new OpenLayers.Projection("EPSG:4326"),
+		projection: spher_merc,
+		displayProjection: latlon, 
 		maxExtent: new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34),
-		maxResolution: 156543.0339
+		maxResolution: 156543.0339,
 	});
 	
 	
@@ -59,17 +89,12 @@
 	//var tile_url = "http://localhost:8888/1.0.0/blue-marble-topo-bathy-jul/"
         var tms = new OpenLayers.Layer.TMS( "Tilestream Blue Marble", tile_url,
         { projection: latlon,
-          //displayProjection: spher_merc,
-          //getURL: overlay_getTileURL,
-          //maxResolution:156543.0339,
-          //units: "m",
-          //maxExtent: new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34),
-          //tileOrigin: new OpenLayers.LonLat(0,0).transform(latlon,spher_merc),
           serviceVersion: '.', 
           layername: '.', 
           type: 'png', 
           alpha: true, 
-          isBaseLayer: true
+          isBaseLayer: true,
+	  transitionEffect: "resize"
 	});
         map.addLayer(tms);
 
