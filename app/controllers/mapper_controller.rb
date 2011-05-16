@@ -4,7 +4,7 @@ class MapperController < ApplicationController
 	end
 
 	def images
-		images = Image.find :all, :conditions => ['path LIKE ?','sites/'+params[:site]+'%'], :limit => 10
+		images = Image.find :all, :conditions => ['path LIKE ?','sites/'+params[:site]+'%']
 		@images = images.sort_by do |i|
 			if (i.hits > 0)
 				-1*i.points/i.hits
