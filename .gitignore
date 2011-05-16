@@ -4,13 +4,12 @@ tmp/*
 tmp/**/*
 todo
 coverage*
-public/warpables/*
-public/warps/*
 public/api/0.6/*
 config/database.yml
 config/amazon_s3.yml
 *.swp
 public/sites
+public/thumbnails
 sites-done
 backup
 config/environment.rb

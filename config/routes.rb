@@ -8,8 +8,9 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'sites', :controller => 'mapper', :action => 'sites'
   map.connect 'embed', :controller => 'mapper', :action => 'index', :style => 'embed'
   map.connect 'images/:site', :controller => 'mapper', :action => 'images'
-  map.connect 'place/site/:site', :controller => 'mapper', :action => 'place_site'
-  map.connect 'place/:id', :controller => 'mapper', :action => 'place_image'
+  map.connect 'locate/site/:site', :controller => 'mapper', :action => 'locate_site'
+  map.connect 'locate/site/:site/save', :controller => 'mapper', :action => 'save_site_location'
+  map.connect 'locate/:id', :controller => 'mapper', :action => 'locate_image'
   map.connect 'vote/:id/:points', :controller => 'mapper', :action => 'vote', :site => ""
   map.connect 'vote/:id/:points/:site', :controller => 'mapper', :action => 'vote'
 

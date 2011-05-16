@@ -1,6 +1,6 @@
 class MapperController < ApplicationController
 	def sites
-		@sites = Site.all
+		@sites = Site.find :all
 	end
 
 	def images
@@ -35,7 +35,7 @@ class MapperController < ApplicationController
 			puts pool.length.to_s+' images, selected '+rand_index.to_s
 			image = pool.slice(rand_index,1).first
 			unless Image.find_by_path(image)
-				i = Image.new({:path => image,:filename => image.split('/').last})
+				i = Image.new({:path => image,:filename => image.split('/').last,:site_id => Site.find_by_name(image.split('/')[1]).id})
 				i.save
 			end
 			if i = Image.find_by_path(image)
@@ -65,7 +65,7 @@ class MapperController < ApplicationController
 			puts pool.length.to_s+' images, selected '+rand_index.to_s
 			image = pool.slice(rand_index,1).first
 			unless Image.find_by_path(image)
-				i = Image.new({:path => image,:filename => image.split('/').last})
+				i = Image.new({:path => image,:filename => image.split('/').last,:site_id => Site.find_by_name(image.split('/')[1]).id})
 				i.save
 			end
 			if i = Image.find_by_path(image)
@@ -82,12 +82,11 @@ class MapperController < ApplicationController
 	def vote
 		if i = Image.find(params[:id])
 			i.points += params[:points].to_i if params[:points].to_i < 11
-			i.save
+			i.vote
 		else
 			# this should be unnecessary:
 			# i = Image.new({:path => params[:path],:filename => params[:filename],:points => params[:points]})
 		end
-		puts params
 		if params[:site] != ""
 			path = '/sort/'+params[:site]+'/?o=x&last='+i.path
 		else
@@ -96,14 +95,20 @@ class MapperController < ApplicationController
 		redirect_to path
 	end
 	
-	def place_site
-		
-		render "place"
+	def save_site_location
+
+		redirect_to 'sites'
+
 	end
 
-	def place_image
+	def locate_site
+		
+		render "locate"
+	end
 
-		render "place"
+	def locate_image
+
+		render "locate"
 	end
 
 end

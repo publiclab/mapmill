@@ -1,0 +1,102 @@
+
+<script type="text/javascript" src="/javascripts/OpenLayers.js"></script>
+<!--<script src='http://maps.google.com/maps?file=api&amp;v=2&amp;key=ABQIAAAA6OwkJm9n23daDNkGhsMquBQCA0kQZc0rHxnaN3mazoBpOqX1oBTpjr5CmuXpD4rh2PoCYYL43exvhg' type='text/javascript'></script>--> 
+<!--<link rel="stylesheet" href="/theme/mapmill.css" type="text/css" media="screen" title="no title" charset="utf-8">
+-->
+<div id="place-page">
+
+<div id="map-header">
+	<% if params[:action] == 'place_site' %><h2>Geolocate this site</h2><% end %>
+	<% if params[:action] == 'place_image' %><h2>Geolocate this image</h2><% end %>
+	<p>Line up the map below with where you began mapping and press "Save". Repeat for your endpoint if possible.</p>
+
+	<div id="map-buttons">
+		<p>
+		<a id="map-start-btn" class="start" href="javascript:void(0);" onclick="save_start();">Save start point</a>
+		<a id="map-end-btn" style="display:none;" class="end" href="javascript:void(0);" onclick="save_end();">Save endpoint </a>
+		<a id="map-save-btn" style="display:none;" class="save" href="javascript:void(0);" onclick="done();">Done</a>
+		</p>
+	</div>
+</div>
+
+<div id="map-panel"> 
+
+<div id="map"></div>
+
+<img id="map-start" src="/images/start.png" />
+<img style="display:none;" id="map-end" src="/images/end.png" />
+
+<script>
+	var map;
+	var mapBounds = new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34)
+	var mapMinZoom = 14;
+	var mapMaxZoom = 20;
+	var spher_merc = new OpenLayers.Projection("EPSG:4326")
+	var latlon = new OpenLayers.Projection("EPSG:900913")
+
+	OpenLayers.theme = '/theme/mapmill.css';
+	OpenLayers.ImgPath = '/theme/dark/';
+	// http://mapbox.github.com/webintegration
+
+	map = new OpenLayers.Map('map', { //controls: [], 
+		tileOrigin: new OpenLayers.LonLat(0,0).transform(latlon,spher_merc),
+		units: "m",
+		theme: "/theme/mapmill.css",
+		projection: new OpenLayers.Projection("EPSG:900913"),
+		displayProjection: new OpenLayers.Projection("EPSG:4326"),
+		maxExtent: new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34),
+		maxResolution: 156543.0339
+	});
+	
+	
+	//var gsat = new OpenLayers.Layer.Google("Google Satellite", 
+	//					{type: G_SATELLITE_MAP, 
+	//					sphericalMercator: true, 
+	//					numZoomLevels: 20} );
+	//map.addLayer(gsat)
+
+	var tile_url = "http://tilestream.publiclaboratory.org/1.0.0/blue-marble-topo-bathy-jan/"
+	//var tile_url = "http://localhost:8888/1.0.0/blue-marble-topo-bathy-jul/"
+        var tms = new OpenLayers.Layer.TMS( "Tilestream Blue Marble", tile_url,
+        { projection: latlon,
+          //displayProjection: spher_merc,
+          //getURL: overlay_getTileURL,
+          //maxResolution:156543.0339,
+          //units: "m",
+          //maxExtent: new OpenLayers.Bounds(-20037508, -20037508, 20037508, 20037508.34),
+          //tileOrigin: new OpenLayers.LonLat(0,0).transform(latlon,spher_merc),
+          serviceVersion: '.', 
+          layername: '.', 
+          type: 'png', 
+          alpha: true, 
+          isBaseLayer: true
+	});
+        map.addLayer(tms);
+
+	map.setCenter(map.getCenter(),3)
+
+	$('OpenLayers.Control.PanZoom_5').style.top = '60px'
+
+	function save_start() {
+		$('map-start-btn').hide();
+		$('map-end-btn').show();
+		$('map-save-btn').show();
+	}
+
+	function done() {
+		$('map-place-form').submit();	
+	}
+
+</script>
+
+<form id="map-place-form" style="display:none;" action="/locate/site/visible/save">
+
+	<input id="form-start-lat" type="hidden" name="start_lat" value="" />
+	<input id="form-start-lon" type="hidden" name="start_lon" value="" />
+	<input id="form-end-lat" type="hidden" name="end_lat" value="" />
+	<input id="form-end-lon" type="hidden" name="end_lon" value="" />
+
+</form>
+
+</div>
+</div>
