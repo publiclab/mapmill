@@ -26,7 +26,7 @@ class Image < ActiveRecord::Base
 			image.write thumb_path+'/'+filename
 			thumbnail.close
 		end
-		'thumbnails/'+self.sitename+'/'+filename
+		'/thumbnails/'+self.sitename+'/'+filename
 	end
 
 end
