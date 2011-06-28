@@ -92,22 +92,22 @@ img { border:0; }
 	width:280px;
 }
 
-#sites-page {
+#sites-page, #list-page {
 	font-size:120%;
 	padding:10px;
 	padding-top:50px;
 }
-#sites-page h2, #place-page h2 {
+#sites-page h2, #place-page h2, #list-page h2 {
 	font-weight:normal;
 	font-style:italic;
 	font-size:2em;
-	margin-bottom:0;
+	margin-bottom:10px;
 }
 
-#sites-list {
+#sites-list, .list {
 	line-height:1.4em;
 }
-#sites-list div {
+#sites-list div, .list div {
 	border-bottom:1px solid #555;
 	background:#333;
 	padding:10px;

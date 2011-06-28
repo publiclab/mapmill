@@ -71,6 +71,7 @@ class MapperController < ApplicationController
 	def locate_site
 		@site = Site.find_by_name(params[:site])
 		@image = @site.images.first
+		@image.thumb
 		render "locate"
 	end
 
