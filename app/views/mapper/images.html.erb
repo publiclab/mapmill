@@ -5,10 +5,13 @@
 	<a href="/sort/<%= params[:site] %>">sort only this site</a>
 </p>
 
+<%= will_paginate @images %>
+<br style="clear:both;" />
+
 <% for image in @images %>
 <div class="picture">
 <p> <% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> out of 10 | <%= image.hits %> reviewers</p>
-<a class="image"  href="/<%= image.path %>"><img width="180px" src="<%= image.thumb %>" /></a> 
+<a class="image"  href="/sites/<%= image.site.name+"/"+image.filename %>"><img width="180px" src="<%= image.thumb %>" /></a> 
 <div class="voting buttons">
 	<a class="green"  href="/vote/<%= image.id %>/10/<%= params[:site] %>">+</a>
 	<a class="yellow" href="/vote/<%= image.id %>/5/<%= params[:site] %>">~</a>

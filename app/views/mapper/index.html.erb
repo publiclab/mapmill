@@ -10,10 +10,10 @@
 	}
 </script>
 
-<h2>"Oil Spill Hot or Not": <br />Help us sort images of the oil spill</h2>
+<h2>Sort and select the best images to make a map</h2>
 <p><i>It takes hours to go through the thousands of images we're capturing <a href="http://publiclaboratory.org/tool/balloon-mapping">from balloons and kites</a>, to pick out the best ones for inclusion in our <a href="http://grassrootsmapping.org/data">free and open source maps</a>. Help us by choosing the best images.</i></p>
 
-<p>We want images that are aimed straight down and are not blurry. We also want images of as large an area as possible. The rest are not useful! If you're not sure, mark it OK. <a href="http://farm2.static.flickr.com/1276/4703515530_4482bc2f15_o.png">Click here to learn what makes a good image</a></p>
+<p>We want images that are aimed <b>straight down</b> and are <b>not blurry</b>. We also want images of as large an area as possible. The rest are not useful! If you're not sure, mark it OK. <a href="http://farm2.static.flickr.com/1276/4703515530_4482bc2f15_o.png">Learn what makes a good image</a></p>
 <p><i>Confused? Learn more about the project at <a href="http://grassrootsmapping.org">GrassrootsMapping.org</a>.</i></p>
 
 <p>(Keyboard shortcuts: 1 = good, 2 = ok, 3 = not useful)</p>
@@ -21,21 +21,21 @@
 </div>
 
 
-<% unless params[:style] == "embed" %><a target="_blank" href="/<%= @image.path %>" id="expand">full resolution</a><% end %>
+<% unless params[:style] == "embed" %><a target="_blank" href="/sites/<%= @image.site.name+"/"+@image.filename %>" id="expand">full resolution (<%= @image.hits %>)</a><% end %>
 
 <div id="image">
-<img src="/<%= @image.path %>" />
+<img src="/sites/<%= @image.site.name+"/"+@image.filename %>" />
 </div>
 
 <div id="buttons">
-<a class="green"  href="/vote/<%= @image.id %>/10/<%= @site %>">really good</a>
-<a class="yellow" href="/vote/<%= @image.id %>/5/<%= @site %>">just ok</a>
-<a href="/vote/<%= @image.id %>/0/<%= @site %>">not useful</a>
+<a class="green"  href="/vote/<%= @image.id %>/10/<%= @sitename %>">really good</a>
+<a class="yellow" href="/vote/<%= @image.id %>/5/<%= @sitename %>">just ok</a>
+<a href="/vote/<%= @image.id %>/0/<%= @sitename %>">not useful</a>
 </div>
 <script>
-shortcut.add("1",function() { window.location = "/vote/<%= @image.id %>/1/<%= @site %>" });
-shortcut.add("2",function() { window.location = "/vote/<%= @image.id %>/5/<%= @site %>" });
-shortcut.add("3",function() { window.location = "/vote/<%= @image.id %>/0/<%= @site %>" });
+shortcut.add("1",function() { window.location = "/vote/<%= @image.id %>/1/<%= @sitename %>" });
+shortcut.add("2",function() { window.location = "/vote/<%= @image.id %>/5/<%= @sitename %>" });
+shortcut.add("3",function() { window.location = "/vote/<%= @image.id %>/0/<%= @sitename %>" });
 
 setInterval(function() {
 	if (location.hash == "#slideshow") window.location.reload();

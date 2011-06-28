@@ -15,10 +15,7 @@ class CreateSites < ActiveRecord::Migration
     add_column :images, :site_id, :integer
 
     # make a record for each site -- previously these were just read from the directory
-    Site.all.each do |site|
-	s = Site.new({ :name => site[0] })
-	s.save
-    end
+    Site.import
     # add a site_id for each image
     i = Image.find :all
     i.each do |image|
