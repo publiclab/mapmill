@@ -31,14 +31,6 @@ class MapperController < ApplicationController
 		@image.thumb
 	end
 
-	def import
-		Site.import
-		Site.find(:all).each do |site|
-			site.import_images
-		end
-		render :text => "import successful"
-	end
-
 	def sort
 		@site = Site.find_by_name(params[:site])
 		pool = []
@@ -61,7 +53,11 @@ class MapperController < ApplicationController
 		else
 			path = '/?o=x&last='+i.path
 		end
-		redirect_to path
+		if  params[:ajax]
+			render :text => "success"
+		else
+			redirect_to path 
+		end
 	end
 	
 	def save_site_location

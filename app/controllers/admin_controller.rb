@@ -18,4 +18,12 @@ class AdminController < ApplicationController
 		redirect_to "/admin"
 	end
 
+	def import
+		Site.import
+		Site.find(:all).each do |site|
+			site.import_images
+		end
+		render :text => "import successful"
+	end
+
 end
