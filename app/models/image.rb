@@ -19,7 +19,7 @@ class Image < ActiveRecord::Base
 		require 'mini_magick'
 		thumb_path = 'public/thumbnails/'+self.site.name
 		unless File.exists?(thumb_path+'/'+self.filename)
-			image = MiniMagick::Image.from_file('public/sites/'+self.site.name+"/"+self.path)
+			image = MiniMagick::Image.from_file('public/sites/'+self.site.name+"/"+self.filename)
 			image.resize "180X120"
 			Dir.mkdir(thumb_path) unless File.exists?(thumb_path)
 			thumbnail = File.open(thumb_path+'/'+filename,"wb+")

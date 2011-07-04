@@ -2,6 +2,7 @@ class Site < ActiveRecord::Base
 	
 	has_many :images
 	validates_presence_of :name
+	validates_uniqueness_of :name
 
 	# reads sites directory to find all sites, whether they have records or not
 	def self.all

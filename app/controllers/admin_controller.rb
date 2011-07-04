@@ -26,4 +26,10 @@ class AdminController < ApplicationController
 		render :text => "import successful"
 	end
 
+	def import_site
+		site = Site.find_by_name(params[:id])
+		site.import_images
+		redirect_to "/site/"+params[:id]
+	end
+
 end
