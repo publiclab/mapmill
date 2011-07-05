@@ -1,7 +1,7 @@
 class MapperController < ApplicationController
 
 	def sites
-		@sites = Site.find :all, :conditions => {:active => true}
+		@sites = Site.find :all, :conditions => {:active => true}, :order => "id DESC"
 	end
 
 	def images
