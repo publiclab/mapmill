@@ -9,7 +9,7 @@
 	<% @sites.each do |site| %>
 		<div>
 			<a href="/images/<%= site.name %>"><%= site.name %></a>
-			(<%= site.images.length %> images, <%= site.average %>/10 average score)
+			(<%= site.images.length %> images, <%= site.average %>/100 average)
 			<% unless site.active %> (<span style="color:#999;">Archived</span>)<% end %>:
 			<i><% if site.active %><a href="/admin/archive/<%= site.id %>">Archive</a></a>
 			<% else %><a href="/admin/activate/<%= site.id %>">Activate</a><% end %></i>
