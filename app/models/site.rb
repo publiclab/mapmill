@@ -37,7 +37,7 @@ class Site < ActiveRecord::Base
 		d = Dir.new(RAILS_ROOT+'/public/sites/'+self.name)
 		d.each do |image|
 			if image[-3..-1] && image[-3..-1].downcase == 'jpg'
-				unless Image.find_by_path(image)
+				unless Image.find_by_path("sites/"+name+"/"+image)
 					i = Image.new({:path => "sites/"+name+"/"+image,:filename => image.split('/').last,:site_id => self.id})
 					i.save
 				end
@@ -62,11 +62,12 @@ class Site < ActiveRecord::Base
 		votes = 0
 		self.images.each do |image|
 			if image.hits > 0
-				puts image.points.to_s + ' of ' + image.hits.to_s
+				#puts image.points.to_s + ' of ' + image.hits.to_s
 				votes += image.hits
 				points += image.points
 			end
 		end
+		votes = 0.00001 if votes == 0
 		(10.00*points/votes).to_s.to(3)
 	end
 
