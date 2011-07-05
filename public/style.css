@@ -260,8 +260,8 @@ img { border:0; }
 .buttons a:hover.yellow, #buttons a:hover.yellow {
 	background:#aa0;
 }
-.buttons.grey {
-	background:#aaa !important;
+.buttons.grey a, .buttons.grey a:hover {
+	background:#777;
 }
 
 #mainpage #buttons {

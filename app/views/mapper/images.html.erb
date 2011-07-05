@@ -30,17 +30,3 @@
 <br style="clear:both;" />
 <%= will_paginate @images %>
 </div>
-
-<script>
-function vote(id,vote,site) {
-	// this is not working: "Uncaught SyntaxError: Unexpected token )"
-	new Ajax.Request("/vote/"+id+"/"+vote+"/"+site+"?ajax=true", {
-//		method: "get",
-//		parameters: {},
-		onComplete: function(response) {
-			$('buttons-'+id).addClass('grey');
-		}
-	})
-	console.log("/vote/"+id+"/"+vote+"/"+site)
-}
-</script>
