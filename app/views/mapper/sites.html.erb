@@ -8,7 +8,7 @@
 <% for site in @sites %>
 <div>
 	<a href="/images/<%= site.name %>"><%= site.name %></a> 
-	(<%= site.images.length %> images, <%= site.average %>/10 average score)
+	(<%= site.images.length %> images, <%= site.average %>/100 average, <%= site.percent_complete %> done)
 	 | <a href="/sort/<%= site.name %>">sort this site</a>
 <!--	 | <a href="/locate/site/<%= site.name %>">place this on a map</a>-->
 </div>

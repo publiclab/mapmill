@@ -55,6 +55,14 @@ class Site < ActiveRecord::Base
 		Image.find(:all,:conditions => ["site_id = ? AND hits < ?",self.id,threshold], :order => "hits", :limit => count)
 	end
 
+	def percent_complete
+		with_hits = 0
+		self.images.each do |image|
+			with_hits += 1 if image.hits > 0
+		end
+		(100*with_hits/self.images.length).to_s+"%"
+	end
+
 	# average score
 	def average
 		count = self.images.length
@@ -71,10 +79,6 @@ class Site < ActiveRecord::Base
 		(10.00*points/votes).to_s.to(3)
 	end
 
-	def image_count
-		Dir.glob(RAILS_ROOT+self.path+'/*.jpg').length	
-	end
-	
 	def path
 		'/public/sites/'+self.name
 	end

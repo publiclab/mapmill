@@ -23,7 +23,7 @@ class AdminController < ApplicationController
 #		Site.find(:all).each do |site|
 #			site.import_images
 #		end
-		render :text => "import successful"
+		redirect_to "/admin"
 	end
 
 	def import_site
