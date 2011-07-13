@@ -105,7 +105,7 @@ class Site < ActiveRecord::Base
 		0..bars.length do |i|
 			bars[i] = 0 unless bars[i]
 		end
-		bars[0..20]
+		bars[0..self.average_votes]
 	end
 
 	def self.imagenames_from_dir(dirname)
