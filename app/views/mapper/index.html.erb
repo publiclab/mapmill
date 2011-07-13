@@ -33,9 +33,10 @@
 	<a href="/vote/<%= @image.id %>/0/<%= @sitename %>">not useful (3)</a>
 </div>
 <script>
-shortcut.add("1",function() { window.location = "/vote/<%= @image.id %>/1/<%= @sitename %>" });
-shortcut.add("2",function() { window.location = "/vote/<%= @image.id %>/5/<%= @sitename %>" });
-shortcut.add("3",function() { window.location = "/vote/<%= @image.id %>/0/<%= @sitename %>" });
+var voted = false
+shortcut.add("1",function() { if (!voted) { window.location = "/vote/<%= @image.id %>/1/<%= @sitename %>"; voted = true; }});
+shortcut.add("2",function() { if (!voted) { window.location = "/vote/<%= @image.id %>/5/<%= @sitename %>"; voted = true; }});
+shortcut.add("3",function() { if (!voted) { window.location = "/vote/<%= @image.id %>/0/<%= @sitename %>"; voted = true; }});
 
 setInterval(function() {
 	if (location.hash == "#slideshow") window.location.reload();
