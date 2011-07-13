@@ -15,13 +15,13 @@ class CreateSites < ActiveRecord::Migration
     add_column :images, :site_id, :integer
 
     # make a record for each site -- previously these were just read from the directory
-    Site.import
+#    Site.import
     # add a site_id for each image
-    i = Image.find :all
-    i.each do |image|
-	image.site_id = Site.find_by_name(image.sitename).id
-	image.save
-    end
+#    i = Image.find :all
+#    i.each do |image|
+#	image.site_id = Site.find_by_name(image.sitename).id
+#	image.save
+#    end
     # move all thumbnail directories to their new home in /public/thumbnails
     Dir.mkdir('public/thumbnails') unless File.exists?('public/thumbnails')
     `mv public/sites/*_thumb/ public/thumbnails/`
