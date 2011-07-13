@@ -28,9 +28,9 @@
 </div>
 
 <div id="buttons">
-<a class="green"  href="/vote/<%= @image.id %>/10/<%= @sitename %>">really good</a>
-<a class="yellow" href="/vote/<%= @image.id %>/5/<%= @sitename %>">just ok</a>
-<a href="/vote/<%= @image.id %>/0/<%= @sitename %>">not useful</a>
+	<a class="green"  href="/vote/<%= @image.id %>/10/<%= @sitename %>">really good (1)</a>
+	<a class="yellow" href="/vote/<%= @image.id %>/5/<%= @sitename %>">just ok (2)</a>
+	<a href="/vote/<%= @image.id %>/0/<%= @sitename %>">not useful (3)</a>
 </div>
 <script>
 shortcut.add("1",function() { window.location = "/vote/<%= @image.id %>/1/<%= @sitename %>" });

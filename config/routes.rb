@@ -9,6 +9,7 @@ ActionController::Routing::Routes.draw do |map|
   map.connect 'geolocate/:id', :controller => 'mapper', :action => 'geolocate'
   map.connect 'embed', :controller => 'mapper', :action => 'index', :style => 'embed'
   map.connect 'images/:site', :controller => 'mapper', :action => 'images'
+  map.connect 'images/:site/:filter', :controller => 'mapper', :action => 'images'
   map.connect 'locate/site/:site', :controller => 'mapper', :action => 'locate_site'
   map.connect 'locate/image/:id', :controller => 'mapper', :action => 'locate_image'
   map.connect 'locate/site/:site/save', :controller => 'mapper', :action => 'save_site_location'

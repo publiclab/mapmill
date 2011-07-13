@@ -1,8 +1,12 @@
 <div id="site">
-<h2>Images from "<%= params[:site] %>"</h2>
+<% unless params[:filter] %><h2>Images from "<%= params[:site] %>"</h2><% end %>
+<% if params[:filter] == "unsorted" %><h2>Unsorted images from "<%= params[:site] %>"</h2><% end %>
 <p>
 	<i>Sorted best to worst</i> | 
-	<a href="/sort/<%= params[:site] %>">sort only this site</a>
+	<a href="/sort/<%= params[:site] %>">sort only this site</a> | 
+	<% unless params[:filter] %><a href="/images/<%= params[:site] %>/unsorted">view unsorted from this site</a><% end %>
+	<% if params[:filter] == "unsorted" %><a href="/images/<%= params[:site] %>">view all from this site</a><% end %> | 
+	(<%= @site.images.length %> images, <%= @site.average %>/100 average, <%= @site.percent_complete %> done)
 </p>
 
 
@@ -12,7 +16,7 @@
 <% for image in @images %>
 <div class="picture">
 <p> <% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> out of 10 | <%= image.hits %> reviewers</p>
-<a class="image"  href="/sites/<%= image.site.name+"/"+image.filename %>"><img width="180px" src="<%= image.thumb %>" /></a> 
+<a class="image" target="_blank" href="/sites/<%= image.site.name+"/"+image.filename %>"><img width="180px" src="<%= image.thumb %>" /></a> 
 <div class="voting buttons" id="buttons-<%= image.id %>">
 
 	<a class="green"  href="javascript:void()" onClick="vote(<%= image.id %>,10,'<%= params[:site] %>')">+</a>
