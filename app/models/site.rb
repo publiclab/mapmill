@@ -85,7 +85,7 @@ class Site < ActiveRecord::Base
 		self.images.each do |image|
 			votes += image.hits
 		end
-		votes/self.images.length
+		(10.00*votes/self.images.length).to_s.to(4)
 	end
 
 	def path
@@ -105,7 +105,7 @@ class Site < ActiveRecord::Base
 		0..bars.length do |i|
 			bars[i] = 0 unless bars[i]
 		end
-		bars[0..self.average_votes]
+		bars[0..10] #self.average_votes]
 	end
 
 	def self.imagenames_from_dir(dirname)
