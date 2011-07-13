@@ -12,7 +12,7 @@
 //http://willarson.com/code/sparklines/sparklines.html
 var opts = {'scale_from':-1};
 var data = [<%= @site.vote_bars * "," %>]
-sparkline = new Sparkline('bars', data, opts)
+sparkline = new BarSparkline('bars', data, opts)
 //sparkline.stroke = "rga(100,100,100,.7);"
 sparkline.draw()
 </script>
