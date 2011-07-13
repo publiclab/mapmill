@@ -1,6 +1,7 @@
 class Site < ActiveRecord::Base
 	
 	has_many :images
+	has_many :participants
 	validates_presence_of :name
 	validates_uniqueness_of :name
 
@@ -79,8 +80,32 @@ class Site < ActiveRecord::Base
 		(10.00*points/votes).to_s.to(3)
 	end
 
+	def average_votes
+		votes = 0
+		self.images.each do |image|
+			votes += image.hits
+		end
+		votes/self.images.length
+	end
+
 	def path
 		'/public/sites/'+self.name
+	end
+
+	def unique_participant(key)
+		!Participant.find_by_key(key,:conditions => {:site_id => self.id})
+	end
+
+	def vote_bars
+		bars = [0]
+		self.images.each do |image|
+			bars[image.hits] = 0 if bars[image.hits] == nil
+			bars[image.hits] += 1
+		end
+		0..bars.length do |i|
+			bars[i] = 0 unless bars[i]
+		end
+		bars[0..20]
 	end
 
 	def self.imagenames_from_dir(dirname)

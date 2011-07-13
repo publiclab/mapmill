@@ -34,9 +34,9 @@
 </div>
 <script>
 var voted = false
-shortcut.add("1",function() { if (!voted) { window.location = "/vote/<%= @image.id %>/1/<%= @sitename %>"; voted = true; }});
-shortcut.add("2",function() { if (!voted) { window.location = "/vote/<%= @image.id %>/5/<%= @sitename %>"; voted = true; }});
-shortcut.add("3",function() { if (!voted) { window.location = "/vote/<%= @image.id %>/0/<%= @sitename %>"; voted = true; }});
+shortcut.add("1",function() { if (!voted) { window.location = "/vote/<%= @image.id %>/1/<%= @sitename %>?mapmill_id="+mapmill_id; voted = true; }});
+shortcut.add("2",function() { if (!voted) { window.location = "/vote/<%= @image.id %>/5/<%= @sitename %>?mapmill_id="+mapmill_id; voted = true; }});
+shortcut.add("3",function() { if (!voted) { window.location = "/vote/<%= @image.id %>/0/<%= @sitename %>?mapmill_id="+mapmill_id; voted = true; }});
 
 setInterval(function() {
 	if (location.hash == "#slideshow") window.location.reload();

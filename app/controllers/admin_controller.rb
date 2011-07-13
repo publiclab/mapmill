@@ -31,5 +31,14 @@ class AdminController < ApplicationController
 		site.import_images
 		redirect_to "/admin"
 	end
+	
+	def session
+		render :text => request.session_options[:hash]
+	end
+
+	def participants
+		@participants = Participant.find :all
+		render :json => @participants
+	end
 
 end

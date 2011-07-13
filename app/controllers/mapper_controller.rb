@@ -48,7 +48,7 @@ class MapperController < ApplicationController
 	def vote
 		if i = Image.find(params[:id])
 			i.points += params[:points].to_i if params[:points].to_i < 11
-			i.vote
+			i.vote(params[:mapmill_id])
 		end
 		if params[:site] != ""
 			path = '/sort/'+params[:site]+'/?o=x&last='+i.path

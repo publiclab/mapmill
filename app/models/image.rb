@@ -2,7 +2,11 @@ class Image < ActiveRecord::Base
 
 	belongs_to :site
 
-	def vote
+	def vote(key)
+		if key && self.site.unique_participant(key)
+			p = Participant.new({:key => key,:site_id => self.site_id}) 
+			p.save
+		end
 		self.hits += 1
 		self.save
 	end

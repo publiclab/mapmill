@@ -1,14 +1,24 @@
 <div id="site">
+<canvas style="margin-top:10px;height:120px;float:left;margin-right:10px;" id="bars"></canvas>
 <% unless params[:filter] %><h2>Images from "<%= params[:site] %>"</h2><% end %>
 <% if params[:filter] == "unsorted" %><h2>Unsorted images from "<%= params[:site] %>"</h2><% end %>
 <p>
 	<i>Sorted best to worst</i> | 
 	<a href="/sort/<%= params[:site] %>">sort only this site</a> | 
 	<% unless params[:filter] %><a href="/images/<%= params[:site] %>/unsorted">view unsorted from this site</a><% end %>
-	<% if params[:filter] == "unsorted" %><a href="/images/<%= params[:site] %>">view all from this site</a><% end %> | 
-	(<%= @site.images.length %> images, <%= @site.average %>/100 average, <%= @site.percent_complete %> done)
+	<% if params[:filter] == "unsorted" %><a href="/images/<%= params[:site] %>">view all from this site</a><% end %> 
 </p>
-
+<script>
+//http://willarson.com/code/sparklines/sparklines.html
+var opts = {'scale_from':-1};
+var data = [<%= @site.vote_bars * "," %>]
+sparkline = new Sparkline('bars', data, opts)
+//sparkline.stroke = "rga(100,100,100,.7);"
+sparkline.draw()
+</script>
+<p>
+(<%= @site.images.length %> images, <%= @site.average %>/100 average, ~<%= @site.average_votes %> votes per image, <%= @site.percent_complete %> have votes, &gt;<%= @site.participants.length %> participants)
+</p>
 
 <%= will_paginate @images %>
 <br style="clear:both;" />

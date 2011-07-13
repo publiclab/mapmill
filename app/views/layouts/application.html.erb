@@ -10,6 +10,7 @@
   <% if params[:style] == "embed" %><link rel="stylesheet" href="/embed.css" type="text/css" media="screen" title="no title" charset="utf-8"><% end %>
   <script type="text/javascript" src="/javascripts/shortcut.js"></script>
   <script type="text/javascript" src="/javascripts/prototype.js"></script>
+  <script type="text/javascript" src="/javascripts/sparklines.min.js"></script>
 
 </head>
 <body>
@@ -57,6 +58,7 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 
+init()
 </script>
 <% end %>
 </body>
