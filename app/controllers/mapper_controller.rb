@@ -86,4 +86,9 @@ class MapperController < ApplicationController
 		end
 	end
 
+	def fullsize_thumb
+		image = Image.find(params[:id])
+		redirect_to image.fullsize_thumb
+	end
+
 end

@@ -26,7 +26,18 @@ sparkline.draw()
 <% for image in @images %>
 <div class="picture">
 <p> <% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> out of 10 | <%= image.hits %> reviewers</p>
-<a class="image" target="_blank" href="/sites/<%= image.site.name+"/"+image.filename %>"><img width="180px" src="<%= image.thumb %>" /></a> 
+<a class="image" target="_blank" href="/sites/<%= image.site.name+"/"+image.filename %>"><img id="image_<%= image.id %>" width="180px" src="<%= image.thumb %>" /></a> 
+<script>
+$('image_<%= image.id %>').onmouseover = function() {
+	console.log('hover')
+	$('image_<%= image.id %>').src = "/mapper/fullsize_thumb/<%= image.id %>"
+}
+$('image_<%= image.id %>').onmouseout = function() {
+	console.log('hover')
+	$('image_<%= image.id %>').src = "<%= image.thumb %>"
+}
+</script>
+
 <div class="voting buttons" id="buttons-<%= image.id %>">
 
 	<a class="green"  href="javascript:void()" onClick="vote(<%= image.id %>,10,'<%= params[:site] %>')">+</a>
