@@ -25,7 +25,8 @@ sparkline.draw()
 
 <% for image in @images %>
 <div class="picture">
-<p> <% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> out of 10 | <%= image.hits %> reviewers</p>
+<p> <% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> out of 10 | <%= image.hits %> reviewers <br />
+<% if @site.map_export && params[:export] %><a href="http://localhost:3000/import/<%= @site.map_export %>?url=http://localhost:3001<%= image.thumb %>">Open in Knitter &raquo;</a><% end %></p>
 <a class="image" target="_blank" href="/sites/<%= image.site.name+"/"+image.filename %>"><img id="image_<%= image.id %>" width="180px" src="<%= image.thumb %>" /></a> 
 <script>
 $('image_<%= image.id %>').onmouseover = function() {

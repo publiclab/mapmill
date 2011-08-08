@@ -41,4 +41,13 @@ class AdminController < ApplicationController
 		render :json => @participants
 	end
 
+	def set_map
+		@site = Site.find(params[:id])
+		if params[:map_export]
+			@site.map_export = params[:map_export]
+			@site.save
+			redirect_to "/admin"
+		end
+	end
+
 end

@@ -1,0 +1,16 @@
+<div id="list-page">
+
+	<h2>Input a Knitter map name to associate with "<%= @site.name %>"</h2>
+
+	<p>
+		<form action="/admin/set_map/<%= params[:id] %>" method="get">
+			<small>Such as "wilkinson-bay": </small>
+			<input name="map_export" type="text" />
+			<input type="submit" value="Save" />
+		</form>
+	</p>
+	<p>
+		<a href="/admin">Cancel</a>
+	</p>
+
+</div>
