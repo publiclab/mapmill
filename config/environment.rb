@@ -21,6 +21,13 @@ Rails::Initializer.run do |config|
   # config.gem "aws-s3", :lib => "aws/s3"
   config.gem 'will_paginate', '2.3.11'
   config.gem 'geokit'
+
+  # Load local, vendor'ed gems from /vendor/gems:
+  # http://errtheblog.com/posts/50-vendor-everything
+
+  config.load_paths += Dir["#{RAILS_ROOT}/vendor/gems/**"].map do |dir| 
+    File.directory?(lib = "#{dir}/lib") ? lib : dir
+  end
   
 # Only load the plugins named here, in the order given (default is alphabetical).
   # :all can be used as a placeholder for all plugins not explicitly named
