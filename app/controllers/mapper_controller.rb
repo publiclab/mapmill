@@ -11,7 +11,7 @@ class MapperController < ApplicationController
 		images = Image.find_all_by_site_id(@site.id, :conditions => {:hits=> 0, :points => 0}) if params[:filter] == "unsorted"
 		@images = images.sort_by do |i|
 			if (i.hits > 0)
-				-1*i.points/i.hits
+				-1*(i.points/i.hits)+-1*(i.hits*0.1)
 			else
 				0
 			end
