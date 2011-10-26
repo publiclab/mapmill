@@ -11,6 +11,5 @@ config/amazon_s3.yml
 public/sites
 public/thumbnails
 sites-done
-backup
 config/environment.rb
 db/*.sqlite3

@@ -26,7 +26,7 @@ sparkline.draw()
 <% for image in @images %>
 <div class="picture">
 <p> <% if image.hits > 0 %><%= image.points/image.hits %><% else %>0<% end %> out of 10 | <%= image.hits %> reviewers <br />
-<% if @site.map_export != "" %><a href="http://cartagen.org/import/<%= @site.map_export %>?url=http://mapmill.org/sites/<%= image.site.name + "/" + image.filename %>">Open in Knitter &raquo;</a><% end %></p>
+<% if @site.map_export != "" %><a href="http://mapknitter.org/import/<%= @site.map_export %>?url=http://mapmill.org/sites/<%= image.site.name + "/" + image.filename %>">Open in Knitter &raquo;</a><% end %></p>
 <a class="image" target="_blank" href="/sites/<%= image.site.name+"/"+image.filename %>"><img id="image_<%= image.id %>" width="180px" src="<%= image.thumb %>" /></a> 
 <script>
 $('image_<%= image.id %>').onmouseover = function() {
