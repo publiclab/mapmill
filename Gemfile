@@ -18,8 +18,10 @@ gem 'rails-assets-angular'
 gem 'rails-assets-angular-bootstrap'
 gem 'rails-assets-leaflet'
 
-gem 'ruby-openid'
-gem 'open_id_authentication'
+#gem 'ruby-openid'
+#gem 'open_id_authentication'
+gem 'devise'
+gem "devise_openid_authenticatable"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
