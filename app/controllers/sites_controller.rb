@@ -1,11 +1,18 @@
 class SitesController < ApplicationController
 
   @@openid_url_base  = "http://publiclaboratory.org/people/"
+
   def create
+    @trust_root = 'http://localhost:3000/'
+    @return_to = 'http://localhost:3000/sites/complete_open_id'
     openid_url = @@openid_url_base + "faboolous" + "/identity"
+    OpenID::Consumer::CheckIDRequest.redirect_url(@trust_root,@return_to)
     openid_authentication(openid_url)
   end 
 
+  def complete_open_id
+    
+  end
 #  protected
 
   def openid_authentication(openid_url)

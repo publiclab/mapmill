@@ -15,8 +15,8 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 gem 'rails-assets-angular'
+gem 'rails-assets-angular-route'
 gem 'rails-assets-angular-bootstrap'
-gem 'rails-assets-leaflet'
 
 gem 'ruby-openid'
 gem 'open_id_authentication'

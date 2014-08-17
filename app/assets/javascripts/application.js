@@ -15,5 +15,28 @@
 
 //= require angular
 //= require angular-bootstrap
+//= require angular-route
 //= require turbolinks
 //= require_tree .
+
+var app = angular.module('mapmillApp', [
+  'ui.bootstrap',
+  'ngRoute']);
+
+
+app.config(['$routeProvider,
+  function($routeProvider) {
+    $routeProvider.
+      when('/front', {
+        templateUrl: '../assets/front.html',
+        controller: 'FrontCtrl'
+      }).
+      when('/login', {
+        templateUrl: 'partials/login',
+        controller: 'LoginCtrl'
+      }).
+      otherwise({
+        redirectTo: '/front'
+      });
+  }
+]);

@@ -76,7 +76,8 @@ GEM
     rails-assets-angular (1.2.20)
     rails-assets-angular-bootstrap (0.11.0)
       rails-assets-angular (>= 1)
-    rails-assets-leaflet (0.7.3)
+    rails-assets-angular-route (1.2.20)
+      rails-assets-angular (~> 1.2.0)
     railties (4.1.4)
       actionpack (= 4.1.4)
       activesupport (= 4.1.4)
@@ -131,7 +132,7 @@ DEPENDENCIES
   rails (= 4.1.4)
   rails-assets-angular
   rails-assets-angular-bootstrap
-  rails-assets-leaflet
+  rails-assets-angular-route
   ruby-openid
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
