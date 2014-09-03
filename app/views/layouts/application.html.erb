@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html ng-app>
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mapmill</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"  rel="stylesheet">
+  <link href='http://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
-<%= yield %>
+  <header class="top" role="header">
+    <div class="container">
+      <h1 class="page_title"><a href="/" class="title_link">MapMill</a></h1>
+      <div class="page_sub_title">
+        by PublicLab
+      </div>
+    </div>
+  </header>
+  <hr>
 
+  <div class="content container">
+  
+    <%= yield %>
+
+  </div>
+
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 </body>
 </html>

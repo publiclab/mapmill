@@ -13,7 +13,6 @@
 // require jquery
 // require jquery_ujs
 
-//= require angular
-//= require angular-bootstrap
 //= require turbolinks
 //= require_tree .
+//= require s3_direct_upload

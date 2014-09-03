@@ -12,4 +12,26 @@
  *
  *= require_tree .
  *= require_self
+ *= require s3_direct_upload_progress_bars
  */
+
+.page_title {
+  font-family: 'Love Ya Like A Sister', cursive;
+  font-size: 48px;
+}
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  color: #111111;
+}
+
+input,
+textarea {
+  border: 1px solid #428bca;
+  padding: 4px;
+  width: 250px;
+}
+
+input[type=text] {
+  height: 32px;
+}

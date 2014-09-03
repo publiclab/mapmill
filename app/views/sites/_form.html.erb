@@ -9,10 +9,10 @@
   </p>
   <p>
     <%= f.label :description %><br>
-    <%= f.text_field :description %>
+    <%= f.text_area :description, :rows => 6 %>
   </p>
    <p>
-    <%= f.submit %>
+    <%= f.submit 'Begin' , :class => 'btn btn-primary' %>
   </p>
 
 <% end %>

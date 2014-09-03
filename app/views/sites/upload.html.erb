@@ -1,0 +1,9 @@
+<h2> Upload Page</h2>
+<div class="upload_section">
+  <div id="upload-status">Drag and drop the files you want to upload</div>
+<%= s3_uploader_form callback_url: sites_path, callback_param: "model[image_url]", id: "s3-uploader" do %>
+  <%= file_field_tag :file, multiple: true %>
+<% end %>
+  <div id="upload-list"></div>
+
+</div>
