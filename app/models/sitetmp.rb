@@ -1,2 +1,2 @@
-class SiteTmp < ActiveRecord::Base
+class Sitetmp < Site
 end
