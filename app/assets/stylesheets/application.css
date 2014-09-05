@@ -15,6 +15,13 @@
  *= require s3_direct_upload_progress_bars
  */
 
+header {
+  background-color: #1b1b1b;
+  color: white;
+  padding-bottom: 12px;
+  margin-bottom: 40px;
+}
+
 .page_title {
   font-family: 'Love Ya Like A Sister', cursive;
   font-size: 48px;
@@ -34,4 +41,34 @@ textarea {
 
 input[type=text] {
   height: 32px;
+}
+
+.site_desc {
+  margin-top: 34px;
+}
+
+.site_desc_title {
+  font-style: italic;
+  font-size: 16px;
+  line-height: 8px;
+}
+
+.user_info {
+  font-size: 10px;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+}
+
+.logout {
+  margin-left: 8px;
+}
+
+.session_info {
+  position: relative;
+  height: 100px;
+}
+
+.learn_more {
+  margin-top: 22px;
 }

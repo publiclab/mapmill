@@ -8,7 +8,8 @@ jQuery ->
 if(window.FileReader)  
   addEventHandler(window, 'load', () ->
     status = document.getElementById('upload-status')
-    drop   = document.getElementById('s3-uploader')
+    #drop   = document.getElementById('s3-uploader')
+    drop   = document.getElementById('upload-area')
     list   = document.getElementById('upload-list')
     
     cancel(e) ->

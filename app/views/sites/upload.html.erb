@@ -1,9 +1,23 @@
 <h2> Upload Page</h2>
 <div class="upload_section">
   <div id="upload-status">Drag and drop the files you want to upload</div>
-<%= s3_uploader_form callback_url: sites_path, callback_param: "model[image_url]", id: "s3-uploader" do %>
-  <%= file_field_tag :file, multiple: true %>
-<% end %>
+  <div id="upload-area">
+  <% if false %>
+  <%= s3_uploader_form callback_url: sites_path, 
+      callback_param: "model[image_url]", 
+      id: "s3-uploader" do %>
+    <%= file_field_tag :file, multiple: true %>
+  <% end %>
+  <% end %>
+  </div>
   <div id="upload-list"></div>
+
+
+<script id="template-upload" type="text/x-tmpl">
+<div id="file-{%=o.unique_id%}" class="upload">
+  {%=o.name%}
+  <div class="progress"><div class="bar" style="width: 0%"></div></div>
+</div>
+</script>
 
 </div>

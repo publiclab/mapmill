@@ -10,7 +10,10 @@ Rails.application.routes.draw do
     end
   end
 
-  get '/login' => 'login#login_openid'
+  resources :session
+
+  get '/login' => 'session#login_openid'
+  get '/logout' => 'session#logout'
 
   # You can have the root of your site routed with "root"
   root 'home#front'

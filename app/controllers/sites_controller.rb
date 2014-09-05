@@ -1,13 +1,17 @@
 class SitesController < ApplicationController
 
   def create
-    #TODO check session 
-    # if not login
-    site = Sitetmp.new
-    # TODO nounce = generate_nonce
-    site.save
-    #TODO redirect to login
-    redirect_to '/login' 
+    user_id = session[:user_id] 
+    if User.exists?(user_id)
+      site = Site.new
+      site.save
+      redirect_to '/sites/upload'
+    else 
+      site = Sitetmp.new
+      site.nonce = nonce
+      site.save
+      redirect_to '/login?n='  + nonce
+    end
   end 
 
 
@@ -15,5 +19,8 @@ class SitesController < ApplicationController
 
   end
 
-
+  private
+  def nonce
+    return rand(10 ** 30).to_s.rjust(30,'0')
+  end 
 end
