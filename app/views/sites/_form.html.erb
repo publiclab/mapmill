@@ -1,18 +1,19 @@
-<%= form_for :site, url: sites_path do |f| %>
+<%= form_for :site, url: sites_path, remote: true, :html => { :id => "site_form"} do |f| %>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
   <p>
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class => 'form-control' %>
   </p>
   <p>
     <%= f.label :date %><br>
-    <%= f.text_field :date %>
+    <%= f.text_field :date, :class => 'form-control'%>
   </p>
   <p>
     <%= f.label :description %><br>
-    <%= f.text_area :description, :rows => 6 %>
-  </p>
-   <p>
-    <%= f.submit 'Begin' , :class => 'btn btn-primary' %>
+    <%= f.text_area :description, :rows => 6, :class => 'form-control'%>
   </p>
 
 <% end %>
+  <p>
+    <%= button_tag "Begin", :id => 'login_via_open_id_btn', :class => "btn btn-primary form-control" %>
+  </p>

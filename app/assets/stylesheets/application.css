@@ -72,3 +72,12 @@ input[type=text] {
 .learn_more {
   margin-top: 22px;
 }
+
+.blue-header {
+ background-color: #428bca;
+}
+
+.input-desc {
+  font-size: 12px !important;
+  color: #555;
+}

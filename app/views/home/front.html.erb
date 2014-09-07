@@ -27,6 +27,10 @@
 </div>
 
 <div class="col-md-6 upload_images">
+  <% if logged_in? %>
+    <input type="hidden" id="logged_in" value="1"/>
+  <% end %>
 
-<%= render 'sites/form' %>
+  <%= render 'sites/form' %>
+
 </div>

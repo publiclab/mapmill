@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_filter :current_user
+  helper_method :logged_in?
 
   def current_user
     user_id = session[:user_id] 
@@ -17,4 +18,27 @@ class ApplicationController < ActionController::Base
       @user = nil
     end
   end
+
+  private
+    def require_login
+      unless logged_in?
+        flash[:error] = "You must be logged in to access this section"
+        redirect_to '/' # halts request cycle
+      end
+    end
+
+    def logged_in?
+      user_id = session[:user_id]
+
+      begin
+        if user_id and User.find(user_id)
+          return true
+        else
+          return false
+        end
+      rescue
+        return false
+      end
+    end
+
 end

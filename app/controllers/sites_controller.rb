@@ -1,4 +1,8 @@
+require 'uri'
+
 class SitesController < ApplicationController
+
+  before_action :require_login, only: [:upload]
 
   def create
     user_id = session[:user_id] 
@@ -7,10 +11,12 @@ class SitesController < ApplicationController
       site.save
       redirect_to '/sites/upload'
     else 
+      open_id = URI.encode(params[:open_id])
       site = Sitetmp.new
       site.nonce = nonce
       site.save
-      redirect_to '/login?n='  + nonce
+      to_url = '/login?n='  + nonce + '&open_id=' + open_id
+      redirect_to to_url 
     end
   end 
 
