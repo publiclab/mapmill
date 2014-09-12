@@ -1,0 +1,163 @@
+# Place all the behaviors and hooks related to the matching controller here.
+# All this logic will automatically be available in application.js.
+# You can use CoffeeScript in this file: http://coffeescript.org/
+
+$('#fileupload').fileupload('option', {
+            url: $("s3-data").data("url")',
+            #Enable image resizing, except for Android and Opera,
+            #which actually support image resizing, but fail to
+            #send Blob objects via XHR requests:
+            disableImageResize: /Android(?!.*Chrome)|Opera/
+                .test(window.navigator.userAgent),
+            maxFileSize: 5000000,
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+        })
+
+$ ->
+  #$(".directUpload").find("input:file").each (i, elem) ->
+  #  fileInput = $(elem)
+    fileInput = $('select_upload_files')
+    form = $(fileInput.parents("form:first"))
+    submitButton = form.find("input[type=\"submit\"]")
+    progressBar = $("<div class='bar'></div>")
+    barContainer = $("<div class='progress'></div>").append(progressBar)
+    fileInput.after barContainer
+    fileInput.fileupload
+      fileInput: fileInput
+      url: $("s3-data").data("url")
+      type: "POST"
+      autoUpload: true
+      formData: $("s3-data").data("fields")
+      paramName: "file" # S3 does not like nested name fields i.e. name="user[avatar_url]"
+      dataType: "XML" # S3 returns XML if success_action_status is set to 201
+      replaceFileInput: false
+      progressall: (e, data) ->
+        progress = parseInt(data.loaded / data.total * 100, 10)
+        progressBar.css "width", progress + "%"
+        return
+
+      start: (e) ->
+        submitButton.prop "disabled", true
+        progressBar.css("background", "green").css("display", "block").css("width", "0%").text "Loading..."
+        return
+
+      done: (e, data) ->
+        submitButton.prop "disabled", false
+        progressBar.text "Uploading done"
+        
+        # extract key and generate URL from response
+        key = $(data.jqXHR.responseXML).find("Key").text()
+        url = "//" + $("s3-data").data("host") + "/" + key
+        
+        # create hidden field
+        input = $("<input />",
+          type: "hidden"
+          name: fileInput.attr("name")
+          value: url
+        )
+        form.append input
+        return
+
+      fail: (e, data) ->
+        submitButton.prop "disabled", false
+        progressBar.css("background", "red").text "Failed"
+        return
+
+    return
+
+  return
+
+
+
+
+
+
+
+create_img_html = (img, drop) ->
+  div = ''
+  last_row = $(drop).find('.row').last()
+  row_children = last_row.children().size()
+  if row_children > 7
+    row = $('<div>') 
+    row.addClass('row')
+    drop.appendChild row
+    last_row = row
+   
+  col_div = $('<div class="col-sm-6 col-md-3">')
+  thumbnail = $('<div class="thumbnail">')
+  img_tag = document.createElement('img') 
+  img_tag.src = img
+  img_tag.alt = "Upload thumbnail"
+  thumbnail.append img_tag
+  thumbnail.on 'click', ->
+    $(this).toggleClass('selected_img')
+  
+  col_div.append thumbnail
+  last_row.append col_div
+ 
+addEventHandler = (obj, evt, handler) ->
+  if obj.addEventListener
+    
+    # W3C method
+    obj.addEventListener evt, handler, false
+  else if obj.attachEvent
+    
+    # IE method.
+    obj.attachEvent "on" + evt, handler
+  else
+    
+    # Old school method.
+    obj["on" + evt] = handler
+  return
+if window.FileReader
+  drop = undefined
+  addEventHandler window, "load", ->
+    cancel = (e) ->
+      e.preventDefault()  if e.preventDefault
+      false
+    status = document.getElementById("upload-status")
+    drop = document.getElementById("upload-area")
+    list = document.getElementById("upload-list")
+    addEventHandler drop, "dragover", cancel
+    addEventHandler drop, "dragenter", cancel
+    addEventHandler drop, "drop", (e) ->
+      e = e or window.event
+      e.preventDefault()  if e.preventDefault
+      dt = e.dataTransfer
+      files = dt.files
+      i = 0
+
+      while i < files.length
+        file = files[i]
+        reader = new FileReader()
+        reader.readAsDataURL file
+        addEventHandler reader, "loadend", ((e, file) ->
+          create_img_html(@result, drop)
+          #bin = @result
+          #newFile = document.createElement("div")
+          list.innerHTML += '<br/>Loaded file ' + file.name + " of size " + file.size + " B"
+          #list.appendChild newFile
+          fileNumber = $(drop).find('.thumbnail').length
+          status.innerHTML = (if fileNumber < files.length then "Loaded 100% of file " + fileNumber + " of " + files.length + "..." else "Done loading. processed " + fileNumber + " files.")
+          #img = document.createElement("img")
+          #img.file = file
+          #img.src = bin
+          #list.appendChild img
+          return
+        ).bindToEventHandler(file)
+        i++
+      false
+
+    Function::bindToEventHandler = bindToEventHandler = ->
+      handler = this
+      boundParameters = Array::slice.call(arguments)
+      (e) ->
+        e = e or window.event
+        boundParameters.unshift e
+        handler.apply this, boundParameters
+        return
+
+    return
+
+else
+  document.getElementById("status").innerHTML = "Your browser does not support the HTML5 FileReader."
