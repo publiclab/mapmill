@@ -7,6 +7,3 @@ class Site < ActiveRecord::Base
 end
 
 
-class Image < ActiveRecord::Base
-  belongs_to :site
-end

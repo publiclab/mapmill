@@ -1,36 +1,15 @@
 <div class="col-md-6 sites_overview">
  <h2>Sites</h2>
-  <div class="site_list">
-  <% @sites.each do |site| %>
- 
-    <div class="site_info"> 
-      <div class="img_row">
-     <% if false %>
-      <% site.images.each do |img| %>
-    
-          <div class="site_img">
-            <!-- show image -->
-          </div>
-      <% end %>
-     <% end %>
-      </div>
-      <div class="site_details">
-        <div class="site_name"><% site.name %></div>
-          <% if false %>
-        <div class="site_img_num"><% site.images.count %></div>
-          <% end %>
-      </div>
-    </div>
-
-  <% end %>
-  </div>
+  <%= render 'sites/list' %>
 </div>
 
 <div class="col-md-6 upload_images">
   <% if logged_in? %>
     <input type="hidden" id="logged_in" value="1"/>
   <% end %>
-
+  <div class="section_title">
+    To upload new images for a new site, start here:
+  </div>
   <%= render 'sites/form' %>
 
 </div>

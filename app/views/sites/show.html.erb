@@ -1,0 +1,22 @@
+<h1>Site details</h1>
+<div class="site_information">
+<h2><%= @site.name %>
+</div>
+
+<div class="alert alert-info" role="alert">
+    Use arrow keys, j/k, 1,2,3
+</div>
+
+<div class="site_details">
+  <% if false %>
+  <% @site.images.each do |img| %>
+    <div class="col-sm-6 col-md-3">
+      <div class="thumbnail">
+        <img src="<%= img %>" alt="">
+      </div>
+      <div class="image_controls">
+      </div>
+    </div> 
+  <% end %>
+  <% end %>
+</div>

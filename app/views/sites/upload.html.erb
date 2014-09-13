@@ -1,16 +1,68 @@
 <h2> Upload Page</h2>
-<div class="upload_section">
-  <div id="upload-status">Drag and drop the files you want to upload</div>
-  <div id="upload-area">
-  <% if false %>
-  <%= s3_uploader_form callback_url: sites_path, 
-      callback_param: "model[image_url]", 
-      id: "s3-uploader" do %>
-    <%= file_field_tag :file, multiple: true %>
-  <% end %>
-  <% end %>
+<div style="display:none" id="s3-data" data="<%= @s3_post_data %>"></div>
+<div class="row">
+ <div class="col-md-10 col-sm-6">
+  <div class="upload_section">
+    <div id="upload-status">Drag and drop the files you want to upload...
+    </div>
+    <div id="upload-area">
+      <div class="row">
+    <% if false %>
+    <%= s3_uploader_form callback_url: sites_path, 
+        callback_param: "model[image_url]", 
+        id: "s3-uploader" do %>
+      <%= file_field_tag :file, multiple: true %>
+    <% end %>
+    <% end %>
+      </div>
+    </div>
+    
+    <div class="panel panel-default upload-actions">
+      <form id="fileupload" action="<%= @s3_direct_post.url %>" method="POST" enctype="multipart/form-data">
+
+        <div class="subpanel">
+          <label>Only upload unblurred top 10%</label>
+          <input id="upload_unblurred_only" type="checkbox" name="upload_unblurred_only"/>
+        </div>
+
+        <div class="row fileupload-buttonbar">
+          <div class="col-lg-7">
+            <!-- The fileinput-button span is used to style the file input field as button -->
+            <span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Add files...</span>
+                <!-- The file input field used as target for the file upload widget -->
+                <input type="file" name="files[]" multiple>
+            </span>
+            <button type="submit" class="btn btn-primary start">
+                            <i class="glyphicon glyphicon-upload"></i>
+                            <span>Start upload</span>
+                        </button>
+            <button type="reset" class="btn btn-warning cancel">
+                            <i class="glyphicon glyphicon-ban-circle"></i>
+                            <span>Cancel upload</span>
+                        </button>
+            <button type="button" class="btn btn-danger delete">
+                            <i class="glyphicon glyphicon-trash"></i>
+                            <span>Delete</span>
+                        </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+
+    <br>
+    <br>
+    <!-- The global progress bar -->
+    <div id="progress" class="progress">
+        <div class="progress-bar progress-bar-success"></div>
+    </div>
+    <!-- The container for the uploaded files -->
+    <div id="files" class="files"></div>
+
   </div>
-  <div id="upload-list"></div>
 
 
 <script id="template-upload" type="text/x-tmpl">
@@ -19,5 +71,8 @@
   <div class="progress"><div class="bar" style="width: 0%"></div></div>
 </div>
 </script>
-
+  </div>
+ <div id="upload-list" class="col-md-2 col-sm-6 status-messsages">
+ </div>
+  
 </div>

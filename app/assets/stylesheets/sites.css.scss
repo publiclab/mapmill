@@ -7,3 +7,23 @@
   min-height: 400px;
   border: 1px dashed #428bca;
 }
+
+.selected_img {
+  border: 8px solid #428bca !important;
+}
+
+#upload_selected {
+  width: 100%;
+  margin-top: 20px;
+}
+
+.upload-actions {
+  margin-top: 20px;
+  padding: 20px;
+}
+
+.subpanel {
+  padding: 10px 10px 10px 0;
+  margin-bottom: 20px;
+}
+  

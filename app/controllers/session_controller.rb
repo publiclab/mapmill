@@ -1,13 +1,20 @@
 class SessionController < ApplicationController
 
   @@openid_url_base  = "http://publiclab.org/people/"
-
+  @@openid_url_suffix = "/identity"
 
   def login_openid
     open_id = params[:open_id]
-    #openid_url = @@openid_url_base  + open
     openid_url = URI.decode(open_id)
-    openid_authentication(openid_url)
+    #possibly user is providing the whole URL
+    if openid_url.include? "publiclab"
+      if openid_url.include? "http"
+        url = openid_url
+    else 
+      url = @@openid_url_base + openid_url + @@openid_url_suffix
+    end
+
+    openid_authentication(url)
   end
 
 #  protected

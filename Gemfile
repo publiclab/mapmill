@@ -17,10 +17,6 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'rails-assets-angular'
 gem 'rails-assets-angular-bootstrap'
 gem 'rails-assets-leaflet'
-
-gem 'ruby-openid'
-gem 'open_id_authentication'
-
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -32,8 +28,6 @@ gem 'sdoc', '~> 0.4.0',          group: :doc
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
-
-gem 's3_direct_upload'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -47,3 +41,13 @@ gem 's3_direct_upload'
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
+###########################
+#MY ADDITIONS
+##########################
+
+#gem 's3_direct_upload'
+
+gem 'ruby-openid'
+gem 'open_id_authentication'
+gem 'aws-sdk'
+gem 'jquery.fileupload-rails'

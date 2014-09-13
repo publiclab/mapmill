@@ -21,12 +21,23 @@ class SitesController < ApplicationController
   end 
 
 
-  def upload
-
+  def show
+    @site= Site.find(params[:id])
   end
 
-  private
+  def sites
+    @sites = Site.all
+  end
+
+
+  def upload
+    @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
+    @s3_post_data = {"data-url" => @s3_direct_post.url, "data-fields" => @s3_direct_post.fields.to_json.html_safe, "data-host" => @s3_direct_post.url.host}
+  end
+
+  private#
   def nonce
     return rand(10 ** 30).to_s.rjust(30,'0')
   end 
+
 end

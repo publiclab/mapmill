@@ -2,12 +2,27 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
+$(document).ready ->
+  $('body').on('keypress keyup', '#open_id_username', ->
+    val = $(this).val()
+    setTimeout (-> 
+        $('#open_id_part_username').text(val)
+        return
+    ), 0
+    return
+  )
+ 
 $ ->
   validate_open_id = () ->
     if $('#open_id_username').val().length > 0
       return true
     else
       return false
+
+  $('.datepicker').datepicker({
+      clearBtn: true,
+      todayBtn: "linked" 
+  })
 
 
   $('#login_via_open_id_btn').click( ->
@@ -18,7 +33,7 @@ $ ->
           #
           # @required String|Element
           #/
-          message: '<div class="alert alert-warning">Note: Only <a href="http://publiclab.org">Publiclab</a> is currently supported as OpenID provider!</div><div class="alert alert-info">Please enter your OpenID endpoint, you will then be redirected to publiclab.org to complete the login procedure</div><div class="input-group" id="open_id_input_group"><span class="input-group-addon glyphicon glyphicon-user input-desc">&nbsp;OpenID</span><input id="open_id_username" type="text" class="form-control" placeholder="Username"></div>'
+          message: '<div class="alert alert-warning">Note: Only <a href="http://publiclab.org">Publiclab</a> is currently supported as OpenID provider!</div><div class="alert alert-info">Please enter your OpenID endpoint, you will then be redirected to publiclab.org to complete the login procedure</div><div class="input-group" id="open_id_input_group"><span class="input-group-addon glyphicon glyphicon-user input-desc">&nbsp;OpenID</span><input id="open_id_username" type="text" class="form-control" placeholder="Username"></div><div class="open_id_endpoint"><label class="open_id_part">http://publiclab.org/people/</label><label class="open_id_part" id="open_id_part_username"></label><label class="open_id_part">/identity</label>'
           #
           # @optional String|Element
           # adds a header to the dialog and places this text in an h4

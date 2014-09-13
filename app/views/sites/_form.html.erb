@@ -1,16 +1,19 @@
 <%= form_for :site, url: sites_path, remote: true, :html => { :id => "site_form"} do |f| %>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
   <p>
-    <%= f.label :name %><br>
-    <%= f.text_field :name, :class => 'form-control' %>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+      <%= f.text_field :name, :class => 'form-control', :placeholder => "New site name" %>
+    </div>
   </p>
   <p>
-    <%= f.label :date %><br>
-    <%= f.text_field :date, :class => 'form-control'%>
+    <div class="input-group">
+      <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+      <%= f.text_field :date, :class => 'form-control datepicker', :placeholder => "Date" , :style => "padding-left: 12px !important"%>
+    </div>
   </p>
   <p>
-    <%= f.label :description %><br>
-    <%= f.text_area :description, :rows => 6, :class => 'form-control'%>
+    <%= f.text_area :description, :rows => 6, :class => 'form-control', :placeholder => "Description"%>
   </p>
 
 <% end %>
