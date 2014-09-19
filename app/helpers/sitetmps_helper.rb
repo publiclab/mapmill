@@ -1,0 +1,2 @@
+module SitetmpsHelper
+end

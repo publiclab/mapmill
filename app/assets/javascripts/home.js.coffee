@@ -21,6 +21,8 @@ $ ->
 
   $('.datepicker').datepicker({
       clearBtn: true,
+      autoclose: true,
+      forceIframeTransport: true,
       todayBtn: "linked" 
   })
 

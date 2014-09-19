@@ -3,7 +3,7 @@ class Site < ActiveRecord::Base
                     :length => { :minimum => 5 }
   validates :date, :presence => true
 
-  has_many :images
+  has_many :images, :inverse_of => :site
 end
 
 

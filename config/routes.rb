@@ -3,17 +3,15 @@ Rails.application.routes.draw do
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
-  resources :sites do
-    resources :images
-    collection do
-      get 'upload'
-    end
-  end
-
+  resources :sites 
+  resources :images
   resources :session
+
+  resources :signed_urls, only: :index
 
   get '/login' => 'session#login_openid'
   get '/logout' => 'session#logout'
+  get '/sites/:id/upload' => 'sites#upload'
 
   # You can have the root of your site routed with "root"
   root 'home#front'

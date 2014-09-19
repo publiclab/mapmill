@@ -10,6 +10,7 @@ class SessionController < ApplicationController
     if openid_url.include? "publiclab"
       if openid_url.include? "http"
         url = openid_url
+      end
     else 
       url = @@openid_url_base + openid_url + @@openid_url_suffix
     end
@@ -30,16 +31,24 @@ class SessionController < ApplicationController
           @user.email = registration['email']
           @user.identity_url = identity_url
           @user.save
-          nonce = params[:n]
-          if nonce? 
-            @tmp = Sitetmp.find_by nonce: nonce
-            @site = Site.new(tmp)
+        end
+        nonce = params[:n]
+        if nonce 
+          @tmp = Sitetmp.find_by nonce: nonce
+          if @tmp 
+            data = @tmp.attributes
+            data.delete("nonce")
+            @site = Site.new(data)
             @site.save
             @tmp.destroy
           end
         end
         @current_user = @user
-        successful_login
+        if @site
+          successful_login @site.id
+        else
+          successful_login nil 
+        end
       else
         failed_login result.message
         return false
@@ -52,10 +61,14 @@ class SessionController < ApplicationController
     redirect_to '/'
   end
 
-  def successful_login
+  def successful_login(id)
     session[:user_id] = @current_user.id
     flash[:notice] = "You have successfully logged in."
-    redirect_to '/sites/upload'
+    if id
+      redirect_to '/sites/' + id.to_s + '/upload'
+    else
+      redirect_to '/sites'
+    end
   end
 
   def logout

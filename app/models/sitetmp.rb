@@ -1,3 +1,2 @@
-class Sitetmp < Site
-  attr_accessor :nonce
+class Sitetmp < ActiveRecord::Base
 end

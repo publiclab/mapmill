@@ -4,31 +4,138 @@
 
 
 #Initialize the jQuery File Upload widget:
-$('#fileupload').fileupload({
-        #Uncomment the following to send cross-domain cookies:
-        xhrFields: {withCredentials: true},
-        url: $("s3-data").data("url"),
-})
+#$('#fileupload').fileupload({
+#        #Uncomment the following to send cross-domain cookies:
+#        xhrFields: {withCredentials: true},
+#        url: $("s3-data").data("url"),
+#        autoUpload: false,
+#        acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+#        maxFileSize: 9000000
+#})
 
 
 #Enable iframe cross-domain access via redirect option:
-$('#fileupload').fileupload(
-        'option',
-        'redirect',
-        window.location.href.replace(
-            /\/[^\/]*$/,
-            '/cors/result.html?%s'
-        )
-)
+#$('#fileupload').fileupload(
+#        'option',
+#        'redirect',
+#        window.location.href.replace(
+#            /\/[^\/]*$/,
+#            '/cors/result.html?%s'
+#        )
+#)
 
-$('#fileupload').fileupload('option', {
-            url: $("s3-data").data("url"),
-            #Enable image resizing, except for Android and Opera,
-            #which actually support image resizing, but fail to
-            #send Blob objects via XHR requests:
-            disableImageResize: /Android(?!.*Chrome)|Opera/
-                .test(window.navigator.userAgent),
-            maxFileSize: 5000000,
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
-        })
+#$('#fileupload').fileupload('option', {
+#            url: $("s3-data").data("url"),
 
+
+
+# 5 MB
+# Enable image resizing, except for Android and Opera,
+# which actually support image resizing, but fail to
+# send Blob objects via XHR requests:
+#$("#fileupload").fileupload(
+#  #url: url
+#  url: $("s3-data").data("url"),
+#  dataType: "json"
+#  autoUpload: false
+#  acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i
+#  maxFileSize: 5000000
+#  disableImageResize: /Android(?!.*Chrome)|Opera/.test(window.navigator.userAgent)
+#  previewMaxWidth: 100
+#  previewMaxHeight: 100
+#  previewCrop: true
+#)
+
+$(document).ready ->
+  $uploadList = $('#upload-list')
+  $url = $("#s3-data").data("url")
+
+  # trigger file upload browser on Browse click
+  $('#browse').click () ->
+    $('#fileupload').click()
+
+  $('#upload_selected').click ->
+    selected_files = $('.thumbnail.selected_img img')
+    filesList = []
+    for f in selected_files
+      filesList.push(f.src)  
+    #$.ajax
+    #      url: "/signed_urls"
+    #      type: 'GET'
+    #      dataType: 'json'
+    #      data: 
+    #        doc: 
+    #          title: 'test' #send the file name to the server so it can generate the key param
+    #      async: false
+    #      success: (data) -> 
+    #        $('#fileupload').fileupload('send', {formData: data, files: filesList})
+    jqXHR = $('#fileupload').fileupload('send', {files: filesList})
+      .success( (result, textStatus, jqXHR) ->
+          $('#upload-status').text("Success")
+      )
+      .error( (jqXHR, textStatus, errorThrown) ->
+          $('#upload-status').text("Error")
+      )
+      .complete( (result, textStatus, jqXHR) -> 
+          $('#upload-status').text("Complete")
+      )
+
+  
+  formatFileSize = (bytes) ->
+    return ""  if typeof bytes isnt "number"
+    return (bytes / 1000000000).toFixed(2) + " GB"  if bytes >= 1000000000
+    return (bytes / 1000000).toFixed(2) + " MB"  if bytes >= 1000000
+    (bytes / 1000).toFixed(2) + " KB"
+
+
+  $("#fileupload").fileupload({
+    xhrFields: {withCredentials: true},
+    url: $url,
+    autoUpload: false,
+    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+    maxFileSize: 9000000,
+    dataType: 'xml',
+    formData: '<%= @s3_direct_post.fields.to_json.html_safe %>', 
+    dropZone: $('#upload-area'),
+    add: (e, data) ->
+      for file in data.files
+        #console.log file
+        reader = new FileReader()
+        reader.onloadend = ->
+          tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><img src="" alt="Upload thumbnail"/><div class="caption"></div><span></span></div></div>')
+          # add image source
+          tpl.find("img").get(0).src = reader.result 
+          # add click handler to thumbnails so they can be selected
+          tpl.find('.thumbnail').click ->
+            $(this).toggleClass 'selected_img'
+            return
+          # Append the file name and file size
+          tpl.find(".caption").text(file.name).append "<i><br/>" + formatFileSize(file.size) + "</i>"
+          # Add the HTML to the UL element
+          data.context = tpl.appendTo($uploadList)
+          # Initialize the knob plugin
+          #tpl.find("input").knob()
+          # Listen for clicks on the cancel icon
+          #tpl.find("span").click ->
+          #  jqXHR.abort()  if tpl.hasClass("working")
+          #  tpl.fadeOut ->
+          #    tpl.remove()
+
+          #Automatically upload the file once it is added to the queue
+          #jqXHR = data.submit()
+        reader.readAsDataURL file
+
+    progress: (e, data) ->
+        # Calculate the completion percentage of the upload
+        progress = parseInt(data.loaded / data.total * 100, 10)
+        # Update the hidden input field and trigger a change
+        # so that the jQuery knob plugin knows to update the dial
+        data.context.find("input").val(progress).change()
+        data.context.removeClass "working"  if progress is 100
+
+    fail: (e, data) ->
+        data.context.addClass "error"
+  })
+
+  $(document).on "drop dragover", (e) ->
+      e.preventDefault()

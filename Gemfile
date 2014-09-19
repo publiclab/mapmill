@@ -50,4 +50,6 @@ gem 'spring',        group: :development
 gem 'ruby-openid'
 gem 'open_id_authentication'
 gem 'aws-sdk'
-gem 'jquery.fileupload-rails'
+gem 'haml-rails'
+gem 'jquery-fileupload-rails'
+
