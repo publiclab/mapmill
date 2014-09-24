@@ -15,14 +15,6 @@
 
 
 #Enable iframe cross-domain access via redirect option:
-#$('#fileupload').fileupload(
-#        'option',
-#        'redirect',
-#        window.location.href.replace(
-#            /\/[^\/]*$/,
-#            '/cors/result.html?%s'
-#        )
-#)
 
 #$('#fileupload').fileupload('option', {
 #            url: $("s3-data").data("url"),
@@ -49,6 +41,7 @@
 $(document).ready ->
   $uploadList = $('#upload-list')
   $url = $("#s3-data").data("url")
+  file_list = []
 
   # trigger file upload browser on Browse click
   $('#browse').click () ->
@@ -56,9 +49,18 @@ $(document).ready ->
 
   $('#upload_selected').click ->
     selected_files = $('.thumbnail.selected_img img')
-    filesList = []
-    for f in selected_files
-      filesList.push(f.src)  
+    selected_files.each( (i, elem) ->
+      jqXHR = $('#fileupload').fileupload('send', {files: })
+        .success( (result, textStatus, jqXHR) ->
+            $('#upload-status').text("Success")
+        )
+        .error( (jqXHR, textStatus, errorThrown) ->
+            $('#upload-status').text("Error")
+        )
+        .complete( (result, textStatus, jqXHR) -> 
+            $('#upload-status').text("Complete")
+        )
+    #  filesList.push(f.src)  
     #$.ajax
     #      url: "/signed_urls"
     #      type: 'GET'
@@ -69,16 +71,6 @@ $(document).ready ->
     #      async: false
     #      success: (data) -> 
     #        $('#fileupload').fileupload('send', {formData: data, files: filesList})
-    jqXHR = $('#fileupload').fileupload('send', {files: filesList})
-      .success( (result, textStatus, jqXHR) ->
-          $('#upload-status').text("Success")
-      )
-      .error( (jqXHR, textStatus, errorThrown) ->
-          $('#upload-status').text("Error")
-      )
-      .complete( (result, textStatus, jqXHR) -> 
-          $('#upload-status').text("Complete")
-      )
 
   
   formatFileSize = (bytes) ->
@@ -91,11 +83,14 @@ $(document).ready ->
   $("#fileupload").fileupload({
     xhrFields: {withCredentials: true},
     url: $url,
+    type: 'POST',
     autoUpload: false,
     acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
     maxFileSize: 9000000,
     dataType: 'xml',
-    formData: '<%= @s3_direct_post.fields.to_json.html_safe %>', 
+    #formData: $s3_post_data, 
+    formData: $("#s3-data").data("fields"), 
+    paramName: 'file',
     dropZone: $('#upload-area'),
     add: (e, data) ->
       for file in data.files
@@ -112,7 +107,7 @@ $(document).ready ->
           # Append the file name and file size
           tpl.find(".caption").text(file.name).append "<i><br/>" + formatFileSize(file.size) + "</i>"
           # Add the HTML to the UL element
-          data.context = tpl.appendTo($uploadList)
+          file.context = tpl.appendTo($uploadList)
           # Initialize the knob plugin
           #tpl.find("input").knob()
           # Listen for clicks on the cancel icon
@@ -124,18 +119,66 @@ $(document).ready ->
           #Automatically upload the file once it is added to the queue
           #jqXHR = data.submit()
         reader.readAsDataURL file
+        file_list.push(file)
 
     progress: (e, data) ->
         # Calculate the completion percentage of the upload
         progress = parseInt(data.loaded / data.total * 100, 10)
+        $('#upload-status').text(progress)
         # Update the hidden input field and trigger a change
         # so that the jQuery knob plugin knows to update the dial
-        data.context.find("input").val(progress).change()
-        data.context.removeClass "working"  if progress is 100
+        #data.context.find("input").val(progress).change()
+        #data.context.removeClass "working"  if progress is 100
+
+   progressall: (e, data) -> 
+      progress = parseInt(data.loaded / data.total * 100, 10)
+      $("#progressbar").css('width', progress + '%')
+
 
     fail: (e, data) ->
-        data.context.addClass "error"
+        #$(data).addClass "error"
+        $('.alert').show()
+        #$('.alert').alert()
+
+    uploadTemplate: (o) ->
+        rows = $()
+        $.each o.files, (index, file) ->
+          row = $("<tr class=\"template-upload fade\">" + "<td><span class=\"preview\"></span></td>" + "<td><p class=\"name\"></p>" + "<div class=\"error\"></div>" + "</td>" + "<td><p class=\"size\"></p>" + "<div class=\"progress\"></div>" + "</td>" + "<td>" + ((if not index and not o.options.autoUpload then "<button class=\"start\" disabled>Start</button>" else "")) + ((if not index then "<button class=\"cancel\">Cancel</button>" else "")) + "</td>" + "</tr>")
+          row.find(".name").text file.name
+          row.find(".size").text o.formatFileSize(file.size)
+          row.find(".error").text file.error  if file.error
+          rows = rows.add(row)
+          return
+
+        rows
+
+      downloadTemplate: (o) ->
+        rows = $()
+        $.each o.files, (index, file) ->
+          row = $("<tr class=\"template-download fade\">" + "<td><span class=\"preview\"></span></td>" + "<td><p class=\"name\"></p>" + ((if file.error then "<div class=\"error\"></div>" else "")) + "</td>" + "<td><span class=\"size\"></span></td>" + "<td class=\"delete\"><button>Delete</button></td>" + "</tr>")
+          row.find(".size").text o.formatFileSize(file.size)
+          if file.error
+            row.find(".name").text file.name
+            row.find(".error").text file.error
+          else
+            row.find(".name").append $("<a></a>").text(file.name)
+            row.find(".preview").append $("<a></a>").append($("<img>").prop("src", file.thumbnailUrl))  if file.thumbnailUrl
+            row.find("a").attr("data-gallery", "").prop "href", file.url
+            row.find(".delete button").attr("data-type", file.delete_type).attr "data-url", file.delete_url
+          rows = rows.add(row)
+          return
+
+        rows
   })
+
+  #$('#fileupload').fileupload(
+  #      'option',
+  #      'redirect',
+  #      window.location.href.replace(
+  #          /\/[^\/]*$/,
+  #          '/cors/result.html?%s'
+  #      )
+  #)
 
   $(document).on "drop dragover", (e) ->
       e.preventDefault()

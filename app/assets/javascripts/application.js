@@ -10,10 +10,27 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-// require jquery
-// require jquery_ujs
 
-//= require jquery-fileupload/basic
+//= require jquery
+//  require jquery_ujs
+//= require jquery.ui.widget
+
+//= require jquery.iframe-transport
+//= require jquery.fileupload
+//=  require jquery.fileupload-ui
+//= require jquery.fileupload-process
+//= require jquery.fileupload-image
+//= require jquery.fileupload-audio
+//= require jquery.fileupload-video
+//= require jquery.fileupload-validate
+//=  require jquery.fileupload-jquery-ui
+//= require jquery.knob
+
+//= require bootstrap.min
+//= require bootbox.min 
+//= require bootstrap-datepicker
+ 
+// require jquery-fileupload
 
 //= require turbolinks
 //= require_tree .

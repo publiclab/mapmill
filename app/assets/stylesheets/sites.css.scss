@@ -41,6 +41,15 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
   min-height: 400px;
   border: 8px dashed #428bca;
   margin-bottom: 15px;
+  padding: 20px;
+}
+
+#upload-area:hover {
+  border: 8px dashed #0033CC;
+}
+
+.thumbnail {
+  border: 8px solid #CCC !important;
 }
 
 .selected_img {
@@ -65,4 +74,8 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 .thumbnail .caption {
   font-size: 10px;
   text-align: center;
+}
+
+.alert {
+  display: none;
 }

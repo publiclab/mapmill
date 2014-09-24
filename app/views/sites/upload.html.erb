@@ -1,6 +1,15 @@
+<div class="alert alert-danger" role="alert">Oooops - looks as something didn't go well...
+<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+  </div>
+
+
 <h2> Upload Page</h2>
 
-<div style="display:none" id="s3-data" data-url="<%= @s3_post_data[:url] %>"></div>
+<%= javascript_tag do %>
+  s3_post_data = <%= @s3_direct_post.fields.to_json.html_safe %> 
+<% end %>  
+
+<div style="display:none" id="s3-data" data-fields='<%= @s3_direct_post.fields.to_json.html_safe %>' data-url="<%= @s3_post_data[:url] %>"></div>
 
 <div class="row">
 
@@ -9,8 +18,9 @@
 
       <div id="upload-status">
       </div>
-
+<!--
       <input id="fileupload" multiple="" name="image[image]" type="file" style="display:none" />
+-->
 
       <div id="upload-area">
         Drag and drop the files you want to upload...  
@@ -24,9 +34,62 @@
 
     </div><!-- upload-section -->
   
+
+<form enctype="multipart/form-data" method="POST" id="fileupload">
+        <!-- Redirect browsers with JavaScript disabled to the origin page -->
+        <noscript>&lt;input type="hidden" name="redirect" value="http://localhost"&gt;</noscript>
+<div class="row fileupload-buttonbar">
+            <div class="col-lg-7">
+                <!-- The fileinput-button span is used to style the file input field as button -->
+                <span class="btn btn-success fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add files...</span>
+                    <input type="file" multiple="" name="files[]">
+                </span>
+                <button class="btn btn-primary start" type="submit">
+                    <i class="glyphicon glyphicon-upload"></i>
+                    <span>Start upload</span>
+                </button>
+                <button class="btn btn-warning cancel" type="reset">
+                    <i class="glyphicon glyphicon-ban-circle"></i>
+                    <span>Cancel upload</span>
+                </button>
+                <button class="btn btn-danger delete" type="button">
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <span>Delete</span>
+                </button>
+                <input type="checkbox" class="toggle">
+                <!-- The global file processing state -->
+                <span class="fileupload-process"></span>
+            </div>
+            <!-- The global progress state -->
+            <div class="col-lg-5 fileupload-progress fade">
+                <!-- The global progress bar -->
+                <div aria-valuemax="100" aria-valuemin="0" role="progressbar" class="progress progress-striped active">
+                    <div style="width:0%;" class="progress-bar progress-bar-success"></div>
+                </div>
+                <!-- The extended global progress state -->
+                <div class="progress-extended">&nbsp;</div>
+            </div>
+        </div>
+</form>
   </div><!-- col-md-10 -->
+<!--
+  <span class="btn btn-success fileinput-button">
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>Add files...</span>
+    <input id="fileupload" type="file" name="files[]" multiple>
+  </span>
+-->
 
   <button id="upload_selected" class="btn btn-success">Upload selected files</button>
+
+
+  <div id="progress" class="progress">
+    <div class="progress-bar progress-bar-success"></div>
+  </div>
+
+  <div id="files" class="files"></div>
 
   <div class="col-md-2 col-sm-6">
       <div id="upload-msg" class="col-md-2 col-sm-6 status-messsages"> </div>
