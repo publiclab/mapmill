@@ -11,7 +11,7 @@
  * file per style scope.
  *
  *= require jquery.fileupload
- *= require jquery.fileupload-ui.css
+ *= require jquery.fileupload-ui
 
  *= require_tree .
  *= require_self

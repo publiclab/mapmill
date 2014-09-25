@@ -56,11 +56,6 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
   border: 8px solid #428bca !important;
 }
 
-#upload_selected {
-  width: 100%;
-  margin-top: 20px;
-}
-
 .upload-actions {
   margin-top: 20px;
   padding: 20px;
@@ -76,6 +71,11 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
   text-align: center;
 }
 
-.alert {
+.knob-progress {
+  position: absolute;
+  width: 102px;
+  height: 100px;
+  background-color: #ccc;
+  opacity: 0.8;
   display: none;
 }
