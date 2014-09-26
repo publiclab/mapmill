@@ -4,8 +4,12 @@
 
 
 $(document).ready ->
+  $.ajaxSetup headers:
+    "X-CSRF-Token": $("meta[name=\"csrf-token\"]").attr("content")
+
   $uploadList = $('#upload-list')
   $url = $("#s3-data").data("url")
+  upload_btn = $('#upload_selected')
   file_list = []
 
   # trigger file upload browser on Browse click
@@ -31,6 +35,8 @@ $(document).ready ->
     paramName: 'file',
     dropZone: $('#upload-area'),
     add: (e, data) ->
+      if file_list.length > 0
+        upload_btn.prop('disabled', false);
       for file in data.files
         #console.log file
         reader = new FileReader()
@@ -45,9 +51,11 @@ $(document).ready ->
               idx = file_list.indexOf(file)
               if idx > -1
                 file_list.splice(idx, 1) 
+              $("#upload-msg").append('Image ' + file.name + " removed from upload queue<br/>")
             else
               $(this).addClass 'selected_img'
               file_list.push(file)
+              $("#upload-msg").append('Image ' + file.name + " added to upload queue<br/>")
               
             return
           # Append the file name and file size
@@ -79,55 +87,44 @@ $(document).ready ->
         data.context.find("input").val(progress).change()
         data.context.removeClass "working"  if progress is 100
 
-   progressall: (e, data) -> 
+    progressall: (e, data) -> 
       progress = parseInt(data.loaded / data.total * 100, 10)
       $(".progress-bar").css('width', progress + '%')
+      $(".progress-bar").attr('aria-valuenow', progress)
+      $(".progress-bar").text(progress + '%')
 
+    done: (e, data) -> 
+      #$(".progress-bar").text("Upload terminated!")
+      #upload_btn.prop('disabled', true);
+      $("#upload-msg").append('Image ' + data.files[0].name + " successfully uploaded<br/>")
+
+      #extract key and generate URL from response
+      site = $('#site_id').val()
+      key  = $(data.jqXHR.responseXML).find("Key").text()
+      post_data =
+        site_id: site 
+        url: '//' + $('#s3-data').data('host') + '/' + key
+
+      $.post("/sites/" + site + "/images",post_data, (success) ->
+        $("#upload-msg").append('<p style="color: green">Image ' + data.files[0].name + " successfully saved to site</p><br/>")
+        return
+      ).fail( (xhr, textStatus, errorThrown) ->
+        $("#upload-msg").append('<i style="color: red">Image ' + data.files[0].name + " failed to be associated to site! " + xhr.responseText + "</i><br/>")
+        return
+      )
+      #create hidden field
+      #var input = $("<input />", { type:'hidden', name: fileInput.attr('name'), value: url })
+      #form.append(input);
+
+    start: (e) ->
+      $(".progress-section").addClass('in')
 
     fail: (e, data) ->
-        #$(data).addClass "error"
-        $('.alert').show()
-        #$('.alert').alert()
+      $('.alert').show()
+      $(".progress-bar").css("background", "red")
+      $(".progress-bar").text("Upload failed!")
 
-    uploadTemplate: (o) ->
-        rows = $()
-        $.each o.files, (index, file) ->
-          row = $("<tr class=\"template-upload fade\">" + "<td><span class=\"preview\"></span></td>" + "<td><p class=\"name\"></p>" + "<div class=\"error\"></div>" + "</td>" + "<td><p class=\"size\"></p>" + "<div class=\"progress\"></div>" + "</td>" + "<td>" + ((if not index and not o.options.autoUpload then "<button class=\"start\" disabled>Start</button>" else "")) + ((if not index then "<button class=\"cancel\">Cancel</button>" else "")) + "</td>" + "</tr>")
-          row.find(".name").text file.name
-          row.find(".size").text o.formatFileSize(file.size)
-          row.find(".error").text file.error  if file.error
-          rows = rows.add(row)
-          return
-
-        rows
-
-      downloadTemplate: (o) ->
-        rows = $()
-        $.each o.files, (index, file) ->
-          row = $("<tr class=\"template-download fade\">" + "<td><span class=\"preview\"></span></td>" + "<td><p class=\"name\"></p>" + ((if file.error then "<div class=\"error\"></div>" else "")) + "</td>" + "<td><span class=\"size\"></span></td>" + "<td class=\"delete\"><button>Delete</button></td>" + "</tr>")
-          row.find(".size").text o.formatFileSize(file.size)
-          if file.error
-            row.find(".name").text file.name
-            row.find(".error").text file.error
-          else
-            row.find(".name").append $("<a></a>").text(file.name)
-            row.find(".preview").append $("<a></a>").append($("<img>").prop("src", file.thumbnailUrl))  if file.thumbnailUrl
-            row.find("a").attr("data-gallery", "").prop "href", file.url
-            row.find(".delete button").attr("data-type", file.delete_type).attr "data-url", file.delete_url
-          rows = rows.add(row)
-          return
-
-        rows
   })
-
-  #$('#fileupload').fileupload(
-  #      'option',
-  #      'redirect',
-  #      window.location.href.replace(
-  #          /\/[^\/]*$/,
-  #          '/cors/result.html?%s'
-  #      )
-  #)
 
   $(document).on "drop dragover", (e) ->
       e.preventDefault()

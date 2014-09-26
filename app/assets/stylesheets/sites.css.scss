@@ -36,6 +36,8 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 @media (min-width: $screen-md-min) {.thumbnail img { height:150px !important; }}
 @media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}
 
+@media (min-width: $screen-sm-min) {.thumbnail.small img { height:100px !important; }}
+
 #upload-area {
   width: 100%;
   min-height: 400px;
@@ -82,4 +84,12 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 
 .upload-buttons-section {
   margin-top: 15px;
+}
+
+.progress-area {
+  margin-top: 20px;
+}
+
+.status-messages {
+  font-size: 10px;
 }

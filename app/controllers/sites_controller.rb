@@ -7,9 +7,9 @@ class SitesController < ApplicationController
   def create
     user_id = session[:user_id] 
     if user_id 
-      params = site_params
-      params[:date] = Date.strptime(params[:date],'%m/%d/%Y') 
-      site = Site.new(params)
+      all_params = site_params
+      all_params[:date] = Date.strptime(all_params[:date],'%m/%d/%Y') 
+      site = Site.new(all_params)
       if site.valid?
         site.save
         redirect_to '/sites/' + site.id.to_s + '/upload'
@@ -37,7 +37,7 @@ class SitesController < ApplicationController
     @site= Site.find(params[:id])
   end
 
-  def sites
+  def index 
     @sites = Site.all
   end
 

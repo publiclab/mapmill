@@ -1,22 +1,19 @@
 
-class SitesController < ApplicationController
+class ImagesController < ApplicationController
 
   # POST /image
   # POST /images.json
   def create
-    @image = Image.new(params[:image])
-
+    @site = Site.find(params[:site_id])
+    @image = @site.images.create(image_params)
     respond_to do |format|
-      if @image.save
-        format.html { redirect_to @image, notice: 'Photo was successfully created.' }
-        format.json {
-          data = {id: @image.id, thumb: view_context.image_tag(@image.image.url(:thumb))}
-          render json: data, status: :created, location: @image
-        }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @image.errors, status: :unprocessable_entity }
-      end
+      format.js {render nothing: true}
     end
   end
+
+
+  private
+    def image_params
+      params.permit(:url, :thumbnail)
+    end
 end

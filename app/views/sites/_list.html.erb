@@ -3,22 +3,22 @@
   <% @sites.each do |site| %>
  
     <div class="site_info"> 
-      <div class="img_row">
-     <% if false %>
-      <% site.images.each do |img| %>
-    
-          <div class="site_img">
-            <!-- show image -->
+      <div class="row">
+      <% site.images.take(3).each do |img| %>
+          <div class="col-xs-6 col-sm-3 col-md-3">
+            <div class="thumbnail small">
+              <img src="<%= img.url %>" alt="">
+            </div>
           </div>
       <% end %>
-     <% end %>
       </div>
-      <div class="site_details">
-        <div class="site_name"><% site.name %></div>
-          <% if false %>
-        <div class="site_img_num"><% site.images.count %></div>
-          <% end %>
+      <div class="row">
+        <div class="site_details">
+          <div class="site_name"><a href="/sites/<%= site.id %>/"><%= site.name %></a></div>
+          <div class="site_img_num"><%= site.images.count %> images</div>
+        </div>
       </div>
+
     </div>
 
   <% end %>

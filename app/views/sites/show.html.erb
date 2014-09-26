@@ -1,6 +1,6 @@
 <h1>Site details</h1>
 <div class="site_information">
-<h2><%= @site.name %>
+<h2><%= @site.name %></h2>
 </div>
 
 <div class="alert alert-info" role="alert">
@@ -8,15 +8,15 @@
 </div>
 
 <div class="site_details">
-  <% if false %>
-  <% @site.images.each do |img| %>
-    <div class="col-sm-6 col-md-3">
-      <div class="thumbnail">
-        <img src="<%= img %>" alt="">
-      </div>
-      <div class="image_controls">
-      </div>
-    </div> 
-  <% end %>
-  <% end %>
+  <div class="row">
+        <% @site.images.each do |img| %>
+          <div class="col-xs-6 col-sm-3 col-md-3">
+            <div class="thumbnail">
+              <img src="<%= img.url %>" alt="">
+            </div>
+            <div class="image_controls">
+            </div>
+          </div> 
+        <% end %>
+  </div>
 </div>
