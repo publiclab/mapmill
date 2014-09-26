@@ -34,18 +34,18 @@ class SessionController < ApplicationController
         end
         nonce = params[:n]
         if nonce 
-          @tmp = Sitetmp.find_by nonce: nonce
-          if @tmp 
-            data = @tmp.attributes
+          tmp = Sitetmp.find_by nonce: nonce
+          if tmp 
+            data = tmp.attributes
             data.delete("nonce")
-            @site = Site.new(data)
-            @site.save
-            @tmp.destroy
+            site = Site.new(data)
+            site.save
+            tmp.destroy
           end
         end
         @current_user = @user
-        if @site
-          successful_login @site.id
+        if site
+          successful_login site.id
         else
           successful_login nil 
         end

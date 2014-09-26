@@ -12,29 +12,6 @@ $(document).ready ->
   $('#browse').click () ->
     $('#fileupload').click()
 
-  #$('#upload_selected').click ->
-  #  #selected_files = $('.thumbnail.selected_img img')
-  #  #selected_files.each( (i, elem) ->
-  #  $(file_list).each( (i, elem) ->
-  #    #elem_array = []
-  #    #elem_array[0] = elem.src
-  #    #blob = new Blob(elem_array)
-  #    blob_array = []
-  #    blob_array[0] = elem 
-  #    jqXHR = $('#fileupload').fileupload('send', {files: blob_array })
-  #      .success( (result, textStatus, jqXHR) ->
-  #          $('#upload-status').text("Success")
-  #      )
-  #      .error( (jqXHR, textStatus, errorThrown) ->
-  #          $('#upload-status').text("Error")
-  #      )
-  #      .complete( (result, textStatus, jqXHR) -> 
-  #          $('#upload-status').text("Complete")
-  #      )
-  #  )
-  #  #  filesList.push(f.src)  
-
-  
   formatFileSize = (bytes) ->
     return ""  if typeof bytes isnt "number"
     return (bytes / 1000000000).toFixed(2) + " GB"  if bytes >= 1000000000

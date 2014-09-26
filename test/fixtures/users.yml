@@ -1,9 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  nickname: MyString
-  email: MyString
+  username: Fabio
+  email: fabio.barone.co@gmail.com 
+  identity_url: http://www.mdeinteligente.co/identity/fabio 
 
 two:
-  nickname: MyString
-  email: MyString
+  username: Someone
+  email: someone@somewhere.com 
+  identity_url: http://www.mdeinteligente.co/identity/someone

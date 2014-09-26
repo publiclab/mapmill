@@ -7,15 +7,27 @@ class SitesController < ApplicationController
   def create
     user_id = session[:user_id] 
     if user_id 
-      @site = Site.new(site_params)
-      @site.save
-      redirect_to '/sites/' + @site.id + '/upload'
+      params = site_params
+      params[:date] = Date.strptime(params[:date],'%m/%d/%Y') 
+      site = Site.new(params)
+      if site.valid?
+        site.save
+        redirect_to '/sites/' + site.id.to_s + '/upload'
+      else
+        err = site.errors.messages
+        err_str = "\n"
+        err.each do |key, value|
+          err_str += "#{key}:#{value}\n"
+        end
+        flash[:error] = "Oooops - sorry, something went wrong while saving your new site: " + err_str
+        redirect_to '/'
+      end
     else 
       open_id = URI.encode(params[:open_id])
-      @tmp = Sitetmp.new(site_params)
-      @tmp.nonce = nonce
-      @tmp.save
-      to_url = '/login?n='  + @tmp.nonce + '&open_id=' + open_id
+      tmp = Sitetmp.new(site_params)
+      tmp.nonce = nonce
+      tmp.save
+      to_url = '/login?n='  + tmp.nonce + '&open_id=' + open_id
       redirect_to to_url 
     end
   end 
@@ -43,7 +55,7 @@ class SitesController < ApplicationController
   end 
 
   def site_params
-    params.require(:site).permit(:name, :date, :description)
+    params.require(:site).permit(:name,:date,:description)
   end
 
 end
