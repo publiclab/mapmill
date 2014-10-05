@@ -17,6 +17,10 @@
  *= require_self
  */
 
+a {
+  text-decoration: none !important;
+  color: #428BCA !important;
+}
 
 header {
   background-color: #1b1b1b;

@@ -49,11 +49,12 @@ $(document).ready ->
             canvas = document.createElement("canvas")
             canvas.width = img.width * scale
             canvas.height = img.height * scale
+            canvas.className = "canvas-thumbnail"
             
             canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
 
             #tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="knob-progress working"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><img src="" alt="Upload thumbnail"/><div class="caption"></div><span></span></div></div>')
-            tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="knob-progress working"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><div class="caption"></div><span></span></div></div>')
+            tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="caption"></div><div class="knob-outer"><div class="knob-progress working"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div><span></span></div></div>')
             # add image source
             #tpl.find("img").get(0).src = reader.result 
             tpl.find(".thumbnail").append(canvas)
@@ -66,11 +67,11 @@ $(document).ready ->
                 idx = file_list.indexOf(file)
                 if idx > -1
                   file_list.splice(idx, 1) 
-                $("#upload-msg").append('Image ' + file.name + " removed from upload queue<br/>")
+                $("#upload-msg").append('<p class="status-info">Image ' + file.name + " removed from upload queue</p>")
               else
                 $(this).addClass 'selected_img'
                 file_list.push(file)
-                $("#upload-msg").append('Image ' + file.name + " added to upload queue<br/>")
+                $("#upload-msg").append('<p class="status-info">Image ' + file.name + " added to upload queue</p>")
                 
               return
             # Append the file name and file size
@@ -80,18 +81,22 @@ $(document).ready ->
             # Initialize the knob plugin
             tpl.find("input").knob()
             # Listen for clicks on the cancel icon
-            #tpl.find("span").click ->
+            #tpl.find("input").click ->
             #  jqXHR.abort()  if tpl.hasClass("working")
             #  tpl.fadeOut ->
             #    tpl.remove()
 
-            #Automatically upload the file once it is added to the queue
-            #jqXHR = data.submit()
-
         reader.readAsDataURL file
         $('#upload_selected').on('click', () ->
-          data.submit()
+          if (file_list.indexOf(file) > -1)
+            jqXHR = data.submit()
         )
+
+        $('#cancel_upload').on('click', () ->
+          if jqXHR
+            jqXHR.abort() 
+            $("#upload-msg").append('<p class="status-error">Upload aborted by user!</p>')
+            
 
     progress: (e, data) ->
      if data.context
@@ -128,13 +133,13 @@ $(document).ready ->
             dataType: "json",
             data: put_data 
           }).done( (response) ->
-              $("#upload-msg").append('Thumbnail successfully associated to image ' + file.image_id  + "<br/>")
+              $("#upload-msg").append('<p class="status-info">Thumbnail successfully associated to image ' + file.image_id  + "</p>")
             ).fail( (response) ->
-              $("#upload-msg").append('Thumbnail failed to be associated to image ' + file.image_id  + "<br/>")
+              $("#upload-msg").append('<p class="status-error">Thumbnail failed to be associated to image ' + file.image_id  + "</p>")
             )
 
         else
-          $("#upload-msg").append('Image ' + file.name + " successfully uploaded<br/>")
+          $("#upload-msg").append('<p class="status-info">Image ' + file.name + " successfully uploaded</p>")
 
           #extract key and generate URL from response
           site = $('#site_id').val()
@@ -164,10 +169,10 @@ $(document).ready ->
               flist.push(blob)
               $("#fileupload").fileupload("send", {files: flist})
             )
-            $("#upload-msg").append('<p style="color: green">Image ' + file.name + " successfully saved to site</p><br/>")
+            $("#upload-msg").append('<p class="status-success">Image ' + file.name + " successfully saved to site</p></p>")
             return
           ).fail( (xhr, textStatus, errorThrown) ->
-            $("#upload-msg").append('<i style="color: red">Image ' + file.name + " failed to be associated to site! " + xhr.responseText + "</i><br/>")
+            $("#upload-msg").append('<p class="status-error"><i>Image ' + file.name + " failed to be associated to site! " + xhr.responseText + "</i></p>")
             console.log textStatus
             console.log errorThrown
             return
@@ -189,15 +194,3 @@ $(document).ready ->
   $(document).on "drop dragover", (e) ->
       e.preventDefault()
 
-getThumbnail = (original, scale) ->
-  img = new Image() 
-  img.src = original 
-  img.onload = () ->
-    canvas = document.createElement("canvas")
-    canvas.width = img.width * scale
-    canvas.height = img.height * scale
-    #canvas.width = $(this).width() 
-    #canvas.height = $(this).height() 
-    
-    canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
-    canvas

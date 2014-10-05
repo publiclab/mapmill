@@ -36,9 +36,22 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 @media (min-width: $screen-md-min) {.thumbnail img { height:150px !important; }}
 @media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}
 
-@media (min-width: $screen-sm-min) {.thumbnail canvas { height:100px !important; }}
-@media (min-width: $screen-md-min) {.thumbnail canvas { height:150px !important; }}
-@media (min-width: $screen-lg-min) {.thumbnail canvas { height:200px !important; width: 176px !important}}
+@media (min-width: $screen-sm-min) {
+  .thumbnail canvas.canvas-thumbnail { height:76px !important; width: 76px !important}
+  .knob-progress {width: 100px; height: 100px} 
+}
+
+@media (min-width: $screen-md-min) {
+  .thumbnail canvas.canvas-thumbnail { height:126px !important; width: 126px !important}
+  .knob-outer { padding: 13px;}
+  .knob-progress {width: 150px; height: 150px} 
+}
+
+@media (min-width: $screen-lg-min) {
+  .thumbnail canvas.canvas-thumbnail { height:176px !important; width: 176px !important}
+  .knob-outer { padding: 38px;}
+  .knob-progress {width: 200px; height: 200px} 
+}
 
 @media (min-width: $screen-sm-min) {.thumbnail.small img { height:100px !important; }}
 
@@ -77,10 +90,14 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
   text-align: center;
 }
 
-.knob-progress {
+.knob-outer {
   position: absolute;
-  width: 102px;
+}
+
+.knob-progress {
+  width: 100px;
   height: 100px;
+  position: absolute;
   background-color: #ccc;
   opacity: 0.8;
   display: none;
@@ -96,4 +113,15 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 
 .status-messages {
   font-size: 10px;
+}
+
+.status-info {
+}
+
+.status-success {
+  color: green;
+}
+
+.status-error {
+  color: red;
 }
