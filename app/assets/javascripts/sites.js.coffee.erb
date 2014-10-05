@@ -41,43 +41,60 @@ $(document).ready ->
         #console.log file
         reader = new FileReader()
         reader.onloadend = ->
-          tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="knob-progress working"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><img src="" alt="Upload thumbnail"/><div class="caption"></div><span></span></div></div>')
-          # add image source
-          tpl.find("img").get(0).src = reader.result 
-          # add click handler to thumbnails so they can be selected
-          tpl.find('.thumbnail').click ->
-            if $(this).hasClass 'selected_img'
-              $(this).removeClass 'selected_img'
-              idx = file_list.indexOf(file)
-              if idx > -1
-                file_list.splice(idx, 1) 
-              $("#upload-msg").append('Image ' + file.name + " removed from upload queue<br/>")
-            else
-              $(this).addClass 'selected_img'
-              file_list.push(file)
-              $("#upload-msg").append('Image ' + file.name + " added to upload queue<br/>")
-              
-            return
-          # Append the file name and file size
-          tpl.find(".caption").text(file.name).append "<i><br/>" + formatFileSize(file.size) + "</i>"
-          # Add the HTML to the UL element
-          data.context = tpl.appendTo($uploadList)
-          # Initialize the knob plugin
-          tpl.find("input").knob()
-          # Listen for clicks on the cancel icon
-          #tpl.find("span").click ->
-          #  jqXHR.abort()  if tpl.hasClass("working")
-          #  tpl.fadeOut ->
-          #    tpl.remove()
+          scale = 0.15
+          original = reader.result
+          img = new Image() 
+          img.src = original 
+          img.onload = () ->
+            canvas = document.createElement("canvas")
+            canvas.width = img.width * scale
+            canvas.height = img.height * scale
+            
+            canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
 
-          #Automatically upload the file once it is added to the queue
-          #jqXHR = data.submit()
+            #tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="knob-progress working"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><img src="" alt="Upload thumbnail"/><div class="caption"></div><span></span></div></div>')
+            tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="knob-progress working"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><div class="caption"></div><span></span></div></div>')
+            # add image source
+            #tpl.find("img").get(0).src = reader.result 
+            tpl.find(".thumbnail").append(canvas)
+            #file.thumbnail = canvas.toDataURL()
+            file.thumbnail = canvas
+            # add click handler to thumbnails so they can be selected
+            tpl.find('.thumbnail').click ->
+              if $(this).hasClass 'selected_img'
+                $(this).removeClass 'selected_img'
+                idx = file_list.indexOf(file)
+                if idx > -1
+                  file_list.splice(idx, 1) 
+                $("#upload-msg").append('Image ' + file.name + " removed from upload queue<br/>")
+              else
+                $(this).addClass 'selected_img'
+                file_list.push(file)
+                $("#upload-msg").append('Image ' + file.name + " added to upload queue<br/>")
+                
+              return
+            # Append the file name and file size
+            tpl.find(".caption").text(file.name).append "<i><br/>" + formatFileSize(file.size) + "</i>"
+            # Add the HTML to the UL element
+            data.context = tpl.appendTo($uploadList)
+            # Initialize the knob plugin
+            tpl.find("input").knob()
+            # Listen for clicks on the cancel icon
+            #tpl.find("span").click ->
+            #  jqXHR.abort()  if tpl.hasClass("working")
+            #  tpl.fadeOut ->
+            #    tpl.remove()
+
+            #Automatically upload the file once it is added to the queue
+            #jqXHR = data.submit()
+
         reader.readAsDataURL file
         $('#upload_selected').on('click', () ->
           data.submit()
         )
 
     progress: (e, data) ->
+     if data.context
         # Calculate the completion percentage of the upload
         progress = parseInt(data.loaded / data.total * 100, 10)
         #$('#upload-status').text(progress)
@@ -96,25 +113,68 @@ $(document).ready ->
     done: (e, data) -> 
       #$(".progress-bar").text("Upload terminated!")
       #upload_btn.prop('disabled', true);
-      $("#upload-msg").append('Image ' + data.files[0].name + " successfully uploaded<br/>")
 
-      #extract key and generate URL from response
-      site = $('#site_id').val()
-      key  = $(data.jqXHR.responseXML).find("Key").text()
-      post_data =
-        site_id: site 
-        url: '//' + $('#s3-data').data('host') + '/' + key
 
-      $.post("/sites/" + site + "/images",post_data, (success) ->
-        $("#upload-msg").append('<p style="color: green">Image ' + data.files[0].name + " successfully saved to site</p><br/>")
-        return
-      ).fail( (xhr, textStatus, errorThrown) ->
-        $("#upload-msg").append('<i style="color: red">Image ' + data.files[0].name + " failed to be associated to site! " + xhr.responseText + "</i><br/>")
-        return
-      )
-      #create hidden field
-      #var input = $("<input />", { type:'hidden', name: fileInput.attr('name'), value: url })
-      #form.append(input);
+      for file in data.files
+
+        if file.isThumbnail
+          key  = $(data.jqXHR.responseXML).find("Key").text()
+          put_data =
+            thumbnail: '//' + $('#s3-data').data('host') + '/' + key
+ 
+          $.ajax({
+            url: "/images/" + file.image_id + '/set_thumbnail', 
+            type: 'PUT',
+            dataType: "json",
+            data: put_data 
+          }).done( (response) ->
+              $("#upload-msg").append('Thumbnail successfully associated to image ' + file.image_id  + "<br/>")
+            ).fail( (response) ->
+              $("#upload-msg").append('Thumbnail failed to be associated to image ' + file.image_id  + "<br/>")
+            )
+
+        else
+          $("#upload-msg").append('Image ' + file.name + " successfully uploaded<br/>")
+
+          #extract key and generate URL from response
+          site = $('#site_id').val()
+          key  = $(data.jqXHR.responseXML).find("Key").text()
+          post_data =
+            site_id: site 
+            url: '//' + $('#s3-data').data('host') + '/' + key
+
+          $.ajax({
+            url: "/sites/" + site + "/images", 
+            type: 'POST',
+            dataType: "json",
+            data: post_data
+          }).done( (response) ->
+            #img = new Image()
+            #img.src = file.thumbnail.toDataURL('image/png')
+            #arr = []
+            #arr.push(img)
+            #thumb = new Blob(arr)
+            file.thumbnail.toBlob( (blob) ->
+              blob.isThumbnail = true
+              last = file.name.lastIndexOf('.')
+              ext  = file.name.substr(last)
+              blob.name = file.name.substr(0, last) + '_thumb' + ext
+              blob.image_id = response.id
+              flist = []
+              flist.push(blob)
+              $("#fileupload").fileupload("send", {files: flist})
+            )
+            $("#upload-msg").append('<p style="color: green">Image ' + file.name + " successfully saved to site</p><br/>")
+            return
+          ).fail( (xhr, textStatus, errorThrown) ->
+            $("#upload-msg").append('<i style="color: red">Image ' + file.name + " failed to be associated to site! " + xhr.responseText + "</i><br/>")
+            console.log textStatus
+            console.log errorThrown
+            return
+          )
+          #create hidden field
+          #var input = $("<input />", { type:'hidden', name: fileInput.attr('name'), value: url })
+          #form.append(input);
 
     start: (e) ->
       $(".progress-section").addClass('in')
@@ -128,3 +188,16 @@ $(document).ready ->
 
   $(document).on "drop dragover", (e) ->
       e.preventDefault()
+
+getThumbnail = (original, scale) ->
+  img = new Image() 
+  img.src = original 
+  img.onload = () ->
+    canvas = document.createElement("canvas")
+    canvas.width = img.width * scale
+    canvas.height = img.height * scale
+    #canvas.width = $(this).width() 
+    #canvas.height = $(this).height() 
+    
+    canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
+    canvas

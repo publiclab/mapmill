@@ -36,6 +36,10 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 @media (min-width: $screen-md-min) {.thumbnail img { height:150px !important; }}
 @media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}
 
+@media (min-width: $screen-sm-min) {.thumbnail canvas { height:100px !important; }}
+@media (min-width: $screen-md-min) {.thumbnail canvas { height:150px !important; }}
+@media (min-width: $screen-lg-min) {.thumbnail canvas { height:200px !important; width: 176px !important}}
+
 @media (min-width: $screen-sm-min) {.thumbnail.small img { height:100px !important; }}
 
 #upload-area {

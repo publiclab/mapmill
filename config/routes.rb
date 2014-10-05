@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get '/logout' => 'session#logout'
   get '/sites/:id/upload' => 'sites#upload'
 
+  put '/images/:id/set_thumbnail' => 'images#set_thumbnail'
+
   # You can have the root of your site routed with "root"
   root 'home#front'
 
