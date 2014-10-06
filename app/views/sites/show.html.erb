@@ -1,6 +1,8 @@
 <h1>Site details</h1>
 <div class="site_information">
-<h2><%= @site.name %></h2>
+<h2 style="display: inline-block; margin-right: 20px"><%= @site.name %></h2><div class="site_img_num"><%= @site.images.count %> images</div><button style="margin-left: 20px; padding: 10px; margin-bottom: 10px" id="upload_more" class="btn btn-primary">Upload more pictures for this site</button>
+          
+ <%= hidden_field_tag 'site_id', @site.id %>
 </div>
 
 <div class="alert alert-info" role="alert">
@@ -8,15 +10,88 @@
 </div>
 
 <div class="site_details">
-  <div class="row">
+  <div id="links" class="row">
         <% @site.images.each do |img| %>
           <div class="col-xs-6 col-sm-3 col-md-3">
             <div class="thumbnail">
-              <img src="<%= img.url %>" alt="">
+              <%= hidden_field_tag 'img_' + img.id.to_s , img.id %>
+              <a href="<%= img.url %>" title="" data-gallery>
+                <img src="<%= img.thumbnail %>" alt="">
+              </a>
             </div>
             <div class="image_controls">
-            </div>
-          </div> 
+              <div class="btn-group btn-group-justified">
+                <div class="btn-group">
+                  <button id="btn_good_<%= img.id %>" type="button" class="btn btn-success <% if img.good? %> assigned_quality <% end %>">
+                    <span class="glyphicon glyphicon-ok"></span> good 
+                  </button>
+                </div>
+                <div class="btn-group">
+                  <button id="btn_nok_<%= img.id %>" type="button" class="btn btn-warning <% if img.nok? %> assigned_quality <% end %>">
+                    <span class="glyphicon glyphicon-flag"></span> not ok
+                  </button>
+                </div>
+                <div class="btn-group">
+                  <button id="btn_bad_<%= img.id %>" type="button" class="btn btn-danger <% if img.bad? %> assigned_quality <% end %>">   
+                    <span class="glyphicon glyphicon-remove"></span> bad
+                  </button>
+                </div><!-- btn-group -->
+              </div><!-- btn-group-justified -->
+            </div><!-- image_controls -->
+          </div><!-- bootstrap grid cell --> 
         <% end %>
-  </div>
+  </div><!-- links row -->
+</div><!-- site_details -->
+
+<div id="blueimp-gallery" class="blueimp-gallery">
+    <!-- The container for the modal slides -->
+    <div class="slides"></div>
+    <!-- Controls for the borderless lightbox -->
+            <div class="image_controls">
+              <div class="btn-group btn-group-justified">
+                <div class="btn-group">
+                  <button id="btn_good" type="button" class="btn btn-success ">
+                    <span class="glyphicon glyphicon-ok"></span> good 
+                  </button>
+                </div>
+                <div class="btn-group">
+                  <button id="btn_nok" type="button" class="btn btn-warning">
+                    <span class="glyphicon glyphicon-flag"></span> not ok
+                  </button>
+                </div>
+                <div class="btn-group">
+                  <button id="btn_bad" type="button" class="btn btn-danger">   
+                    <span class="glyphicon glyphicon-remove"></span> bad
+                  </button>
+                </div><!-- btn-group -->
+              </div><!-- btn-group-justified -->
+            </div><!-- image_controls -->
+    <h3 class="title"></h3>
+    <a class="prev">‹</a>
+    <a class="next">›</a>
+    <a class="close">×</a>
+    <a class="play-pause"></a>
+    <ol class="indicator"></ol>
+    <!-- The modal dialog, which will be used to wrap the lightbox content -->
+    <div class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title"></h4>
+                </div>
+                <div class="modal-body next"></div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left prev">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                        Previous
+                    </button>
+                    <button type="button" class="btn btn-primary next">
+                        Next
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

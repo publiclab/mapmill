@@ -88,3 +88,36 @@ input[type=text] {
   font-size: 12px !important;
   color: #555;
 }
+
+.site_details .image_controls {
+  position: absolute;
+  top: 182px;
+  width: 235px;
+  margin-left: 12px;
+}
+
+.assigned_quality {
+  border: 1px solid black !important;
+  color: blue !important;
+  font-weight: bold;
+}
+
+.assigned_quality_single {
+  border: 10px solid black !important;
+  color: blue !important;
+  font-weight: bold;
+}
+
+/*
+blueimp-gallery options
+*/
+.blueimp-gallery > .image_controls {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  color: #fff;
+  display: none;
+}
+.blueimp-gallery-controls > .image_controls {
+  display: block;
+}

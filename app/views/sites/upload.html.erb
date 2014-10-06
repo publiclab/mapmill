@@ -3,7 +3,8 @@
   </div>
 
 
-<h2> Upload Page</h2>
+<h2 style="display: inline-block; margin-right: 20px"><%= @site.name %>: Upload Page</h2><div class="site_img_num"><%= @site.images.count %> images</div><a style="margin-left: 20px; padding: 10px; margin-bottom: 10px; color: white !important" class="btn btn-primary" href="/sites/<%= @site.id%>">List View of images</a>
+ 
 
 <div style="display:none" id="s3-data" data-host='<%= @s3_post_data[:host] %>' data-fields='<%= @s3_direct_post.fields.to_json.html_safe %>' data-url="<%= @s3_post_data[:url] %>"></div>
 <input type="hidden" id="site_id" value="<%= @site.id %>"/>

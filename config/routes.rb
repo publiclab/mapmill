@@ -16,7 +16,11 @@ Rails.application.routes.draw do
   get '/sites/:id/upload' => 'sites#upload'
 
   put '/images/:id/set_thumbnail' => 'images#set_thumbnail'
+  get '/images/:id/set_good' => 'images#set_good'
+  get '/images/:id/set_nok' => 'images#set_nok'
+  get '/images/:id/set_bad' => 'images#set_bad'
 
+  get '/images/:id' => 'images#show'
   # You can have the root of your site routed with "root"
   root 'home#front'
 

@@ -1,6 +1,6 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
-# You can use CoffeeScript in this file: http://coffeescript.org/
+# You can use CoffeeScript in this file: http:#coffeescript.org/
 
 
 $(document).ready ->
@@ -96,6 +96,7 @@ $(document).ready ->
           if jqXHR
             jqXHR.abort() 
             $("#upload-msg").append('<p class="status-error">Upload aborted by user!</p>')
+        )
             
 
     progress: (e, data) ->
@@ -125,7 +126,7 @@ $(document).ready ->
         if file.isThumbnail
           key  = $(data.jqXHR.responseXML).find("Key").text()
           put_data =
-            thumbnail: '//' + $('#s3-data').data('host') + '/' + key
+            thumbnail: '#' + $('#s3-data').data('host') + '/' + key
  
           $.ajax({
             url: "/images/" + file.image_id + '/set_thumbnail', 
@@ -146,7 +147,7 @@ $(document).ready ->
           key  = $(data.jqXHR.responseXML).find("Key").text()
           post_data =
             site_id: site 
-            url: '//' + $('#s3-data').data('host') + '/' + key
+            url: '#' + $('#s3-data').data('host') + '/' + key
 
           $.ajax({
             url: "/sites/" + site + "/images", 
@@ -169,7 +170,7 @@ $(document).ready ->
               flist.push(blob)
               $("#fileupload").fileupload("send", {files: flist})
             )
-            $("#upload-msg").append('<p class="status-success">Image ' + file.name + " successfully saved to site</p></p>")
+            $("#upload-msg").append('<p class="status-success">Image ' + file.name + " successfully saved to site</p>")
             return
           ).fail( (xhr, textStatus, errorThrown) ->
             $("#upload-msg").append('<p class="status-error"><i>Image ' + file.name + " failed to be associated to site! " + xhr.responseText + "</i></p>")
@@ -194,3 +195,86 @@ $(document).ready ->
   $(document).on "drop dragover", (e) ->
       e.preventDefault()
 
+  $('.image_controls .btn-success').click () ->
+    btn       = $(this)
+    id        = $(this).attr('id')
+    #index 9 is after id 'btn_good_'
+    image_id  = id.substr(9)
+    set_quality(btn, image_id, 'set_good')
+  
+  $('.image_controls .btn-warning').click () ->
+    btn       = $(this)
+    id        = $(this).attr('id')
+    #index 8 is after id 'btn_nok_'
+    image_id  = id.substr(8)
+    set_quality(btn, image_id, 'set_nok')
+  
+  $('.image_controls .btn-danger').click () ->
+    btn       = $(this)
+    id        = $(this).attr('id')
+    #index 8 is after id 'btn_bad_'
+    image_id  = id.substr(8)
+    set_quality(btn, image_id, 'set_bad')
+  
+    
+  set_quality = (btn, image_id, action) ->
+    $.ajax({
+      url: "/images/" + image_id + "/" + action,
+      type: "GET",
+    }).done( (response) ->
+      btn.parent().parent().find('.btn').each( (i, elem) ->
+        if $(this).hasClass('assigned_quality')
+          $(this).removeClass('assigned_quality')
+      )
+      btn.addClass("assigned_quality");  
+    )
+
+  current_img = 0
+  
+  $('#blueimp-gallery .image_controls .btn-success').click () ->
+    set_quality $(this), current_img, 'set_good'
+
+  $('#blueimp-gallery .image_controls .btn-warning').click () ->
+    set_quality $(this), current_img, 'set_nok'
+
+  $('#blueimp-gallery .image_controls .btn-danger').click () ->
+    set_quality $(this), current_img, 'set_bad'
+
+  $('#blueimp-gallery')
+    .on('open', (event) -> 
+        #Gallery open event handler
+    )
+    .on('opened', (event) ->
+        # Gallery opened event handler
+    )
+    .on('slide', (event, index, slide) ->
+        current_img = $('.site_details input[type=hidden]').eq(index).val()
+        $.get '/images/' + current_img, ((img) ->
+          $('#blueimp-gallery .image_controls .btn').each( (i, elem) ->
+            if $(this).hasClass('assigned_quality_single')
+              $(this).removeClass('assigned_quality_single')
+          )
+          if img.quality == 'good'
+            $('#blueimp-gallery .image_controls .btn-success').addClass('assigned_quality_single')
+          else if img.quality == 'nok'
+            $('#blueimp-gallery .image_controls .btn-warning').addClass('assigned_quality_single')
+          else if img.quality == 'bad'
+            $('#blueimp-gallery .image_controls .btn-danger').addClass('assigned_quality_single')
+        ), "json"
+        # Gallery slide event handler
+    )
+    .on('slideend', (event, index, slide) -> 
+        # Gallery slideend event handler
+    )
+    .on('slidecomplete', (event, index, slide) ->
+        # Gallery slidecomplete event handler
+    )
+    .on('close', (event) ->
+        # Gallery close event handler
+    )
+    .on('closed', (event) ->
+        # Gallery closed event handler
+    )
+
+  $('#upload_more').click () ->
+    window.location.href = '/sites/' + $('#site_id').val() + "/upload"
