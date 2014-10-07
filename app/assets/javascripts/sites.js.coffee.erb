@@ -38,6 +38,9 @@ $(document).ready ->
       if file_list.length > 0
         upload_btn.prop('disabled', false);
       for file in data.files
+        tmp_tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="caption"></div></div>')
+        tmp_tpl.find('.thumbnail').html('<img src="<%= asset_path('loading.gif') %>" />')
+        $uploadList.append(tmp_tpl)
         #console.log file
         reader = new FileReader()
         reader.onloadend = ->
@@ -46,6 +49,7 @@ $(document).ready ->
           img = new Image() 
           img.src = original 
           img.onload = () ->
+            tmp_tpl.remove()
             canvas = document.createElement("canvas")
             canvas.width = img.width * scale
             canvas.height = img.height * scale
