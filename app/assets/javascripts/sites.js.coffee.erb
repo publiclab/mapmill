@@ -92,6 +92,10 @@ $(document).ready ->
 
         reader.readAsDataURL file
         $('#upload_selected').on('click', () ->
+          if (file_list.length < 1)
+            $('#no-files').fadeIn()
+          else
+            $('#no-files').hide()
           if (file_list.indexOf(file) > -1)
             jqXHR = data.submit()
         )
@@ -190,7 +194,7 @@ $(document).ready ->
       $(".progress-section").addClass('in')
 
     fail: (e, data) ->
-      $('.alert').show()
+      $('#failure').show()
       $(".progress-bar").css("background", "red")
       $(".progress-bar").text("Upload failed!")
 

@@ -1,4 +1,4 @@
-<div class="alert alert-danger" role="alert" style="display:none">Oooops - looks as something didn't go well...
+<div id="failure" class="alert alert-danger" role="alert" style="display:none">Oooops - looks as something didn't go well...
 <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
   </div>
 
@@ -34,12 +34,17 @@
 <div class="row fileupload-buttonbar">
             <div class="col-lg-7">
                 <!-- The fileinput-button span is used to style the file input field as button -->
-                <span class="btn btn-success fileinput-button" style="width:100%">
+                <span class="btn btn-success fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>...or browse for images</span>
                     <input style="width: 100%" type="file" multiple="" name="files[]">
                 </span>
                 <br />
+
+                <div id="no-files" class="alert alert-warning" role="alert" style="display:none">Please do select some files to be uploaded!
+                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                </div>
+
                 <div class="upload-buttons-section">
                         <button id="upload_selected" class="btn btn-primary start" type="submit">
                             <i class="glyphicon glyphicon-upload"></i>
@@ -74,5 +79,4 @@
   </div>
 
 </div><!-- row -->
-<form id="thumbnails-fileupload" enctype="multipart/form-data" method="POST" style="display:none">
-</form>
+
