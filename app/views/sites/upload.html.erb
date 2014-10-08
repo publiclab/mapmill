@@ -28,10 +28,10 @@
     </div><!-- upload-section -->
   
 
-<form enctype="multipart/form-data" method="POST" id="fileupload">
+    <form enctype="multipart/form-data" method="POST" id="fileupload">
         <!-- Redirect browsers with JavaScript disabled to the origin page -->
         <noscript>&lt;input type="hidden" name="redirect" value="http://localhost"&gt;</noscript>
-<div class="row fileupload-buttonbar">
+        <div class="row fileupload-buttonbar">
             <div class="col-lg-7">
                 <!-- The fileinput-button span is used to style the file input field as button -->
                 <span class="btn btn-success fileinput-button">
@@ -54,7 +54,7 @@
                             <i class="glyphicon glyphicon-ban-circle"></i>
                             <span>Cancel upload</span>
                         </button>
-                        <button class="btn btn-danger delete" type="button">
+                        <button id="clear_files" class="btn btn-danger delete" type="button">
                             <i class="glyphicon glyphicon-trash"></i>
                             <span>Clear file list</span>
                         </button>
@@ -71,7 +71,7 @@
               </div>
             </div>
         </div>
-</form>
+    </form>
   </div><!-- col-md-10 -->
 
   <div class="col-md-2 col-sm-6">

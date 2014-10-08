@@ -35,8 +35,6 @@ $(document).ready ->
     paramName: 'file',
     dropZone: $('#upload-area'),
     add: (e, data) ->
-      if file_list.length > 0
-        upload_btn.prop('disabled', false);
       for file in data.files
         tmp_tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="caption"></div></div>')
         tmp_tpl.find('.thumbnail').html('<img src="<%= asset_path('loading.gif') %>" />')
@@ -57,11 +55,12 @@ $(document).ready ->
             
             canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
 
-            #tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="knob-progress working"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><img src="" alt="Upload thumbnail"/><div class="caption"></div><span></span></div></div>')
-            tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="caption"></div><div class="knob-outer"><div class="knob-progress working"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div><span></span></div></div>')
+            #tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="knob-progress"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><img src="" alt="Upload thumbnail"/><div class="caption"></div><span></span></div></div>')
+            tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="caption"></div><div class="abort_upload working"><span class="alert-warning glyphicon glyphicon-remove-circle"></span></div><div class="knob-outer"><div class="knob-progress"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div></div></div>')
             # add image source
             #tpl.find("img").get(0).src = reader.result 
             tpl.find(".thumbnail").append(canvas)
+            tpl.find(".abort_upload").hide()
             #file.thumbnail = canvas.toDataURL()
             file.thumbnail = canvas
             # add click handler to thumbnails so they can be selected
@@ -76,6 +75,10 @@ $(document).ready ->
                 $(this).addClass 'selected_img'
                 file_list.push(file)
                 $("#upload-msg").append('<p class="status-info">Image ' + file.name + " added to upload queue</p>")
+              
+              if file_list.length > 0
+                upload_btn.prop('disabled', false);
+                $('#cancel_files').prop('disabled', false);
                 
               return
             # Append the file name and file size
@@ -85,18 +88,23 @@ $(document).ready ->
             # Initialize the knob plugin
             tpl.find("input").knob()
             # Listen for clicks on the cancel icon
-            #tpl.find("input").click ->
-            #  jqXHR.abort()  if tpl.hasClass("working")
-            #  tpl.fadeOut ->
-            #    tpl.remove()
+            tpl.find(".abort_upload").click ->
+              if $(this).hasClass("working") 
+                jqXHR.abort()  
+                $("#upload-msg").append('<p class="status-warning">Upload of ' + file.name + ' aborted by user!</p>')
+                tpl.fadeOut ->
+                  tpl.remove()
 
         reader.readAsDataURL file
+        jqXHR = null
         $('#upload_selected').on('click', () ->
           if (file_list.length < 1)
             $('#no-files').fadeIn()
           else
             $('#no-files').hide()
           if (file_list.indexOf(file) > -1)
+            $('#cancel_files').prop('disabled', true)
+            $('.selected_img .abort_upload').css('visibility','visible')
             jqXHR = data.submit()
         )
 
@@ -106,6 +114,17 @@ $(document).ready ->
             $("#upload-msg").append('<p class="status-error">Upload aborted by user!</p>')
         )
             
+        $('#clear_files').on('click', () ->
+          $uploadList.children().each( (i, elem) ->
+            $(this).remove()
+          )
+          if $(".progress-bar").text().indexOf("failed!")
+            $(".progress-bar").text("")
+            $(".progress-bar").css("background", "green")
+          
+          file_list.length = 0
+        )
+
 
     progress: (e, data) ->
      if data.context
@@ -120,17 +139,16 @@ $(document).ready ->
 
     progressall: (e, data) -> 
       progress = parseInt(data.loaded / data.total * 100, 10)
+      $(".progress-bar").css("background", "green")
       $(".progress-bar").css('width', progress + '%')
       $(".progress-bar").attr('aria-valuenow', progress)
       $(".progress-bar").text(progress + '%')
 
     done: (e, data) -> 
-      #$(".progress-bar").text("Upload terminated!")
-      #upload_btn.prop('disabled', true);
-
+      #$("#upload-msg").append("<p class="status-success">Upload terminated!</p>")
+      upload_btn.prop('disabled', true);
 
       for file in data.files
-
         if file.isThumbnail
           key  = $(data.jqXHR.responseXML).find("Key").text()
           put_data =
@@ -142,9 +160,9 @@ $(document).ready ->
             dataType: "json",
             data: put_data 
           }).done( (response) ->
-              $("#upload-msg").append('<p class="status-info">Thumbnail successfully associated to image ' + file.image_id  + "</p>")
+              $("#upload-msg").append('<p class="status-info">Thumbnail successfully associated to image ' + file.original + "</p>")
             ).fail( (response) ->
-              $("#upload-msg").append('<p class="status-error">Thumbnail failed to be associated to image ' + file.image_id  + "</p>")
+              $("#upload-msg").append('<p class="status-error">Thumbnail failed to be associated to image ' + file.original + "</p>")
             )
 
         else
@@ -163,17 +181,13 @@ $(document).ready ->
             dataType: "json",
             data: post_data
           }).done( (response) ->
-            #img = new Image()
-            #img.src = file.thumbnail.toDataURL('image/png')
-            #arr = []
-            #arr.push(img)
-            #thumb = new Blob(arr)
             file.thumbnail.toBlob( (blob) ->
               blob.isThumbnail = true
               last = file.name.lastIndexOf('.')
               ext  = file.name.substr(last)
               blob.name = file.name.substr(0, last) + '_thumb' + ext
               blob.image_id = response.id
+              blob.original = file.name
               flist = []
               flist.push(blob)
               $("#fileupload").fileupload("send", {files: flist})
@@ -182,23 +196,28 @@ $(document).ready ->
             return
           ).fail( (xhr, textStatus, errorThrown) ->
             $("#upload-msg").append('<p class="status-error"><i>Image ' + file.name + " failed to be associated to site! " + xhr.responseText + "</i></p>")
-            console.log textStatus
-            console.log errorThrown
             return
           )
+          
+        data.context.find('.thumbnail').fadeOut(2000, "swing") ->
+           $(this).remove()    
           #create hidden field
           #var input = $("<input />", { type:'hidden', name: fileInput.attr('name'), value: url })
-          #form.append(input);
 
     start: (e) ->
       $(".progress-section").addClass('in')
 
     fail: (e, data) ->
-      $('#failure').show()
-      $(".progress-bar").css("background", "red")
-      $(".progress-bar").text("Upload failed!")
+      if (data.errorThrown == "abort")
+        $("#upload-msg").append('<p class="status-warning">Complete upload aborted by user.</p>')
+        $(".progress-bar").css("background", "#F0AD4E")
+      else 
+        $('#failure').show()
+        $(".progress-bar").css("background", "red")
+        $(".progress-bar").text("Upload failed!")
 
   })
+
 
   $(document).on "drop dragover", (e) ->
       e.preventDefault()

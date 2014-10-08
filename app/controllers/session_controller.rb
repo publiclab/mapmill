@@ -1,7 +1,14 @@
+require 'uri'
+
 class SessionController < ApplicationController
 
   @@openid_url_base  = "http://publiclab.org/people/"
   @@openid_url_suffix = "/identity"
+
+
+  def show_login
+    
+  end
 
   def login_openid
     open_id = params[:open_id]
@@ -21,7 +28,7 @@ class SessionController < ApplicationController
 #  protected
 
   def openid_authentication(openid_url)
-    puts openid_url
+    #puts openid_url
     authenticate_with_open_id(openid_url, :required => [:nickname, :email]) do |result, identity_url, registration|
       if result.successful?
         @user = User.find_by_identity_url(identity_url)

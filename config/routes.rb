@@ -11,18 +11,20 @@ Rails.application.routes.draw do
 
   resources :signed_urls, only: :index
 
-  get '/login' => 'session#login_openid'
-  get '/logout' => 'session#logout'
-  get '/sites/:id/upload' => 'sites#upload'
+  get   '/login' => 'session#login_openid'
+  get   '/show_login' => 'session#show_login'
+  get   '/logout' => 'session#logout'
 
-  put '/images/:id/set_thumbnail' => 'images#set_thumbnail'
-  get '/images/:id/set_good' => 'images#set_good'
-  get '/images/:id/set_nok' => 'images#set_nok'
-  get '/images/:id/set_bad' => 'images#set_bad'
+  get   '/sites/:id/upload' => 'sites#upload'
 
-  get '/images/:id' => 'images#show'
+  put   '/images/:id/set_thumbnail' => 'images#set_thumbnail'
+  get   '/images/:id/set_good' => 'images#set_good'
+  get   '/images/:id/set_nok' => 'images#set_nok'
+  get   '/images/:id/set_bad' => 'images#set_bad'
+
+  get   '/images/:id' => 'images#show'
   # You can have the root of your site routed with "root"
-  root 'home#front'
+  root  'home#front'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

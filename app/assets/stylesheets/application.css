@@ -108,6 +108,16 @@ input[type=text] {
   font-weight: bold;
 }
 
+.action_wrapper {
+  position: relative;
+  height: 100px;
+}
+
+.header_action {
+  position: absolute;
+  bottom: 0;
+}
+
 /*
 blueimp-gallery options
 */

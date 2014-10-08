@@ -34,7 +34,13 @@
         </div>
       </div>
 
-      <div class="col-md-5 col-sm-5 session_info">
+      <div class="col-md-2 col-sm-2">
+        <div class="action_wrapper">
+          <%= link_to("Browse sites", sites_path, class: "header_action btn btn-default") %>
+        </div>
+      </div>
+
+      <div class="col-md-3 col-sm-3 session_info">
       <% if @user %>
         <div class="user_info">Logged in as <%= @user.email %><a class="logout" href="/logout">Logout</a></div>
       <% end %>
@@ -54,6 +60,8 @@
   </div>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
+<!--
   <script src="js/bootstrap-image-gallery.min.js"></script>
+-->
 </body>
 </html>

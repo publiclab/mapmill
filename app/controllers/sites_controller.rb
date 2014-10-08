@@ -46,7 +46,6 @@ class SitesController < ApplicationController
     @site = Site.find(params[:id])
     @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
     @s3_post_data = {url: @s3_direct_post.url, fields: @s3_direct_post.fields.to_json.html_safe, host: @s3_direct_post.url.host}
-    #@s3_post_data = {url: "http://localhost:8088"}
   end
 
   private#

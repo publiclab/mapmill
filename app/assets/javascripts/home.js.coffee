@@ -3,7 +3,19 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).ready ->
+  validate_open_id = () ->
+    if $('#open_id_username').val().length > 0
+      return true
+    else
+      return false
+
   $('body').on('keypress keyup', '#open_id_username', ->
+    if $('#open_id_input_group').hasClass('has-error')
+      $('#open_id_input_group').removeClass('has-error')
+
+    if $('.alert-danger').is(':visible')
+      $('.alert-danger').hide()
+
     val = $(this).val()
     setTimeout (-> 
         $('#open_id_part_username').text(val)
@@ -13,11 +25,6 @@ $(document).ready ->
   )
  
 $ ->
-  validate_open_id = () ->
-    if $('#open_id_username').val().length > 0
-      return true
-    else
-      return false
 
   $('.datepicker').datepicker({
       clearBtn: true,

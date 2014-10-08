@@ -108,14 +108,20 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 }
 
 .progress-area {
-  margin-top: 20px;
+  margin-top: 48px;
 }
 
 .status-messages {
-  font-size: 10px;
+  background-color: #EEE;
+  padding: 3px;
+  height: 400px;
+  overflow-y: auto;
 }
 
-.status-info {
+.status-messages p {
+  font-size: 10px;
+  margin: 0px 0px 4px;
+  font-family: "Fixed, monospace"; 
 }
 
 .status-success {
@@ -125,3 +131,24 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 .status-error {
   color: red;
 }
+
+.status-warning {
+  color: #F0AD4E;
+}
+
+.abort_upload {
+    float:right;
+    margin-top:-42px;
+    cursor:pointer;
+    color: #fff;
+    #border: 1px solid #AEAEAE;
+    border-radius: 6px;
+    #background: #428bca;
+    font-size: 31px;
+    font-weight: bold;
+    display: inline-block !important;
+    line-height: 0px;
+    padding: 4px;       
+    visibility: hidden;
+}
+
