@@ -3,11 +3,6 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).ready ->
-  validate_open_id = () ->
-    if $('#open_id_username').val().length > 0
-      return true
-    else
-      return false
 
   $('body').on('keypress keyup', '#open_id_username', ->
     if $('#open_id_input_group').hasClass('has-error')
@@ -25,6 +20,11 @@ $(document).ready ->
   )
  
 $ ->
+  validate_open_id = () ->
+    if $('#open_id_username').val().length > 0
+      return true
+    else
+      return false
 
   $('.datepicker').datepicker({
       clearBtn: true,
