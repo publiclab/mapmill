@@ -36,7 +36,7 @@ $(document).ready ->
     dropZone: $('#upload-area'),
     add: (e, data) ->
       for file in data.files
-        tmp_tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="caption"></div></div>')
+        tmp_tpl = $('<div class="col-xs-3 col-sm-3 col-md-3"><div class="thumbnail"><div class="caption"></div></div>')
         tmp_tpl.find('.thumbnail').html('<img src="<%= asset_path('loading.gif') %>" />')
         $uploadList.append(tmp_tpl)
         #console.log file

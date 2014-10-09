@@ -31,24 +31,30 @@ $screen-xs-max:              ($screen-sm-min - 1) !default;
 $screen-sm-max:              ($screen-md-min - 1) !default;
 $screen-md-max:              ($screen-lg-min - 1) !default;
 
-
+/*
 @media (min-width: $screen-sm-min) {.thumbnail img { height:100px !important; }}
 @media (min-width: $screen-md-min) {.thumbnail img { height:150px !important; }}
 @media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}
+*/
+
+@media (min-width: $screen-xs-min) {
+  .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important}
+  .knob-progress {width: 100px; height: 100px} 
+}
 
 @media (min-width: $screen-sm-min) {
-  .thumbnail canvas.canvas-thumbnail { height:76px !important; width: 76px !important}
+  .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important}
   .knob-progress {width: 100px; height: 100px} 
 }
 
 @media (min-width: $screen-md-min) {
-  .thumbnail canvas.canvas-thumbnail { height:126px !important; width: 126px !important}
+  .thumbnail canvas.canvas-thumbnail { height:95px !important; width: 126px !important}
   .knob-outer { padding: 13px;}
   .knob-progress {width: 150px; height: 150px} 
 }
 
 @media (min-width: $screen-lg-min) {
-  .thumbnail canvas.canvas-thumbnail { height:176px !important; width: 176px !important}
+  .thumbnail canvas.canvas-thumbnail { height:132px !important; width: 176px !important}
   .knob-outer { padding: 38px;}
   .knob-progress {width: 200px; height: 200px} 
 }
@@ -58,13 +64,14 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 #upload-area {
   width: 100%;
   min-height: 400px;
-  border: 8px dashed #428bca;
+  border-radius: 20px;
+  border: 2px dashed #428bca;
   margin-bottom: 15px;
   padding: 20px;
 }
 
 #upload-area:hover {
-  border: 8px dashed #0033CC;
+  background-color: #eee;
 }
 
 .thumbnail {

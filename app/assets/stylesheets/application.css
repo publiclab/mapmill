@@ -63,7 +63,6 @@ input[type=text] {
 .user_info {
   font-size: 10px;
   bottom: 0;
-  right: 0;
   position: absolute;
 }
 
@@ -115,7 +114,8 @@ input[type=text] {
 
 .header_action {
   position: absolute;
-  bottom: 0;
+  bottom: 35%;
+  color: #fff !important;
 }
 
 /*
