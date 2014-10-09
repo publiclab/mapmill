@@ -152,7 +152,7 @@ $(document).ready ->
         if file.isThumbnail
           key  = $(data.jqXHR.responseXML).find("Key").text()
           put_data =
-            thumbnail: '#' + $('#s3-data').data('host') + '/' + key
+            thumbnail: '#' + $('#s3-data').data('url') + key
  
           $.ajax({
             url: "/images/" + file.image_id + '/set_thumbnail', 
@@ -173,7 +173,7 @@ $(document).ready ->
           key  = $(data.jqXHR.responseXML).find("Key").text()
           post_data =
             site_id: site 
-            url: '#' + $('#s3-data').data('host') + '/' + key
+            url: '#' + $('#s3-data').data('url') + key
 
           $.ajax({
             url: "/sites/" + site + "/images", 
