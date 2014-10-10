@@ -51,5 +51,6 @@ gem 'ruby-openid'
 gem 'open_id_authentication'
 gem 'aws-sdk'
 gem 'haml-rails'
+gem 'bootstrap-addons-rails'
 #gem 'jquery-fileupload-rails'
 

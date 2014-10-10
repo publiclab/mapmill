@@ -12,6 +12,7 @@
  *
  *= require jquery.fileupload
  *= require jquery.fileupload-ui
+ *= bootstrap-addons-rails
 
  *= require_tree .
  *= require_self
@@ -121,13 +122,13 @@ input[type=text] {
 /*
 blueimp-gallery options
 */
-.blueimp-gallery > .image_controls {
+.blueimp-gallery > .detail_image_controls {
   position: absolute;
   bottom: 50px;
   width: 100%;
   color: #fff;
   display: none;
 }
-.blueimp-gallery-controls > .image_controls {
+.blueimp-gallery-controls > .detail_image_controls {
   display: block;
 }

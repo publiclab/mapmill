@@ -305,22 +305,25 @@ $(document).ready ->
       url: "/images/" + image_id + "/" + action,
       type: "GET",
     }).done( (response) ->
+      quality_class = 'assigned_quality'
+      if btn.hasClass 'detail_control'
+        quality_class = 'assigned_quality_single'
       btn.parent().parent().find('.btn').each( (i, elem) ->
-        if $(this).hasClass('assigned_quality')
-          $(this).removeClass('assigned_quality')
+        if $(this).hasClass(quality_class)
+          $(this).removeClass(quality_class)
       )
-      btn.addClass("assigned_quality");  
+      btn.addClass(quality_class);  
     )
 
   current_img = 0
   
-  $('#blueimp-gallery .image_controls .btn-success').click () ->
+  $('#blueimp-gallery .detail_image_controls .btn-success').click () ->
     set_quality $(this), current_img, 'set_good'
 
-  $('#blueimp-gallery .image_controls .btn-warning').click () ->
+  $('#blueimp-gallery .detail_image_controls .btn-warning').click () ->
     set_quality $(this), current_img, 'set_nok'
 
-  $('#blueimp-gallery .image_controls .btn-danger').click () ->
+  $('#blueimp-gallery .detail_image_controls .btn-danger').click () ->
     set_quality $(this), current_img, 'set_bad'
 
   $('#blueimp-gallery')
@@ -333,16 +336,16 @@ $(document).ready ->
     .on('slide', (event, index, slide) ->
         current_img = $('.site_details input[type=hidden]').eq(index).val()
         $.get '/images/' + current_img, ((img) ->
-          $('#blueimp-gallery .image_controls .btn').each( (i, elem) ->
+          $('#blueimp-gallery .detail_image_controls .btn').each( (i, elem) ->
             if $(this).hasClass('assigned_quality_single')
               $(this).removeClass('assigned_quality_single')
           )
           if img.quality == 'good'
-            $('#blueimp-gallery .image_controls .btn-success').addClass('assigned_quality_single')
+            $('#blueimp-gallery .detail_image_controls .btn-success').addClass('assigned_quality_single')
           else if img.quality == 'nok'
-            $('#blueimp-gallery .image_controls .btn-warning').addClass('assigned_quality_single')
+            $('#blueimp-gallery .detail_image_controls .btn-warning').addClass('assigned_quality_single')
           else if img.quality == 'bad'
-            $('#blueimp-gallery .image_controls .btn-danger').addClass('assigned_quality_single')
+            $('#blueimp-gallery .detail_image_controls .btn-danger').addClass('assigned_quality_single')
         ), "json"
         # Gallery slide event handler
     )
