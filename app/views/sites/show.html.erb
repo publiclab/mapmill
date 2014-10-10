@@ -9,14 +9,18 @@
     Use arrow keys, j/k, 1,2,3
 </div>
 
+<div id="select_first" class="alert alert-warning" role="alert" style="display: none">
+   You have tried to change the quality of an image without selecting one first! Please select an image
+</div>
+
 <div class="site_details">
   <div id="links" class="row">
         <% @site.images.each do |img| %>
-          <div class="col-xs-6 col-sm-3 col-md-3">
+          <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="thumbnail">
               <%= hidden_field_tag 'img_' + img.id.to_s , img.id %>
               <a href="<%= img.url %>" title="" data-gallery>
-                <img src="<%= img.thumbnail %>" alt="">
+                <img src="<%= img.thumbnail %>" alt="<%= img.id %>">
               </a>
             </div>
             <div class="image_controls">

@@ -39,24 +39,32 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 
 @media (min-width: $screen-xs-min) {
   .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important}
-  .knob-progress {width: 100px; height: 100px} 
+  .knob-progress {width: 64px; height: 64px} 
+  .image_controls {width: 80% !important; margin-left:0 !important; position:absolute !important; top:100px !important;}
+  .image_controls .btn {font-size: 8.5px !important} 
 }
 
 @media (min-width: $screen-sm-min) {
   .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important}
-  .knob-progress {width: 100px; height: 100px} 
+  .knob-progress {width: 64px; height: 64px} 
+  .image_controls {width: 85% !important; margin-left:0 !important; position:absolute !important; top:120px !important;}
+  .image_controls .btn {font-size: 10px !important} 
 }
 
 @media (min-width: $screen-md-min) {
   .thumbnail canvas.canvas-thumbnail { height:95px !important; width: 126px !important}
   .knob-outer { padding: 13px;}
-  .knob-progress {width: 150px; height: 150px} 
+  .knob-progress {width: 95px; height: 95px} 
+  .image_controls {width: 90% !important; margin-left:0 !important; position:absolute !important; top:200px !important;}
+  .image_controls .btn {font-size: 14px !important} 
 }
 
 @media (min-width: $screen-lg-min) {
   .thumbnail canvas.canvas-thumbnail { height:132px !important; width: 176px !important}
   .knob-outer { padding: 38px;}
-  .knob-progress {width: 200px; height: 200px} 
+  .knob-progress {width: 132px; height: 132px} 
+  .image_controls {width: 90% !important; margin-left:0 !important; position:absolute !important; top:200px !important;}
+  .image_controls .btn {font-size: 14px !important} 
 }
 
 @media (min-width: $screen-sm-min) {.thumbnail.small img { height:100px !important; }}
@@ -102,8 +110,6 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 }
 
 .knob-progress {
-  width: 100px;
-  height: 100px;
   position: absolute;
   background-color: #ccc;
   opacity: 0.8;

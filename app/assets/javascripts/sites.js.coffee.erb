@@ -12,6 +12,62 @@ $(document).ready ->
   upload_btn = $('#upload_selected')
   file_list = []
 
+  $('body').keydown( (evt) ->
+    selected = false
+    $('#select_first').hide()
+    if $('.selected_img').length 
+      selected = $('.selected_img').first()
+    if evt.key =='k'
+      if selected
+        index = $('#links .thumbnail').index(selected)
+        selected.removeClass('selected_img')
+        if index is $('#links .thumbnail').length - 1
+          $('#links .thumbnail').first().addClass('selected_img')
+        else 
+          next = $('#links .thumbnail').eq(index + 1)
+          next.addClass('selected_img')
+      else
+        $('#links .thumbnail').first().addClass('selected_img')
+
+    else if evt.key == 'j'
+      if selected 
+        index = $('#links .thumbnail').index(selected)
+        selected.removeClass('selected_img')
+        if index is 0 
+          $('#links .thumbnail').last().addClass('selected_img')
+        else 
+          prev = $('#links .thumbnail').eq(index - 1)
+          prev.addClass('selected_img')
+      else
+        $('#links .thumbnail').last().addClass('selected_img')
+  
+    else if evt.key == '1'
+      if selected
+        image_id = selected.find('img').attr('alt')
+        btn = selected.parent().find('.btn-success').first()
+        set_quality(btn, image_id, 'set_good')
+      else
+        $('#select_first').show()
+    
+    else if evt.key == '2'
+      if selected
+        image_id = selected.find('img').attr('alt')
+        btn = selected.parent().find('.btn-warning').first()
+        set_quality(btn, image_id, 'set_nok')
+      else
+        $('#select_first').show()
+    
+    else if evt.key == '3'
+      if selected
+        image_id = selected.find('img').attr('alt')
+        btn = selected.parent().find('.btn-danger').first()
+        set_quality(btn, image_id, 'set_bad')
+      else
+        $('#select_first').show()
+    
+    return
+  )
+
   # trigger file upload browser on Browse click
   $('#browse').click () ->
     $('#fileupload').click()
@@ -55,8 +111,8 @@ $(document).ready ->
             
             canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
 
-            #tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="knob-progress"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><img src="" alt="Upload thumbnail"/><div class="caption"></div><span></span></div></div>')
-            tpl = $('<div class="col-xs-6 col-md-3"><div class="thumbnail"><div class="caption"></div><div class="abort_upload working"><span class="alert-warning glyphicon glyphicon-remove-circle"></span></div><div class="knob-outer"><div class="knob-progress"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div></div></div>')
+            #tpl = $('<div class="col-xs-6 col-sm-3 col-md-3"><div class="thumbnail"><div class="knob-progress"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><img src="" alt="Upload thumbnail"/><div class="caption"></div><span></span></div></div>')
+            tpl = $('<div class="col-xs-3 col-sm-3 col-md-3"><div class="thumbnail"><div class="caption"></div><div class="abort_upload working"><span class="alert-warning glyphicon glyphicon-remove-circle"></span></div><div class="knob-outer"><div class="knob-progress"><input type="text" value="0" data-width="64" data-height="64"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div></div></div>')
             # add image source
             #tpl.find("img").get(0).src = reader.result 
             tpl.find(".thumbnail").append(canvas)
