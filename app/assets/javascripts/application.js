@@ -29,7 +29,7 @@
 //= require bootstrap.min
 //= require bootbox.min 
 //= require bootstrap-datepicker
-//= require bootstrap-image-gallery.min
+// require bootstrap-image-gallery.min
  
 // require jquery-fileupload
 

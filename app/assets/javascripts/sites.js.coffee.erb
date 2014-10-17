@@ -202,7 +202,7 @@ $(document).ready ->
 
     done: (e, data) -> 
       #$("#upload-msg").append("<p class="status-success">Upload terminated!</p>")
-      upload_btn.prop('disabled', true);
+      upload_btn.prop('disabled', true)
 
       for file in data.files
         if file.isThumbnail
@@ -312,7 +312,7 @@ $(document).ready ->
         if $(this).hasClass(quality_class)
           $(this).removeClass(quality_class)
       )
-      btn.addClass(quality_class);  
+      btn.addClass(quality_class)
     )
 
   current_img = 0
