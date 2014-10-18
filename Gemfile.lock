@@ -34,6 +34,8 @@ GEM
     aws-sdk-v1 (1.53.0)
       json (~> 1.4)
       nokogiri (>= 1.4.4)
+    blueimp-gallery (2.11.0.1)
+      railties (>= 3.1.0)
     bootstrap-addons-rails (0.1.2)
       rails
     builder (3.2.2)
@@ -138,6 +140,7 @@ PLATFORMS
 
 DEPENDENCIES
   aws-sdk
+  blueimp-gallery
   bootstrap-addons-rails
   coffee-rails (~> 4.0.0)
   haml-rails

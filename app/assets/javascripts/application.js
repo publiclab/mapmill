@@ -29,6 +29,8 @@
 //= require bootstrap.min
 //= require bootbox.min 
 //= require bootstrap-datepicker
+
+//= require blueimp-gallery-all
 // require bootstrap-image-gallery.min
  
 // require jquery-fileupload

@@ -12,6 +12,7 @@
  *
  *= require jquery.fileupload
  *= require jquery.fileupload-ui
+ *= require blueimp-gallery-all
  *= bootstrap-addons-rails
 
  *= require_tree .

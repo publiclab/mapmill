@@ -54,7 +54,7 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 @media (min-width: $screen-md-min) {
   .thumbnail canvas.canvas-thumbnail { height:95px !important; width: 126px !important}
   .knob-outer { padding: 13px;}
-  .knob-progress {width: 95px; height: 95px} 
+  .knob-progress {width: 64px; height: 64px} 
   .image_controls {width: 90% !important; margin-left:0 !important; position:absolute !important; top:200px !important;}
   .image_controls .btn {font-size: 14px !important} 
 }
@@ -62,7 +62,7 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 @media (min-width: $screen-lg-min) {
   .thumbnail canvas.canvas-thumbnail { height:132px !important; width: 176px !important}
   .knob-outer { padding: 38px;}
-  .knob-progress {width: 132px; height: 132px} 
+  .knob-progress {width: 64px; height: 64px} 
   .image_controls {width: 90% !important; margin-left:0 !important; position:absolute !important; top:200px !important;}
   .image_controls .btn {font-size: 14px !important} 
 }

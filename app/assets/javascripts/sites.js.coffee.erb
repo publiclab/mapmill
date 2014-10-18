@@ -207,14 +207,18 @@ $(document).ready ->
       for file in data.files
         if file.isThumbnail
           key  = $(data.jqXHR.responseXML).find("Key").text()
+          csrf = $("meta[name=\"csrf-token\"]").attr("content")
           put_data =
             thumbnail: $('#s3-data').data('url') + key
  
           $.ajax({
-            url: "/images/" + file.image_id + '/set_thumbnail', 
+            url: "/images/" + file.image_id + '/set_thumbnail',
             type: 'PUT',
             dataType: "json",
-            data: put_data 
+            data: put_data,
+            beforeSend: (request) ->
+                request.setRequestHeader "X-CSRF-Token",csrf
+                return
           }).done( (response) ->
               $("#upload-msg").append('<p class="status-info">Thumbnail successfully associated to image ' + file.original + "</p>")
             ).fail( (response) ->
@@ -228,11 +232,11 @@ $(document).ready ->
           site = $('#site_id').val()
           key  = $(data.jqXHR.responseXML).find("Key").text()
           post_data =
-            site_id: site 
+            site_id: site
             url: $('#s3-data').data('url') + key
 
           $.ajax({
-            url: "/sites/" + site + "/images", 
+            url: "/sites/" + site + "/images",
             type: 'POST',
             dataType: "json",
             data: post_data
@@ -256,7 +260,7 @@ $(document).ready ->
           )
           
         data.context.find('.thumbnail').fadeOut(2000, "swing") ->
-           $(this).remove()    
+           $(this).remove()
           #create hidden field
           #var input = $("<input />", { type:'hidden', name: fileInput.attr('name'), value: url })
 
