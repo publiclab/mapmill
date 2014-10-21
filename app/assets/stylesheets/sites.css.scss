@@ -31,11 +31,9 @@ $screen-xs-max:              ($screen-sm-min - 1) !default;
 $screen-sm-max:              ($screen-md-min - 1) !default;
 $screen-md-max:              ($screen-lg-min - 1) !default;
 
-/*
 @media (min-width: $screen-sm-min) {.thumbnail img { height:100px !important; }}
 @media (min-width: $screen-md-min) {.thumbnail img { height:150px !important; }}
 @media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}
-*/
 
 @media (min-width: $screen-xs-min) {
   .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important}
