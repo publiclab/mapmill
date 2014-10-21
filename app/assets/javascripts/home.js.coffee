@@ -42,7 +42,7 @@ $ ->
           #
           # @required String|Element
           #/
-          message: '<div class="alert alert-warning">Note: Only <a href="http://publiclab.org">Publiclab</a> is currently supported as OpenID provider!</div><div class="alert alert-info">Please enter your OpenID endpoint, you will then be redirected to publiclab.org to complete the login procedure</div><div class="input-group" id="open_id_input_group"><span class="input-group-addon glyphicon glyphicon-user input-desc">&nbsp;OpenID</span><input id="open_id_username" type="text" class="form-control" placeholder="Username"></div><div class="open_id_endpoint"><label class="open_id_part">http://publiclab.org/people/</label><label class="open_id_part" id="open_id_part_username"></label><label class="open_id_part">/identity</label>'
+          message: '<div class="alert alert-warning">Note: Only <a href="http://publiclab.org">Publiclab</a> is currently supported as OpenID provider!</div><div class="alert alert-info">Please enter your OpenID endpoint, you will then be redirected to publiclab.org to complete the login procedure. The OpenID is <strong>case sensitive!</strong></div><div class="input-group" id="open_id_input_group"><span class="input-group-addon glyphicon glyphicon-user input-desc">&nbsp;OpenID</span><input id="open_id_username" type="text" class="form-control" placeholder="Username"></div><div class="open_id_endpoint"><label class="open_id_part">http://publiclab.org/people/</label><label class="open_id_part" id="open_id_part_username"></label><label class="open_id_part">/identity</label>'
           #
           # @optional String|Element
           # adds a header to the dialog and places this text in an h4
