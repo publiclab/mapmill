@@ -6,8 +6,11 @@
       <div class="row">
       <% site.images.take(3).each do |img| %>
           <div class="col-xs-6 col-sm-3 col-md-3">
-            <div class="thumbnail small">
+            <div class="thumbnail">
+              <%= link_to image_tag(img.thumbnail, alt: img.url), site %>
+              <!--
               <img src="<%= img.thumbnail %>" alt="">
+              -->
             </div>
           </div>
       <% end %>
