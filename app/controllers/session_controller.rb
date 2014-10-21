@@ -37,7 +37,13 @@ class SessionController < ApplicationController
           @user.username = registration['nickname']
           @user.email = registration['email']
           @user.identity_url = identity_url
-          @user.save
+          begin 
+            @user.save!
+          rescue ActiveRecord::RecordInvalid => invalid
+            puts invalid
+            failed_login "User can not be associated to local account. Probably the account already exists with different case!" 
+            return
+          end
         end
         nonce = params[:n]
         if nonce 
@@ -64,13 +70,13 @@ class SessionController < ApplicationController
   end
 
   def failed_login(message = "Authentication failed.")
-    flash.now[:error] = message
+    flash[:danger] = message
     redirect_to '/'
   end
 
   def successful_login(id)
     session[:user_id] = @current_user.id
-    flash[:notice] = "You have successfully logged in."
+    flash[:success] = "You have successfully logged in."
     if id
       redirect_to '/sites/' + id.to_s + '/upload'
     else
@@ -80,7 +86,7 @@ class SessionController < ApplicationController
 
   def logout
     session[:user_id] = nil 
-    flash[:notice] = "You have successfully logged out."
+    flash[:success] = "You have successfully logged out."
     redirect_to '/'
   end
 
