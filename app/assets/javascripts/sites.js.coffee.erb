@@ -112,7 +112,7 @@ $(document).ready ->
             canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
 
             #tpl = $('<div class="col-xs-6 col-sm-3 col-md-3"><div class="thumbnail"><div class="knob-progress"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><img src="" alt="Upload thumbnail"/><div class="caption"></div><span></span></div></div>')
-            tpl = $('<div class="col-xs-3 col-sm-3 col-md-3"><div class="thumbnail"><div class="caption"></div><div class="abort_upload working"><span class="alert-warning glyphicon glyphicon-remove-circle"></span></div><div class="knob-outer"><div class="knob-progress"><input type="text" value="0" data-width="64" data-height="64"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div></div></div>')
+            tpl = $('<div class="col-xs-6 col-sm-3 col-md-3"><div class="thumbnail"><div class="caption"></div><div class="abort_upload working"><span class="alert-warning glyphicon glyphicon-remove-circle"></span></div><div class="knob-outer"><div class="knob-progress"><input type="text" value="0" data-width="64" data-height="64"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div></div></div>')
             # add image source
             #tpl.find("img").get(0).src = reader.result 
             tpl.find(".thumbnail").append(canvas)

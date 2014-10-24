@@ -2,6 +2,10 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+$screen-xxs:                 320px !default;
+$screen-xxs-min:             $screen-xxs !default;
+$screen-xphone:              $screen-xxs-min !default;
+
 // Extra small screen / phone
 // Note: Deprecated $screen-xs and $screen-phone as of v3.0.1
 $screen-xs:                  420px !default;
@@ -27,6 +31,7 @@ $screen-lg-min:              $screen-lg !default;
 $screen-lg-desktop:          $screen-lg-min !default;
 
 // So media queries don't overlap when required, provide a maximum
+$screen-xxs-max:              ($screen-xs-min - 1) !default;
 $screen-xs-max:              ($screen-sm-min - 1) !default;
 $screen-sm-max:              ($screen-md-min - 1) !default;
 $screen-md-max:              ($screen-lg-min - 1) !default;
@@ -35,18 +40,24 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 @media (min-width: $screen-md-min) {.thumbnail img { height:150px !important; }}
 @media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}
 
+@media (min-width: $screen-xxs-min) {
+  .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
+  .knob-progress {width: 64px; height: 64px} 
+  .image_controls {width: 80% !important; margin-left:0 !important; position:absolute !important; top:100px !important;}
+  .image_controls .btn {font-size: 8.5px !important} 
+}
+
 @media (min-width: $screen-xs-min) {
-  /*.thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important} */
-  .thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
-  .thumbnail .caption {word-wrap: break-word; font-size: 8px !important;}
-  .knob-progress {width: 100%; height: 100%} 
+  .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
+  .knob-progress {width: 64px; height: 64px} 
+  /*.thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
+  /* .thumbnail .caption {word-wrap: break-word; font-size: 8px !important;}*/
   .image_controls {width: 80% !important; margin-left:0 !important; position:absolute !important; top:100px !important;}
   .image_controls .btn {font-size: 8.5px !important} 
 }
 
 @media (min-width: $screen-sm-min) {
-  /*.thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important} */
-  .thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
+  .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important} 
   .knob-progress {width: 100%; height: 100%} 
   /*.knob-progress {width: 64px; height: 64px} */
   .image_controls {width: 85% !important; margin-left:0 !important; position:absolute !important; top:120px !important;}
@@ -54,8 +65,7 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 }
 
 @media (min-width: $screen-md-min) {
-  /*.thumbnail canvas.canvas-thumbnail { height:95px !important; width: 126px !important} */
-  .thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
+  .thumbnail canvas.canvas-thumbnail { height:95px !important; width: 126px !important} 
   .knob-progress {width: 100%; height: 100%} 
   .knob-outer { padding: 13px;}
   /*.knob-progress {width: 64px; height: 64px} */
@@ -64,8 +74,7 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 }
 
 @media (min-width: $screen-lg-min) {
-  /*.thumbnail canvas.canvas-thumbnail { height:132px !important; width: 176px !important}*/
-  .thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
+  .thumbnail canvas.canvas-thumbnail { height:132px !important; width: 176px !important}
   .knob-progress {width: 100%; height: 100%} 
   .knob-outer { padding: 38px;}
   /*.knob-progress {width: 64px; height: 64px} */

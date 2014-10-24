@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140918023654) do
+ActiveRecord::Schema.define(version: 20141024220926) do
 
   create_table "images", force: true do |t|
     t.string   "url"
@@ -50,5 +50,14 @@ ActiveRecord::Schema.define(version: 20140918023654) do
     t.datetime "updated_at"
     t.string   "identity_url"
   end
+
+  create_table "votes", force: true do |t|
+    t.integer  "image_id"
+    t.integer  "value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "votes", ["image_id"], name: "index_votes_on_image_id"
 
 end
