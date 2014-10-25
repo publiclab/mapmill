@@ -7,10 +7,11 @@ class SessionController < ApplicationController
 
 
   def show_login
-    
+    @referer = params[:back_to]  
   end
 
   def login_openid
+    back_to = params[:back_to]
     open_id = params[:open_id]
     openid_url = URI.decode(open_id)
     #possibly user is providing the whole URL
@@ -21,13 +22,12 @@ class SessionController < ApplicationController
     else 
       url = @@openid_url_base + openid_url + @@openid_url_suffix
     end
-
-    openid_authentication(url)
+    openid_authentication(url, back_to)
   end
 
 #  protected
 
-  def openid_authentication(openid_url)
+  def openid_authentication(openid_url, back_to)
     #puts openid_url
     authenticate_with_open_id(openid_url, :required => [:nickname, :email]) do |result, identity_url, registration|
       if result.successful?
@@ -58,9 +58,9 @@ class SessionController < ApplicationController
         end
         @current_user = @user
         if site
-          successful_login site.id
+          successful_login back_to, site.id
         else
-          successful_login nil 
+          successful_login back_to, nil 
         end
       else
         failed_login result.message
@@ -74,13 +74,17 @@ class SessionController < ApplicationController
     redirect_to '/'
   end
 
-  def successful_login(id)
+  def successful_login(back_to, id)
     session[:user_id] = @current_user.id
     flash[:success] = "You have successfully logged in."
     if id
       redirect_to '/sites/' + id.to_s + '/upload'
     else
-      redirect_to '/sites'
+      if back_to 
+        redirect_to back_to 
+      else
+        redirect_to '/sites'
+      end
     end
   end
 

@@ -47,39 +47,42 @@ class ImagesController < ApplicationController
     end
 
     def set_quality(val)
-            puts "set quality"
-            @image = Image.find(params[:id])
-            vote = Vote.new
-            vote.value = val 
-            if vote.save!
-              puts "vote saved"
-              votes = Vote.find_by_image(@image.id) 
-              sum, cnt = 0
-              votes.each do |value|
-                cnt += 1
-                sum += value
-              end
-              avg = (sum / cnt).round
-              puts "avg: " + avg
-              case
-              when 1
-                puts "good!"
-                @image.good!
-              when 2
-                puts "nok"
-                @image.nok!
-              when 3
-                puts "bad"
-                @image.bad!
-              else
-                #nothing
-              end 
-              @image.save
-            else
-               puts "could not save vote"
-            end
-            respond_to do |format|
-              format.js {render nothing: true}
-            end
+      @image = Image.find(params[:id])
+      @vote = @image.votes.create
+      @vote.value = val 
+      @vote.ip = request.remote_ip
+      if @vote.save!
+        votes = Vote.find_by_image(@image) 
+        sum = 0
+        if votes
+          votes.each do |vote|
+            sum += vote.value
+          end
+          cnt = votes.length 
+          avg = sum.fdiv(cnt)
+          case avg
+          when 0..1.5 
+            @image.good!
+          when 1.5..2.5
+            @image.nok!
+          when 2.5..3
+            @image.bad!
+          else
+            #nothing
+          end 
+          @image.save
+        else
+          msg = "Error accessing votes: No votes found!"
+          puts msg
+          format.json { render :text => msg, :status => 404 }
+        end
+      else
+        msg = "could not save vote"
+        puts msg
+        format.json { render :text => msg, :status => 500 }
+      end
+      respond_to do |format|
+        format.json {render json: @image}
+      end
     end
 end

@@ -34,7 +34,12 @@ class SitesController < ApplicationController
 
 
   def show
+    @ip = request.remote_ip
     @site= Site.find(params[:id])
+    @votes = {}
+    @site.images.each do | img |
+      @votes[img.id] = Vote.where(image: img)  
+    end
   end
 
   def index 

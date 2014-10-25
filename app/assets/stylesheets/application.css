@@ -128,7 +128,7 @@ blueimp-gallery options
   bottom: 50px;
   width: 100%;
   color: #fff;
-  display: none;
+  display: block;
 }
 .blueimp-gallery-controls > .detail_image_controls {
   display: block;

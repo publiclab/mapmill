@@ -1,3 +1,6 @@
+require 'uri'
+
+
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -22,8 +25,9 @@ class ApplicationController < ActionController::Base
   private
     def require_login
       unless logged_in?
+        path_info = request.env['PATH_INFO']
         flash[:warning] = "You must be logged in to access this section"
-        redirect_to '/show_login' # halts request cycle
+        redirect_to '/show_login?back_to=' + URI.encode(path_info) # halts request cycle
       end
     end
 

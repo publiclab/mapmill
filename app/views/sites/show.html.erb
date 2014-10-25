@@ -16,6 +16,17 @@
 <div class="site_details">
   <div id="links" class="row">
         <% @site.images.each do |img| %>
+          <% 
+            voting_disabled = "" 
+            btn_disabled = ""
+            votes_for_img = @votes[img.id]
+            votes_for_img.each do | v |
+              if v.ip == @ip
+                voting_disabled = "voting_disabled"
+                btn_disabled = "btn_disabled"
+              end
+            end
+          %>
           <div class="col-xs-3 col-sm-3 col-md-3">
             <div class="thumbnail">
               <%= hidden_field_tag 'img_' + img.id.to_s , img.id %>
@@ -24,19 +35,19 @@
               </a>
             </div>
             <div class="image_controls">
-              <div class="btn-group btn-group-justified">
-                <div class="btn-group">
-                  <button id="btn_good_<%= img.id %>" type="button" class="btn btn-success <% if img.good? %> assigned_quality <% end %>">
+              <div class="btn-group btn-group-justified <%= voting_disabled %>">
+                <div class="btn-group ">
+                  <button id="btn_good_<%= img.id %>" type="button" class="btn btn-success <%= btn_disabled %> <% if img.good? %> assigned_quality <% end %>">
                     <span class="glyphicon glyphicon-ok"></span> good 
                   </button>
                 </div>
                 <div class="btn-group">
-                  <button id="btn_nok_<%= img.id %>" type="button" class="btn btn-warning <% if img.nok? %> assigned_quality <% end %>">
+                  <button id="btn_nok_<%= img.id %>" type="button" class="btn btn-warning <%= btn_disabled %> <% if img.nok? %> assigned_quality <% end %>">
                     <span class="glyphicon glyphicon-flag"></span> not ok
                   </button>
                 </div>
                 <div class="btn-group">
-                  <button id="btn_bad_<%= img.id %>" type="button" class="btn btn-danger <% if img.bad? %> assigned_quality <% end %>">   
+                  <button id="btn_bad_<%= img.id %>" type="button" class="btn btn-danger <%= btn_disabled %> <% if img.bad? %> assigned_quality <% end %>">   
                     <span class="glyphicon glyphicon-remove"></span> bad
                   </button>
                 </div><!-- btn-group -->

@@ -4,6 +4,13 @@
 
 
 $(document).ready ->
+  $('.voting_disabled').mouseover ->
+    $(this).attr('title','You have already voted for this image')
+
+  $('.voting_disabled').click (e) ->
+    e.preventDefault()
+    return false
+
   $.ajaxSetup headers:
     "X-CSRF-Token": $("meta[name=\"csrf-token\"]").attr("content")
 
@@ -305,19 +312,32 @@ $(document).ready ->
   
     
   set_quality = (btn, image_id, action) ->
-    $.ajax({
-      url: "/images/" + image_id + "/" + action,
-      type: "GET",
-    }).done( (response) ->
-      quality_class = 'assigned_quality'
-      if btn.hasClass 'detail_control'
-        quality_class = 'assigned_quality_single'
-      btn.parent().parent().find('.btn').each( (i, elem) ->
-        if $(this).hasClass(quality_class)
-          $(this).removeClass(quality_class)
-      )
-      btn.addClass(quality_class)
-    )
+    $.ajax "/images/" + image_id + "/" + action,
+      type: "GET"
+      dataType: 'json'
+      success: (image) ->
+        quality = image.quality
+        quality_class = 'assigned_quality'
+        if btn.hasClass 'detail_control'
+          quality_class = 'assigned_quality_single'
+
+        
+        btn_group = btn.parent().parent()
+        btn_group.find('.btn').each( (i, elem) ->
+          if $(this).attr('id').indexOf(quality) > -1
+            $(this).addClass(quality_class)
+          else
+            $(this).removeClass(quality_class)
+        )
+        btn_group.addClass("voting_disabled")
+        btn_group.mouseover ->
+          $(this).attr('title','You have already voted for this image')
+        btn_group.find('.btn').each( (i,elem) ->
+          $(this).addClass('btn_disabled')
+        )
+      error: (jqXHR, textStatus, errorThrown) ->
+        console.log textStatus 
+        console.log errorThrown
 
   current_img = 0
   
