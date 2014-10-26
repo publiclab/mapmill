@@ -4,6 +4,14 @@
 
 
 $(document).ready ->
+  ua = navigator.userAgent.toLowerCase()
+  isAndroid = ua.indexOf("android") > -1
+  webkitVer = parseInt((/WebKit\/([0-9]+)/.exec(navigator.appVersion) or 0)[1], 10) or undefined
+  isNativeAndroid = webkitVer <= 534 && navigator.vendor.indexOf('Google') == 0
+
+  if isAndroid || isNativeAndroid
+    $('.voting_disabled').addClass('voting_disabled_android')
+
   $('.voting_disabled').mouseover ->
     $(this).attr('title','You have already voted for this image')
 
@@ -22,7 +30,7 @@ $(document).ready ->
   $('body').keydown( (evt) ->
     selected = false
     $('#select_first').hide()
-    if $('.selected_img').length 
+    if $('.selected_img').length
       selected = $('.selected_img').first()
     if evt.key =='k'
       if selected
@@ -30,19 +38,19 @@ $(document).ready ->
         selected.removeClass('selected_img')
         if index is $('#links .thumbnail').length - 1
           $('#links .thumbnail').first().addClass('selected_img')
-        else 
+        else
           next = $('#links .thumbnail').eq(index + 1)
           next.addClass('selected_img')
       else
         $('#links .thumbnail').first().addClass('selected_img')
 
     else if evt.key == 'j'
-      if selected 
+      if selected
         index = $('#links .thumbnail').index(selected)
         selected.removeClass('selected_img')
-        if index is 0 
+        if index is 0
           $('#links .thumbnail').last().addClass('selected_img')
-        else 
+        else
           prev = $('#links .thumbnail').eq(index - 1)
           prev.addClass('selected_img')
       else
@@ -132,7 +140,7 @@ $(document).ready ->
                 $(this).removeClass 'selected_img'
                 idx = file_list.indexOf(file)
                 if idx > -1
-                  file_list.splice(idx, 1) 
+                  file_list.splice(idx, 1)
                 $("#upload-msg").append('<p class="status-info">Image ' + file.name + " removed from upload queue</p>")
               else
                 $(this).addClass 'selected_img'
@@ -140,8 +148,8 @@ $(document).ready ->
                 $("#upload-msg").append('<p class="status-info">Image ' + file.name + " added to upload queue</p>")
               
               if file_list.length > 0
-                upload_btn.prop('disabled', false);
-                $('#cancel_files').prop('disabled', false);
+                upload_btn.prop('disabled', false)
+                $('#cancel_files').prop('disabled', false)
                 
               return
             # Append the file name and file size
@@ -152,8 +160,8 @@ $(document).ready ->
             tpl.find("input").knob()
             # Listen for clicks on the cancel icon
             tpl.find(".abort_upload").click ->
-              if $(this).hasClass("working") 
-                jqXHR.abort()  
+              if $(this).hasClass("working")
+                jqXHR.abort()
                 $("#upload-msg").append('<p class="status-warning">Upload of ' + file.name + ' aborted by user!</p>')
                 tpl.fadeOut ->
                   tpl.remove()
@@ -173,7 +181,7 @@ $(document).ready ->
 
         $('#cancel_upload').on('click', () ->
           if jqXHR
-            jqXHR.abort() 
+            jqXHR.abort()
             $("#upload-msg").append('<p class="status-error">Upload aborted by user!</p>')
         )
             
@@ -200,14 +208,14 @@ $(document).ready ->
         data.context.find("input").val(progress).change()
         data.context.removeClass "working"  if progress is 100
 
-    progressall: (e, data) -> 
+    progressall: (e, data) ->
       progress = parseInt(data.loaded / data.total * 100, 10)
       $(".progress-bar").css("background", "green")
       $(".progress-bar").css('width', progress + '%')
       $(".progress-bar").attr('aria-valuenow', progress)
       $(".progress-bar").text(progress + '%')
 
-    done: (e, data) -> 
+    done: (e, data) ->
       #$("#upload-msg").append("<p class="status-success">Upload terminated!</p>")
       upload_btn.prop('disabled', true)
 
@@ -278,7 +286,7 @@ $(document).ready ->
       if (data.errorThrown == "abort")
         $("#upload-msg").append('<p class="status-warning">Complete upload aborted by user.</p>')
         $(".progress-bar").css("background", "#F0AD4E")
-      else 
+      else
         $('#failure').show()
         $(".progress-bar").css("background", "red")
         $(".progress-bar").text("Upload failed!")
@@ -330,13 +338,15 @@ $(document).ready ->
             $(this).removeClass(quality_class)
         )
         btn_group.addClass("voting_disabled")
+        if isAndroid || isNativeAndroid
+          btn_group.addClass("voting_disabled_android")
         btn_group.mouseover ->
           $(this).attr('title','You have already voted for this image')
         btn_group.find('.btn').each( (i,elem) ->
           $(this).addClass('btn_disabled')
         )
       error: (jqXHR, textStatus, errorThrown) ->
-        console.log textStatus 
+        console.log textStatus
         console.log errorThrown
 
   current_img = 0
@@ -351,7 +361,7 @@ $(document).ready ->
     set_quality $(this), current_img, 'set_bad'
 
   $('#blueimp-gallery')
-    .on('open', (event) -> 
+    .on('open', (event) ->
         #Gallery open event handler
     )
     .on('opened', (event) ->
@@ -359,11 +369,19 @@ $(document).ready ->
     )
     .on('slide', (event, index, slide) ->
         current_img = $('.site_details input[type=hidden]').eq(index).val()
-        $.get '/images/' + current_img, ((img) ->
+        $.get '/images/' + current_img, ((response) ->
+          if response.voting_disabled == true
+            if isAndroid || isNativeAndroid
+              $('#blueimp-gallery .detail_image_controls .btn-group-justified').addClass('voting_disabled_android')
+            $('#blueimp-gallery .detail_image_controls .btn-group-justified').addClass('voting_disabled')
+          else
+            $('#blueimp-gallery .detail_image_controls .btn-group-justified').removeClass('voting_disabled_android')
+            $('#blueimp-gallery .detail_image_controls .btn-group-justified').removeClass('voting_disabled')
           $('#blueimp-gallery .detail_image_controls .btn').each( (i, elem) ->
             if $(this).hasClass('assigned_quality_single')
               $(this).removeClass('assigned_quality_single')
           )
+          img = response.image
           if img.quality == 'good'
             $('#blueimp-gallery .detail_image_controls .btn-success').addClass('assigned_quality_single')
           else if img.quality == 'nok'
@@ -373,7 +391,7 @@ $(document).ready ->
         ), "json"
         # Gallery slide event handler
     )
-    .on('slideend', (event, index, slide) -> 
+    .on('slideend', (event, index, slide) ->
         # Gallery slideend event handler
     )
     .on('slidecomplete', (event, index, slide) ->

@@ -1,31 +1,60 @@
 
 class ImagesController < ApplicationController
 
-  # POST /image
-  # POST /images.json
   def create
+    if only_xhr
+      return
+    end      
     @site = Site.find(params[:site_id])
     @image = @site.images.create(image_params)
     respond_to do |format|
-      #format.js {render nothing: true}
       format.js {render json: @image.to_json, status: :created}
     end
   end
 
   def show
-    @image = Image.find(params[:id])
+    if only_xhr
+      return
+    end      
+    begin 
+     @image = Image.find(params[:id])
+    rescue
+      respond_to do |format|
+        format.js {render :nothing => true, status: :not_found}
+      end
+    end
+    @voting_disabled = false
+    votes = Vote.find_by_image(@image)
+    if votes
+      votes.each do | v |
+        if v.ip == request.remote_ip
+          @voting_disabled = true
+        end
+      end
+    end
+    
+    response = { :image => @image, :voting_disabled => @voting_disabled }
     respond_to do |format|
-      format.js {render json: @image.to_json, status: :ok}
+      format.js {render :json => response, status: :ok}
     end
   end
 
 
   def set_thumbnail
-    @image = Image.find(params[:id])
-    @image.thumbnail = params[:thumbnail]
-    @image.save
-    respond_to do |format|
-      format.js {render json: @image.to_json, status: :ok}
+    if only_xhr
+      return
+    end      
+    begin
+      @image = Image.find(params[:id])
+      @image.thumbnail = params[:thumbnail]
+      @image.save
+      respond_to do |format|
+        format.js {render json: @image.to_json, status: :ok}
+      end
+    rescue
+      respond_to do |format|
+        format.js {render :nothing => true, status: :not_found}
+      end
     end
   end
 
@@ -47,6 +76,9 @@ class ImagesController < ApplicationController
     end
 
     def set_quality(val)
+      if only_xhr
+        return
+      end      
       @image = Image.find(params[:id])
       @vote = @image.votes.create
       @vote.value = val 
@@ -84,5 +116,15 @@ class ImagesController < ApplicationController
       respond_to do |format|
         format.json {render json: @image}
       end
+    end
+
+
+    def only_xhr
+      if !request.xhr?
+        render_404
+        return true 
+      else
+        return false 
+      end 
     end
 end

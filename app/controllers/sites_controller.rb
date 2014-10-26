@@ -19,7 +19,7 @@ class SitesController < ApplicationController
         err.each do |key, value|
           err_str += "#{key}:#{value}\n"
         end
-        flash[:error] = "Oooops - sorry, something went wrong while saving your new site: " + err_str
+        flash[:danger] = "Oooops - sorry, something went wrong while saving your new site: " + err_str
         redirect_to '/'
       end
     else 
@@ -35,7 +35,13 @@ class SitesController < ApplicationController
 
   def show
     @ip = request.remote_ip
-    @site= Site.find(params[:id])
+    begin
+      @site= Site.find(params[:id])
+    rescue
+      flash[:danger] = "The requested site does not exist in the system."
+      redirect_to sites_path 
+      return
+    end
     @votes = {}
     @site.images.each do | img |
       @votes[img.id] = Vote.where(image: img)  
@@ -48,7 +54,13 @@ class SitesController < ApplicationController
 
 
   def upload
-    @site = Site.find(params[:id])
+    begin
+      @site = Site.find(params[:id])
+    rescue
+      flash[:danger] = "The requested site does not exist in the system."
+      redirect_to sites_path 
+      return
+    end
     @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
     @s3_post_data = {url: @s3_direct_post.url, fields: @s3_direct_post.fields.to_json.html_safe, host: @s3_direct_post.url.host}
   end

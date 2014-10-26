@@ -98,15 +98,18 @@ input[type=text] {
 }
 
 .assigned_quality {
-  border: 1px solid black !important;
+  border: 2px solid black !important;
   color: blue !important;
-  font-weight: bold;
+  font-weight: bold !important;
 }
 
+.btn {
+ border: 2px solid transparent;
+}
 .assigned_quality_single {
-  border: 10px solid black !important;
+  border: 6px solid black !important;
   color: blue !important;
-  font-weight: bold;
+  font-weight: bold !important;
 }
 
 .action_wrapper {
