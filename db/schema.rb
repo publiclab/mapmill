@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141025214008) do
+ActiveRecord::Schema.define(version: 20141201021001) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "images", force: true do |t|
     t.string   "url"
@@ -23,7 +26,7 @@ ActiveRecord::Schema.define(version: 20141025214008) do
     t.integer  "quality",    default: 0
   end
 
-  add_index "images", ["site_id"], name: "index_images_on_site_id"
+  add_index "images", ["site_id"], name: "index_images_on_site_id", using: :btree
 
   create_table "sites", force: true do |t|
     t.string   "name"
@@ -56,9 +59,9 @@ ActiveRecord::Schema.define(version: 20141025214008) do
     t.integer  "value"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "ip"
+    t.string   "cookie"
   end
 
-  add_index "votes", ["image_id"], name: "index_votes_on_image_id"
+  add_index "votes", ["image_id"], name: "index_votes_on_image_id", using: :btree
 
 end

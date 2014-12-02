@@ -21,7 +21,7 @@
             btn_disabled = ""
             votes_for_img = @votes[img.id]
             votes_for_img.each do | v |
-              if v.ip == @ip
+              if v.cookie == @cookie
                 voting_disabled = "voting_disabled"
                 btn_disabled = "btn_disabled"
               end
