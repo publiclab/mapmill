@@ -56,3 +56,4 @@ gem 'bootstrap-addons-rails'
 gem 'pg'
 #gem 'jquery-fileupload-rails'
 
+gem 'passenger'
