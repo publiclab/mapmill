@@ -14,7 +14,6 @@
 //= require jquery
 //= require jquery.ui.widget
 
-//= require blueimp-gallery-all
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
 //= require jquery.iframe-transport
@@ -25,6 +24,7 @@
 //= require jquery.fileupload-jquery-ui
 //= require jquery.fileupload-validate
 //= require jquery.knob
+//= require blueimp-gallery-all
 
 //= require bootstrap.min
 //= require bootbox.min 
