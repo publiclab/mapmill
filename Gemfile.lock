@@ -80,6 +80,7 @@ GEM
       daemon_controller (>= 1.2.0)
       rack
       rake (>= 0.8.1)
+    pg (0.17.1)
     polyglot (0.3.5)
     rack (1.5.2)
     rack-openid (1.4.2)
@@ -153,6 +154,7 @@ DEPENDENCIES
   jquery-rails
   open_id_authentication
   passenger
+  pg
   rails (= 4.1.4)
   ruby-openid
   sass-rails (~> 4.0.3)

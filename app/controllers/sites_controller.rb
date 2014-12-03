@@ -34,7 +34,7 @@ class SitesController < ApplicationController
 
 
   def show
-    @ip = request.remote_ip
+    @cookie = cookies["_mapmill_voting_"]
     begin
       @site= Site.find(params[:id])
     rescue

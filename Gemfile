@@ -53,6 +53,7 @@ gem 'aws-sdk'
 gem 'haml-rails'
 gem 'blueimp-gallery'
 gem 'bootstrap-addons-rails'
+gem 'pg'
 #gem 'jquery-fileupload-rails'
 
 gem 'passenger'
