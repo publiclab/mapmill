@@ -15,9 +15,9 @@
 //= require jquery.ui.widget
 
 //= require blueimp-gallery-all
-//= require jquery.iframe-transport
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
+//= require jquery.iframe-transport
 //= require jquery.fileupload-process
 //= require jquery.fileupload-image
 //= require jquery.fileupload-audio

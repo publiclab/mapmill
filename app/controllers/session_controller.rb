@@ -13,6 +13,10 @@ class SessionController < ApplicationController
   def login_openid
     back_to = params[:back_to]
     open_id = params[:open_id]
+    if not open_id or open_id == ""
+      failed_login "Open ID not provided!"
+      return
+    end  
     openid_url = URI.decode(open_id)
     #possibly user is providing the whole URL
     if openid_url.include? "publiclab"
@@ -58,7 +62,11 @@ class SessionController < ApplicationController
         end
         @current_user = @user
         if site
-          successful_login back_to, site.id
+          if back_to
+            successful_login back_to, site.id
+          else
+            successful_login nil, site.id
+          end
         else
           successful_login back_to, nil 
         end
@@ -70,11 +78,16 @@ class SessionController < ApplicationController
   end
 
   def failed_login(message = "Authentication failed.")
+    session[:user_id] = nil 
     flash[:danger] = message
     redirect_to '/'
   end
 
   def successful_login(back_to, id)
+    puts "back_to: "
+    puts back_to
+    puts "id:"
+    puts id
     session[:user_id] = @current_user.id
     flash[:success] = "You have successfully logged in."
     if id

@@ -57,6 +57,7 @@ class SitesController < ApplicationController
     begin
       @site = Site.find(params[:id])
     rescue
+      puts "Requested site id " + params[:id] + " not found"
       flash[:danger] = "The requested site does not exist in the system."
       redirect_to sites_path 
       return
