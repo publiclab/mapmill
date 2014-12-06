@@ -32,6 +32,16 @@ class SitesController < ApplicationController
     end
   end 
 
+  def map
+    @site = Site.find(params[:id])
+
+    @max_lat = 0
+    @max_lng = 0
+    @min_lat = 0
+    @min_lng = 0
+
+    @lat_lngs = []
+  end
 
   def show
     @cookie = cookies["_mapmill_voting_"]

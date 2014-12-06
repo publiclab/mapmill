@@ -54,6 +54,8 @@ gem 'haml-rails'
 gem 'blueimp-gallery'
 gem 'bootstrap-addons-rails'
 gem 'pg'
+gem 'leaflet-rails'
 #gem 'jquery-fileupload-rails'
 
 gem 'passenger'
+

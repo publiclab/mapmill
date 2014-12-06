@@ -109,7 +109,6 @@ $(document).ready ->
       add: (e, data) ->
         for file in data.files
           tmp_tpl = $('<div class="col-xs-3 col-sm-3 col-md-3"><div class="thumbnail"><div class="caption"></div></div>')
-          #tmp_tpl.find('.thumbnail').html('<img src="<%= asset_path('loading.gif') %>" />')
           tmp_tpl.find('.thumbnail').html('<div class="loading_image">&nbsp;</div>')
           $uploadList.append(tmp_tpl)
           #console.log file
@@ -120,6 +119,18 @@ $(document).ready ->
             img = new Image()
             img.src = original
             img.onload = () ->
+              EXIF.getData this, ->
+                lat = EXIF.getTag(this, "GPSLatitude")
+                lng = EXIF.getTag(this, "GPSLongitude")
+                #Convert coordinates to WGS84 decimal
+                latRef = EXIF.getTag(this, "GPSLatitudeRef")
+                lngRef = EXIF.getTag(this, "GPSLongitudeRef")
+                lat = (lat[0] + lat[1]/60 + lat[2]/3600) * (latRef == "N" ? 1 : -1)
+                lng = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1)
+
+                file.lat = lat
+                file.lng = lng
+                return
               tmp_tpl.remove()
               canvas = document.createElement("canvas")
               canvas.width = img.width * scale
@@ -129,12 +140,9 @@ $(document).ready ->
               canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
 
               tpl = $('<div class="col-xs-6 col-sm-3 col-md-3 working"><div class="thumbnail"><div class="caption"></div><div class="abort_upload"><span class="alert-warning glyphicon glyphicon-remove-circle"></span></div><div class="knob-progress"><input type="text" value="0" data-width="64" data-height="64"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div></div>')
-              #tpl = $('<div class="col-xs-6 col-sm-3 col-md-3 working"><div class="thumbnail"><div class="caption"></div><div class="abort_upload"><span class="alert-warning glyphicon glyphicon-remove-circle"></span></div><div class="knob-outer"><div class="knob-progress"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div></div></div>')
               # add image source
-              #tpl.find("img").get(0).src = reader.result 
               tpl.find(".thumbnail").append(canvas)
               tpl.find(".abort_upload").hide()
-              #file.thumbnail = canvas.toDataURL()
               file.thumbnail = canvas
               # add click handler to thumbnails so they can be selected
               tpl.find('.thumbnail').click ->
@@ -266,6 +274,8 @@ $(document).ready ->
             post_data =
               site_id: site
               url: $('#s3-data').data('url') + key
+              lat: file.lat
+              lng: file.lng
 
             $.ajax({
               url: "/sites/" + site + "/images",
@@ -273,8 +283,7 @@ $(document).ready ->
               dataType: "json",
               data: post_data
             }).done( (response) ->
-  #            data.context.find('.thumbnail').attr('id',"image_" + response.id).html('<img src="<%= asset_path('loading.gif') %>" />')
-              data.context.find('.thumbnail').attr('id',"image_" + response.id)#.html('<div class="loading_div" style="background-image: url(\'<%= asset_path('loading.gif') %>\'></div>')
+              data.context.find('.thumbnail').attr('id',"image_" + response.id)
               file.thumbnail.toBlob( (blob) ->
                 blob.isThumbnail = true
                 last = file.name.lastIndexOf('.')
@@ -426,3 +435,6 @@ $(document).ready ->
 
   $('#upload_more').click () ->
     window.location.href = '/sites/' + $('#site_id').val() + "/upload"
+
+  $('#show_map').click () ->
+    window.location.href = '/sites/' + $('#site_id').val() + "/map"

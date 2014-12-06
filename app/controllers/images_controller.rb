@@ -72,7 +72,7 @@ class ImagesController < ApplicationController
 
   private
     def image_params
-      params.permit(:url, :thumbnail)
+      params.permit(:url, :thumbnail, :lat, :lng)
     end
 
     def set_quality(val)

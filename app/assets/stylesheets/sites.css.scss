@@ -154,7 +154,12 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 }
 
 .progress-area {
-  margin-top: 48px;
+  margin-top: 34px;
+}
+
+.progress-bar {
+  height: 34px !important;
+  line-height: 34px !important;
 }
 
 .status-messages {

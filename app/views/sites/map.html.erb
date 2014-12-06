@@ -1,0 +1,52 @@
+<% @site.images.each do |img| 
+  lat = img.lat
+  lng = img.lng
+
+  if lat and lng
+    arr = [lat, lng]
+    @lat_lngs.push(arr)
+
+=begin 
+    if @max_lat == 0 
+      @max_lat = lat
+    if @max_lng == 0
+      @max_lng = lng
+    if @min_lat == 0
+      @min_lat = 0
+    if @min_lng = 0
+      @min_lng = 0
+
+    abs_lat = lat.abs
+    abs_lng = lng.abs
+
+    if abs_lat < @min_lat
+      @min_lat = abs_lat
+    if abs_lat > @max_lat
+      @max_lat = abs_lat
+    if abs_lng < @min_lng
+      @min_lng = abs_lng
+    if abs_lng > @max_lng
+      @max_lng = abs_lng
+
+    center_lat = @min_lat + (( @max_lat - @min_lat) / 2)
+    center_lng = @min_lng + (( @max_lng - @min_lng) / 2)
+
+    if lat < 0
+      center_lat = 0 - center_lat
+
+    if lng < 0
+      center_lng = 0 - center_lng
+
+=end 
+
+ end
+end %>
+
+<%=
+  map(:center => {
+    :latlng => [-54.00,6.080 ],
+    :zoom => 16
+  }) 
+
+%>
+

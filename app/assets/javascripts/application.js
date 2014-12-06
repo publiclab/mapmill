@@ -21,7 +21,7 @@
 //= require jquery.fileupload-image
 //= require jquery.fileupload-audio
 //= require jquery.fileupload-video
-//= require jquery.fileupload-jquery-ui
+// require jquery.fileupload-jquery-ui
 //= require jquery.fileupload-validate
 //= require jquery.knob
 //= require blueimp-gallery-all
@@ -29,6 +29,9 @@
 //= require bootstrap.min
 //= require bootbox.min 
 //= require bootstrap-datepicker
+
+//= require exif 
+//= require leaflet
 
 //= require turbolinks
 //= require_tree .

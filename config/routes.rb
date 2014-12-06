@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   get   '/logout' => 'session#logout'
 
   get   '/sites/:id/upload' => 'sites#upload'
+  get   '/sites/:id/map' => 'sites#map'
 
   put   '/images/:id/set_thumbnail' => 'images#set_thumbnail'
   get   '/images/:id/set_good' => 'images#set_good'
