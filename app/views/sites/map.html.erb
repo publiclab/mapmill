@@ -9,9 +9,10 @@
     #create lat long array
     arr = [lat, lng]
     #create a marker
-    marker = {:latlng => arr, :popup => '<img class="map_img" src="' + img.thumbnail + '">'}
-    #add to list of markers
-    @markers.push(marker)
+    if img.thumbnail
+      marker = {:latlng => arr, :popup => '<img class="map_img" src="' + img.thumbnail + '">'}
+      #add to list of markers
+      @markers.push(marker)
 
     #Now calculate the center of the map
     abs_lat = lat.abs
