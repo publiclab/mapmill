@@ -146,19 +146,19 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aws-sdk
-  blueimp-gallery
-  bootstrap-addons-rails
+  aws-sdk (= 1.53.0)
+  blueimp-gallery (= 2.11.0.1)
+  bootstrap-addons-rails (= 0.1.2)
   coffee-rails (~> 4.0.0)
-  haml-rails
+  haml-rails (= 0.5.3)
   jbuilder (~> 2.0)
   jquery-rails
-  leaflet-rails
-  open_id_authentication
-  passenger
-  pg
+  leaflet-rails (= 0.7.4)
+  open_id_authentication (= 1.2.0)
+  passenger (= 4.0.53)
+  pg (= 0.17.1)
   rails (= 4.1.4)
-  ruby-openid
+  ruby-openid (= 2.5.0)
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   spring

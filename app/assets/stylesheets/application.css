@@ -143,7 +143,12 @@ blueimp-gallery options
 }
 
 #map {
-  /*height: 100%; */
-  height: 400px;
+  height: 100%; 
   width: 100%;
+  margin-top: -40px;
+  position: absolute !important;
+}
+
+.map_img {
+  width: 200px;
 }

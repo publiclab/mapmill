@@ -3,35 +3,70 @@
 # You can use CoffeeScript in this file: http:#coffeescript.org/
 
 
+##################################################################################################################################
+#
+# This is the main javascript class for all site related stuff.
+# The upload works this way: 
+# <ul> 
+#   <li> First images need to be selected via upload button</li>
+#   <li> ...or, drag and drop</li>
+#   <li> Images which really will be uploaded need to be selected first with the mouse</li>
+#   <li> Click the upload button</li>
+#   <li> After images have been successfully uploaded, a thumbnail is automatically generated</li>
+#   <li> As this is all CLIENT SIDE, this implies:
+#     <ul>
+#       <li> The client sends the image to AWS S3 </li>
+#       <li> If this went OK, a handle is returned. The client <strong> saves the image on the server</strong></li>
+#       <li> The server returns an id for the new image to the client; the client generates a thumbnail and 
+#            <strong>saves this thumbnail on AWS S3</strong></li>
+#       <li> If this all went ok, the client associates the new thumbnail with the id of the image on the server</li>
+#       <li> If that went ok, the process is finished</li>
+#     </ul>
+# </ul>
+#
+##################################################################################################################################
+
 $(document).ready ->
+  #determine browser
   ua = navigator.userAgent.toLowerCase()
   isAndroid = ua.indexOf("android") > -1
   webkitVer = parseInt((/WebKit\/([0-9]+)/.exec(navigator.appVersion) or 0)[1], 10) or undefined
   isNativeAndroid = webkitVer <= 534 && navigator.vendor.indexOf('Google') == 0
-
+  
+  #android specific
   if isAndroid || isNativeAndroid
     $('.voting_disabled').addClass('voting_disabled_android')
 
+  #disable voting
   $('.voting_disabled').mouseover ->
     $(this).attr('title','You have already voted for this image')
 
   $('.voting_disabled').click (e) ->
     e.preventDefault()
     return false
-
+  
+  #ajax calls will always send the CSRF token
   $.ajaxSetup headers:
     "X-CSRF-Token": $("meta[name=\"csrf-token\"]").attr("content")
 
+  #some variables
   $uploadList = $('#upload-list')
   $url = $("#s3-data").data("url")
   upload_btn = $('#upload_selected')
+  #this is the actual container of all files to be uploaded
   file_list = []
 
+  #bind key events for image traversing (j,k) and classification (1,2,3)
+  # 1 = image good
+  # 2 = image not ok
+  # 3 = image bad
   $('body').keydown( (evt) ->
     selected = false
     $('#select_first').hide()
     if $('.selected_img').length
+      #make sure an image gets selected first prior to navigate
       selected = $('.selected_img').first()
+    #navigate right
     if evt.key =='k'
       if selected
         index = $('#links .thumbnail').index(selected)
@@ -43,7 +78,7 @@ $(document).ready ->
           next.addClass('selected_img')
       else
         $('#links .thumbnail').first().addClass('selected_img')
-
+    #navigate left 
     else if evt.key == 'j'
       if selected
         index = $('#links .thumbnail').index(selected)
@@ -55,7 +90,7 @@ $(document).ready ->
           prev.addClass('selected_img')
       else
         $('#links .thumbnail').last().addClass('selected_img')
-  
+    #set good 
     else if evt.key == '1'
       if selected
         image_id = selected.find('img').attr('alt')
@@ -63,7 +98,7 @@ $(document).ready ->
         set_quality(btn, image_id, 'set_good')
       else
         $('#select_first').show()
-    
+    #set not ok 
     else if evt.key == '2'
       if selected
         image_id = selected.find('img').attr('alt')
@@ -71,7 +106,7 @@ $(document).ready ->
         set_quality(btn, image_id, 'set_nok')
       else
         $('#select_first').show()
-    
+    #set bad 
     else if evt.key == '3'
       if selected
         image_id = selected.find('img').attr('alt')
@@ -86,14 +121,15 @@ $(document).ready ->
   # trigger file upload browser on Browse click
   $('#browse').click () ->
     $('#fileupload').click()
-
+  
+  #function to calculate the file size in human readable format
   formatFileSize = (bytes) ->
     return ""  if typeof bytes isnt "number"
     return (bytes / 1000000000).toFixed(2) + " GB"  if bytes >= 1000000000
     return (bytes / 1000000).toFixed(2) + " MB"  if bytes >= 1000000
     (bytes / 1000).toFixed(2) + " KB"
 
-
+  #file upload widget, jquery-fileupload
   if $("#fileupload") 
     $("#fileupload").fileupload({
       xhrFields: {withCredentials: true},
@@ -106,39 +142,51 @@ $(document).ready ->
       formData: $("#s3-data").data("fields"),
       paramName: 'file',
       dropZone: $('#upload-area'),
+      #on adding a new file via drag and drop or file upload widget
       add: (e, data) ->
         for file in data.files
+          #for each selected image, first show a loading gif
           tmp_tpl = $('<div class="col-xs-3 col-sm-3 col-md-3"><div class="thumbnail"><div class="caption"></div></div>')
           tmp_tpl.find('.thumbnail').html('<div class="loading_image">&nbsp;</div>')
           $uploadList.append(tmp_tpl)
-          #console.log file
+          #read the file
           reader = new FileReader()
+          #when finished
           reader.onloadend = ->
+            #scale to calculate thumbnail size
             scale = 0.15
             original = reader.result
             img = new Image()
             img.src = original
             img.onload = () ->
+              #read EXIF GPS info
               EXIF.getData this, ->
                 lat = EXIF.getTag(this, "GPSLatitude")
                 lng = EXIF.getTag(this, "GPSLongitude")
                 #Convert coordinates to WGS84 decimal
                 latRef = EXIF.getTag(this, "GPSLatitudeRef")
                 lngRef = EXIF.getTag(this, "GPSLongitudeRef")
-                lat = (lat[0] + lat[1]/60 + lat[2]/3600) * (latRef == "N" ? 1 : -1)
-                lng = (lng[0] + lng[1]/60 + lng[2]/3600) * (lngRef == "W" ? -1 : 1)
+                lat = (lat[0] + lat[1]/60 + lat[2]/3600)
+                lng = (lng[0] + lng[1]/60 + lng[2]/3600)
+
+                if latRef != "N"
+                  lat = lat * -1
+                if lngRef == "W"
+                  lng = lng * -1
 
                 file.lat = lat
                 file.lng = lng
                 return
+              #file has been loaded, remove loading gif
               tmp_tpl.remove()
+              #create a canvas as thumbnail holder
               canvas = document.createElement("canvas")
               canvas.width = img.width * scale
               canvas.height = img.height * scale
               canvas.className = "canvas-thumbnail"
               
               canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
-
+              #this is the template for the image in the upload view
               tpl = $('<div class="col-xs-6 col-sm-3 col-md-3 working"><div class="thumbnail"><div class="caption"></div><div class="abort_upload"><span class="alert-warning glyphicon glyphicon-remove-circle"></span></div><div class="knob-progress"><input type="text" value="0" data-width="64" data-height="64"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div></div>')
               # add image source
               tpl.find(".thumbnail").append(canvas)
@@ -178,7 +226,10 @@ $(document).ready ->
 
           reader.readAsDataURL file
           jqXHR = null
+          
+          # Click "Start Upload"
           $('#upload_selected').on('click', () ->
+            #when an image gets selected, remove eventual old "No files" messages
             if (file_list.length < 1)
               $('#no-files').fadeIn()
             else
@@ -186,15 +237,18 @@ $(document).ready ->
             if (file_list.indexOf(file) > -1)
               $('#cancel_files').prop('disabled', true)
               $('.selected_img .abort_upload').css('visibility','visible')
+              # Finally upload
               jqXHR = data.submit()
           )
 
+          # Cancel the upload
           $('#cancel_upload').on('click', () ->
             if jqXHR
               jqXHR.abort()
               $("#upload-msg").append('<p class="status-error">Upload aborted by user!</p>')
           )
               
+          # Clear all files
           $('#clear_files').on('click', () ->
             $uploadList.children().each( (i, elem) ->
               $(this).remove()
@@ -206,7 +260,7 @@ $(document).ready ->
             file_list.length = 0
           )
 
-
+      # Progress update callback for each file
       progress: (e, data) ->
        if data.context
           # Calculate the completion percentage of the upload
@@ -217,6 +271,7 @@ $(document).ready ->
           data.context.find(".knob-progress").show()
           data.context.find('.canvas-thumbnail').addClass('knob-update')
           data.context.find("input").val(progress).change()
+          # The Upload finished, display "Generating thumbnail" 
           if progress is 100
             data.context.find('.thumbnail').css('opacity',0.2)
             data.context.find(".knob-progress").hide()
@@ -228,6 +283,7 @@ $(document).ready ->
             data.context.prepend(p)
             data.context.addClass "loading_image"
 
+      # Progress update callback for overall process
       progressall: (e, data) ->
         progress = parseInt(data.loaded / data.total * 100, 10)
         $(".progress-bar").css("background", "green")
@@ -235,17 +291,18 @@ $(document).ready ->
         $(".progress-bar").attr('aria-valuenow', progress)
         $(".progress-bar").text(progress + '%')
 
+      #Callback for a single file when finished
       done: (e, data) ->
-        #$("#upload-msg").append("<p class="status-success">Upload terminated!</p>")
         upload_btn.prop('disabled', true)
 
         for file in data.files
+          # If the file is a thumbnail, the whole process succeeded; remove the image from the list
           if file.isThumbnail
             key  = $(data.jqXHR.responseXML).find("Key").text()
             csrf = $("meta[name=\"csrf-token\"]").attr("content")
             put_data =
               thumbnail: $('#s3-data').data('url') + key
-   
+            # Associate the thumbnail with the image! 
             $.ajax({
               url: "/images/" + file.image_id + '/set_thumbnail',
               type: 'PUT',
@@ -255,16 +312,16 @@ $(document).ready ->
                   request.setRequestHeader "X-CSRF-Token",csrf
                   return
             }).done( (response) ->
+                # All went fine
                 $("#upload-msg").append('<p class="status-info">Thumbnail successfully associated to image ' + file.original + "</p>")
-
                 $("#image_" + file.image_id).fadeOut(2000, "swing", ->
                    $(this).parent().remove()
                 )
-
               ).fail( (response) ->
+                # Something went wrong
                 $("#upload-msg").append('<p class="status-error">Thumbnail failed to be associated to image ' + file.original + "</p>")
               )
-
+          # The uploaded file was the original image, now generate a thumbnail
           else
             $("#upload-msg").append('<p class="status-info">Image ' + file.name + " successfully uploaded</p>")
 
@@ -277,12 +334,14 @@ $(document).ready ->
               lat: file.lat
               lng: file.lng
 
+            # Save image on server first
             $.ajax({
               url: "/sites/" + site + "/images",
               type: 'POST',
               dataType: "json",
               data: post_data
             }).done( (response) ->
+              # Image successfully saved on server, start thumbnail generation, using BLOB
               data.context.find('.thumbnail').attr('id',"image_" + response.id)
               file.thumbnail.toBlob( (blob) ->
                 blob.isThumbnail = true
@@ -293,6 +352,7 @@ $(document).ready ->
                 blob.original = file.name
                 flist = []
                 flist.push(blob)
+                #Start uploading the thumbnail to AWS S3
                 $("#fileupload").fileupload("send", {files: flist})
               )
               $("#upload-msg").append('<p class="status-success">Image ' + file.name + " successfully saved to site</p>")
@@ -301,13 +361,11 @@ $(document).ready ->
               $("#upload-msg").append('<p class="status-error"><i>Image ' + file.name + " failed to be associated to site! " + xhr.responseText + "</i></p>")
               return
             )
-            
-            #create hidden field
-            #var input = $("<input />", { type:'hidden', name: fileInput.attr('name'), value: url })
 
       start: (e) ->
         $(".progress-section").addClass('in')
 
+      # Upload failed callback
       fail: (e, data) ->
         if (data.errorThrown == "abort")
           $("#upload-msg").append('<p class="status-warning">Complete upload aborted by user.</p>')
@@ -323,6 +381,8 @@ $(document).ready ->
   $(document).on "drop dragover", (e) ->
       e.preventDefault()
 
+
+  # Click handlers when selecting image quality
   $('.image_controls .btn-success').click () ->
     btn       = $(this)
     id        = $(this).attr('id')
@@ -344,20 +404,17 @@ $(document).ready ->
     image_id  = id.substr(8)
     set_quality(btn, image_id, 'set_bad')
   
-    
+  # Actually save the new quality to the server 
   set_quality = (btn, image_id, action) ->
-    #cookies       = document.cooke
-    #voting_cookie = 'mapmill_voted'
-    #if (cookies.substr
     $.ajax "/images/" + image_id + "/" + action,
       type: "GET"
       dataType: 'json'
       success: (image) ->
         quality = image.quality
         quality_class = 'assigned_quality'
+        # Different classes for the image set list or the detailed image dialog view
         if btn.hasClass 'detail_control'
           quality_class = 'assigned_quality_single'
-
         
         btn_group = btn.parent().parent()
         btn_group.find('.btn').each( (i, elem) ->
@@ -366,9 +423,12 @@ $(document).ready ->
           else
             $(this).removeClass(quality_class)
         )
+        # Disable voting immediately after voting
         btn_group.addClass("voting_disabled")
+        # Android specific
         if isAndroid || isNativeAndroid
           btn_group.addClass("voting_disabled_android")
+        # Add a hint for the user
         btn_group.mouseover ->
           $(this).attr('title','You have already voted for this image')
         btn_group.find('.btn').each( (i,elem) ->
@@ -380,6 +440,7 @@ $(document).ready ->
 
   current_img = 0
   
+  # Click handlers for setting the image quality in the detailed dialog view
   $('#blueimp-gallery .detail_image_controls .btn-success').click () ->
     set_quality $(this), current_img, 'set_good'
 
@@ -389,6 +450,7 @@ $(document).ready ->
   $('#blueimp-gallery .detail_image_controls .btn-danger').click () ->
     set_quality $(this), current_img, 'set_bad'
 
+  # The image gallery widget
   $('#blueimp-gallery')
     .on('open', (event) ->
         #Gallery open event handler
