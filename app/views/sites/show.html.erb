@@ -1,8 +1,8 @@
 <h1>Site details</h1>
 <div class="site_information">
 <h2 style="display: inline-block; margin-right: 20px"><%= @site.name %></h2><div class="site_img_num"><%= @site.images.count %> images</div>
-<button style="margin-left: 20px; padding: 10px; margin-bottom: 10px" id="upload_more" class="btn btn-primary">Upload more pictures for this site</button>
-<button style="margin-left: 20px; padding: 10px; margin-bottom: 10px" id="show_map" class="btn btn-success">View Map</button>
+<button style="margin-left: 20px; padding: 10px; margin-bottom: 10px" onclick="window.location.href='/sites/<%= @site.id %>/upload'" id="upload_more" class="btn btn-primary">Upload more pictures for this site</button>
+<button style="margin-left: 20px; padding: 10px; margin-bottom: 10px" onclick="window.location.href='/sites/<%= @site.id %>/map'" id="show_map" class="btn btn-success">View map</button>
           
  <%= hidden_field_tag 'site_id', @site.id %>
 </div>

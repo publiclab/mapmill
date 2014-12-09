@@ -26,7 +26,9 @@
 #
 ##################################################################################################################################
 
+  
 $(document).ready ->
+
   #determine browser
   ua = navigator.userAgent.toLowerCase()
   isAndroid = ua.indexOf("android") > -1
@@ -130,7 +132,7 @@ $(document).ready ->
     (bytes / 1000).toFixed(2) + " KB"
 
   #file upload widget, jquery-fileupload
-  if $("#fileupload") 
+  if $("#fileupload")
     $("#fileupload").fileupload({
       xhrFields: {withCredentials: true},
       url: $url,
@@ -495,8 +497,3 @@ $(document).ready ->
         # Gallery closed event handler
     )
 
-  $('#upload_more').click () ->
-    window.location.href = '/sites/' + $('#site_id').val() + "/upload"
-
-  $('#show_map').click () ->
-    window.location.href = '/sites/' + $('#site_id').val() + "/map"
