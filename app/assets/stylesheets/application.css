@@ -18,28 +18,56 @@
  *= require_tree .
  *= require_self
  */
-
-a {
-  text-decoration: none !important;
-  color: #428BCA !important;
+@font-face {
+    font-family: 'Junction';
+    src: url('junction/webfonts/junction-regular.woff') format('woff');
 }
-
-header {
-  background-color: #1b1b1b;
-  color: white;
-  padding-bottom: 12px;
-  margin-bottom: 40px;
-}
-
-.page_title {
-  font-family: 'Love Ya Like A Sister', cursive;
-  font-size: 48px;
-}
-
 body {
   font-family: 'Open Sans', sans-serif;
-  color: #111111;
+  color: #666;
 }
+body a{
+  text-decoration: none;
+  color: red;
+}
+header {
+  color: black;
+  padding-bottom: 12px;
+  margin-bottom: 40px;
+  padding-top: 10px;
+  line-height: 40px;
+  
+}
+.menu{
+  margin: auto;
+  float: right !important;
+}
+.header{
+  border-bottom: solid #a8a8a8 thin;
+  vertical-align: bottom;
+  font-size: 18px;
+  padding: 0 0 5px;
+}
+header > a {
+  color: red;
+}
+h1.page_title{
+  display: inline;
+  margin: 0px;
+  font-family: Junction;
+}
+
+h1.page_title > a {
+  font-size: 32px;
+  color: black;
+}
+h2{
+  font-size: medium;
+  margin: 0;
+  display: inline-block;
+  color: #666;
+}
+
 
 input,
 textarea {
@@ -50,16 +78,6 @@ textarea {
 
 input[type=text] {
   height: 32px;
-}
-
-.site_desc {
-  margin-top: 34px;
-}
-
-.site_desc_title {
-  font-style: italic;
-  font-size: 16px;
-  line-height: 8px;
 }
 
 .user_info {
@@ -75,10 +93,6 @@ input[type=text] {
 .session_info {
   position: relative;
   height: 100px;
-}
-
-.learn_more {
-  margin-top: 22px;
 }
 
 .blue-header {
@@ -112,10 +126,6 @@ input[type=text] {
   font-weight: bold !important;
 }
 
-.action_wrapper {
-  position: relative;
-  height: 100px;
-}
 
 .header_action {
   position: absolute;
