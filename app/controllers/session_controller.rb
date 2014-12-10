@@ -55,6 +55,7 @@ class SessionController < ApplicationController
           if tmp 
             data = tmp.attributes
             data.delete("nonce")
+            data.delete("id")
             site = Site.new(data)
             site.save
             tmp.destroy
@@ -84,10 +85,6 @@ class SessionController < ApplicationController
   end
 
   def successful_login(back_to, id)
-    puts "back_to: "
-    puts back_to
-    puts "id:"
-    puts id
     session[:user_id] = @current_user.id
     flash[:success] = "You have successfully logged in."
     if id
