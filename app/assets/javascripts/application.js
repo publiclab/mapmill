@@ -30,6 +30,8 @@
 //= require bootbox.min 
 //= require bootstrap-datepicker
 
+//= require canvas-to-blob.min 
+
 //= require exif 
 //= require leaflet
 

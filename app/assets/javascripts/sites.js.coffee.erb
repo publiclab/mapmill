@@ -165,6 +165,8 @@ $(document).ready ->
               EXIF.getData this, ->
                 lat = EXIF.getTag(this, "GPSLatitude")
                 lng = EXIF.getTag(this, "GPSLongitude")
+                if (lat is `undefined`) or (lng is `undefined`)
+                  return
                 #Convert coordinates to WGS84 decimal
                 latRef = EXIF.getTag(this, "GPSLatitudeRef")
                 lngRef = EXIF.getTag(this, "GPSLongitudeRef")
