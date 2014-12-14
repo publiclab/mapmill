@@ -7,20 +7,21 @@
   <a href="http://publiclab.org">Publiclab</a> is currently supported as OpenID provider!
 </div>
 
-<div class="alert alert-info">Please enter your OpenID endpoint, you will then be redirected to publiclab.org to complete the login procedure. The OpenID is <strong>case sensitive!</strong></div>
+<div class="alert alert-info">You must be logged in to upload images. The OpenID is <strong>case sensitive!</strong></div>
 
-<form id="open_id_form" method="GET" action="/login">
+
+<form class="well well-white login"  id="open_id_form" method="GET" action="/login">
+  <h1>Login</h1>
   <%= hidden_field_tag :authenticity_token, form_authenticity_token -%>
   <%= hidden_field_tag :back_to,@referer  -%>
-  <div class="input-group" id="open_id_input_group">
-    <span class="input-group-addon glyphicon glyphicon-user input-desc">&nbsp;OpenID</span>
+  <div class="input-group center" id="open_id_input_group">
+    <label>Use your <a href="http://publiclab.org/">PublicLab.org</a> username to log in.
+    <br/> 
+    If you don't have one, <a href="http://publiclab.org/signup"> sign up there first</a>!</label>
+    <!--<span class="input-group-addon glyphicon glyphicon-user input-desc">&nbsp;OpenID</span>-->
     <input id="open_id_username" type="text" class="form-control" placeholder="Username">
   </div>
 
-  <div class="open_id_endpoint">
-    <label class="open_id_part">http://publiclab.org/people/</label> <label class="open_id_part" id="open_id_part_username"></label><label class="open_id_part">/identity</label>
-  </div>
-
-
-  <button id="do_open_id_login" style="margin-top: 20px" data-bb-handler="success" type="button" class="btn btn-success">Take me there</button>
+  <button id="do_open_id_login" style="margin-top: 20px" data-bb-handler="success" type="button" class="btn btn-primary">Log in</button>
 </form>
+

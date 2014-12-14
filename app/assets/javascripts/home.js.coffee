@@ -130,3 +130,8 @@ $ ->
       else
         form.submit()
   )
+$('#toggle_sites_form').click ->
+  $('.toggle-well').addClass('hidden-xs')
+  $('.sites_form').hide().removeClass('hidden-xs').show(650)
+  console.log("whte");
+    

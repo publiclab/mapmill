@@ -1,17 +1,42 @@
-<h1>Site details</h1>
+<div class='well well-white'>
+  <div class='row sites-show-well'>
+  
+   <div class='col-sm-4'>
+      <h3>How to sort</h3>
+      <p class='regular_text'>Rate each image based on sharpness, exposure, and angle.</p>
+      <a href="#">Click to see an example</a>
+    </div>
+    
+    <div class='col-sm-4 hidden-xs'>
+      <h3>Add images to this set</h3>
+      <button id="upload_more" class="btn btn-success">
+        <i class="fa fa-arrow-circle-up fa-lg"></i>&nbsp Upload images
+      </button>
+       <p>You must be <a href="/show_login">logged in</a> to add images</p>
+    </div>
+    
+    <div class='col-sm-4 hidden-xs'>
+      <h3>Powersort!</h3>
+      <p>Use hotkeys 1, 2, & 3 to sort</p>
+      <button class="btn btn-primary"><i class="fa fa-square-o fa-lg"></i>&nbsp Full screen</button>
+      <p>Go to full screen to see image details</p>
+    </div>
+    
+  </div>
+</div>
 <div class="site_information">
-<h2 style="display: inline-block; margin-right: 20px"><%= @site.name %></h2><div class="site_img_num"><%= @site.images.count %> images</div><button style="margin-left: 20px; padding: 10px; margin-bottom: 10px" id="upload_more" class="btn btn-primary">Upload more pictures for this site</button>
-          
+         
  <%= hidden_field_tag 'site_id', @site.id %>
 </div>
 
-<div class="alert alert-info" role="alert">
+<!--<div class="alert alert-info" role="alert">
     Use arrow keys, j/k, 1,2,3
-</div>
+</div>-->
 
 <div id="select_first" class="alert alert-warning" role="alert" style="display: none">
    You have tried to change the quality of an image without selecting one first! Please select an image
 </div>
+<h2><%= @site.name %> <span class='regular_text'>(<%= @site.images.count %> images)</span></h2>
 
 <div class="site_details">
   <div id="links" class="row">

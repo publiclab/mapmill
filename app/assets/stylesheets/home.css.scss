@@ -12,16 +12,12 @@
 }
 
 .site_name, .site_img_num {
-  display: inline-block;
+  display: block;
+}
+.site_img_num{
+  font-size: 10px;
 }
 
-.site_info {
-  border-bottom: 1px solid #428BCA;
-  margin-bottom: 25px;
-}
-.site_details {
-  margin-left: 15px;
-}
 @media screen and (min-width: 768px) { 
   .upload_images {
     /*float right so that sites div moves up beneath well with circles;*/
@@ -37,12 +33,10 @@
 
 .well{
   background-color: #E9F7FB;
-  color: black;
   text-align: center;
   margin-bottom: 0;
 }
 .upload_images > .well{
-  background-color: #fff;
   margin-top: 10px;
 }
 .circle {

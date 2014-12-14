@@ -1,0 +1,16 @@
+.login{
+  margin: 0 auto;
+  max-width: 300px;
+  text-align: left;
+}
+.login label{
+  font-size: smaller;
+  font-weight: normal;
+}
+.login h1{
+  color: black;
+  margin-top: 0;
+}
+.login button{
+  min-width: 120px;
+}

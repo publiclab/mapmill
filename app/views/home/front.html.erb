@@ -27,18 +27,18 @@
     <% if logged_in? %>
       <input type="hidden" id="logged_in" value="1"/>
     <% end %>
-    <div class="section_title hidden-xs">
+    <div class="hidden-xs">
       Create a set to upload images:
     </div>
     <%= render 'sites/form' %>
   </div>
-  <div class='well hidden-sm hidden-lg hidden-md'>
+  <div class='well toggle-well well-white hidden-sm hidden-lg hidden-md'>
     <button id='toggle_sites_form' class='btn btn-primary form-control'>Upload Images</button>
   </div>
 </div> 
 
  <div class="col-lg-5 col-md-5 col-sm-5 sites_overview">
- <h3>Sets</h3>
+ <h3>Sets <span class='regular_text'>(<%= @sites.count%>)</span></h3>
   <%= render 'sites/small_list' %>
 </div><!--end site_overview-->
 </div>

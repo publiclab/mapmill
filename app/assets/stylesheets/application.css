@@ -68,11 +68,11 @@ h1.page_title > a {
   font-size: 32px;
   color: black;
 }
-h2{
+.log-line{
   font-size: medium;
   margin: 0;
-  display: inline-block;
   color: #666;
+  line-height: 1.1;
 }
 
 
@@ -152,4 +152,14 @@ blueimp-gallery options
 }
 .blueimp-gallery-controls > .detail_image_controls {
   display: block;
+}
+.well-white{
+  background-color: #fff;
+  border-color: #BFE7E6;
+}
+.btn{
+  font-size: 16px;
+}
+.regular_text{
+  font-size: medium;
 }

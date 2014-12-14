@@ -36,9 +36,9 @@ $screen-xs-max:              ($screen-sm-min - 1) !default;
 $screen-sm-max:              ($screen-md-min - 1) !default;
 $screen-md-max:              ($screen-lg-min - 1) !default;
 
-@media (min-width: $screen-sm-min) {.thumbnail img { height:100px !important; }}
+/*@media (min-width: $screen-sm-min) {.thumbnail img { height:100px !important; }}
 @media (min-width: $screen-md-min) {.thumbnail img { height:150px !important; }}
-@media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}
+@media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}*/
 
 @media (min-width: $screen-xxs-min) {
   .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
@@ -82,7 +82,6 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
   .image_controls .btn {font-size: 14px !important} 
 }
 
-@media (min-width: $screen-sm-min) {.thumbnail.small img { height:100px !important; }}
 
 #upload-area {
   width: 100%;
@@ -98,7 +97,11 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 }
 
 .thumbnail {
-  border: 8px solid #CCC !important;
+  margin-bottom: 5px;
+  padding: 0;
+}
+.thumbnail.small img{
+  height: 110px;
 }
 
 .selected_img {
@@ -199,3 +202,10 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 .btn_disabled {
   pointer-events: none;
 }
+.sites-show-well{
+  text-align: left;
+}
+.sites-show-well h3{
+  color: black;
+}
+
