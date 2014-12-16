@@ -1,5 +1,10 @@
+<% 
+  upload_more_button = '<button class="btn btn-success upload_more"><i class="fa fa-arrow-circle-up fa-lg"></i>&nbsp Upload <span class="hidden-xs">images</span> </button>'
+  log_in_message = '<p>You must be <a href="/show_login">logged in</a> to add images</p>'
+  fullscreen_button = '<button class="btn btn-primary" id="full-screen"><i class="fa fa-square-o fa-lg"></i>&nbsp Full screen</button>'
+%>
 <div class='well well-white'>
-  <div class='row sites-show-well'>
+  <div class='row sites-show-well-top'>
   
    <div class='col-sm-4'>
       <h3>How to sort</h3>
@@ -8,22 +13,27 @@
     </div>
     
     <div class='col-sm-4 hidden-xs'>
-      <h3>Add images to this set</h3>
-      <button id="upload_more" class="btn btn-success">
-        <i class="fa fa-arrow-circle-up fa-lg"></i>&nbsp Upload images
-      </button>
-       <p>You must be <a href="/show_login">logged in</a> to add images</p>
+      <h3>Add images to this set</h3>      
+      <%= upload_more_button.html_safe %>
+      <%= log_in_message.html_safe %>
     </div>
     
     <div class='col-sm-4 hidden-xs'>
       <h3>Powersort!</h3>
       <p>Use hotkeys 1, 2, & 3 to sort</p>
-      <button class="btn btn-primary"><i class="fa fa-square-o fa-lg"></i>&nbsp Full screen</button>
+      <%= fullscreen_button.html_safe %>
       <p>Go to full screen to see image details</p>
     </div>
     
   </div>
 </div>
+<div class="sites-show-well-mobile hidden-sm hidden-md hidden-lg">
+<%= upload_more_button.html_safe %>
+<%= fullscreen_button.html_safe %>
+<%= log_in_message.html_safe %> 
+</div>
+
+
 <div class="site_information">
          
  <%= hidden_field_tag 'site_id', @site.id %>
@@ -36,7 +46,7 @@
 <div id="select_first" class="alert alert-warning" role="alert" style="display: none">
    You have tried to change the quality of an image without selecting one first! Please select an image
 </div>
-<h2><%= @site.name %> <span class='regular_text'>(<%= @site.images.count %> images)</span></h2>
+<h2><%= @site.name %> <span class='regular_text'>(<%= @site.images.count %> images) &nbsp <a href="">by rank<span class="hidden-xs">ing</span></a> | <a href="">by <span class="hidden-xs"># of </span>votes</a></span></h2>
 
 <div class="site_details">
   <div id="links" class="row">
@@ -52,31 +62,33 @@
               end
             end
           %>
-          <div class="col-xs-12 col-sm-3 col-md-3">
-            <div class="thumbnail">
+          <div class="col-xs-12 col-sm-4 col-md-3 image-grid-cell">
+          <a href="<%= img.url %>" title="" data-gallery >
+            <div class="thumbnail" style="background-image: url('<%= img.url %>');">
               <%= hidden_field_tag 'img_' + img.id.to_s , img.id %>
-              <a href="<%= img.url %>" title="" data-gallery>
-                <img src="<%= img.thumbnail %>" alt="<%= img.id %>">
-              </a>
-            </div>
+                <!--<img src="<%= img.url %>" alt="<%= img.id %>">-->
+              </div>
+            </a>
             <div class="image_controls">
-              <div class="btn-group btn-group-justified <%= voting_disabled %>">
-                <div class="btn-group ">
-                  <button id="btn_good_<%= img.id %>" type="button" class="btn btn-success <%= btn_disabled %> <% if img.good? %> assigned_quality <% end %>">
-                    <span class="glyphicon glyphicon-ok"></span> good 
+              <div class="row <%= voting_disabled %>">
+              
+                <div class="col-xs-4">
+                  <button id="btn_good_<%= img.id %>" type="button" class="btn btn-success <%= btn_disabled %>">
+                    good 
                   </button>
                 </div>
-                <div class="btn-group">
-                  <button id="btn_nok_<%= img.id %>" type="button" class="btn btn-warning <%= btn_disabled %> <% if img.nok? %> assigned_quality <% end %>">
-                    <span class="glyphicon glyphicon-flag"></span> not ok
+                <div class="col-xs-4 ">
+                  <button id="btn_nok_<%= img.id %>" type="button" class="btn btn-primary <%= btn_disabled %>">
+                    ok
                   </button>
                 </div>
-                <div class="btn-group">
-                  <button id="btn_bad_<%= img.id %>" type="button" class="btn btn-danger <%= btn_disabled %> <% if img.bad? %> assigned_quality <% end %>">   
-                    <span class="glyphicon glyphicon-remove"></span> bad
+                <div class="col-xs-4">
+                  <button id="btn_bad_<%= img.id %>" type="button" class="btn btn-danger <%= btn_disabled %>">   
+                     bad
                   </button>
-                </div><!-- btn-group -->
-              </div><!-- btn-group-justified -->
+                </div>
+                
+              </div><!-- row -->
             </div><!-- image_controls -->
           </div><!-- bootstrap grid cell --> 
         <% end %>

@@ -304,7 +304,7 @@ $(document).ready ->
     image_id  = id.substr(9)
     set_quality(btn, image_id, 'set_good')
   
-  $('.image_controls .btn-warning').click () ->
+  $('.image_controls .btn-primary').click () ->
     btn       = $(this)
     id        = $(this).attr('id')
     #index 8 is after id 'btn_nok_'
@@ -404,5 +404,6 @@ $(document).ready ->
         # Gallery closed event handler
     )
 
-  $('#upload_more').click () ->
+  $('.upload_more').click () ->
     window.location.href = '/sites/' + $('#site_id').val() + "/upload"
+    

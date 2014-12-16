@@ -28,8 +28,11 @@ body {
   color: #666;
 }
 body a{
-  text-decoration: none;
   color: red;
+  text-decoration: underline;
+}
+.top a{
+  text-decoration: none;
 }
 header {
   color: black;
@@ -112,10 +115,10 @@ input[type=text] {
 }
 
 .site_details .image_controls {
-  position: absolute;
+  /*position: absolute;
   top: 182px;
   width: 235px;
-  margin-left: 12px;
+  margin-left: 12px;*/
 }
 
 .assigned_quality {
@@ -132,12 +135,20 @@ input[type=text] {
   color: blue !important;
   font-weight: bold !important;
 }
-
-
 .header_action {
   position: absolute;
   bottom: 35%;
   color: #fff !important;
+}
+.well-white{
+  background-color: #fff;
+  border-color: #BFE7E6;
+}
+.btn{
+  font-size: 16px;
+}
+.regular_text{
+  font-size: medium;
 }
 
 /*
@@ -153,13 +164,6 @@ blueimp-gallery options
 .blueimp-gallery-controls > .detail_image_controls {
   display: block;
 }
-.well-white{
-  background-color: #fff;
-  border-color: #BFE7E6;
-}
-.btn{
-  font-size: 16px;
-}
-.regular_text{
-  font-size: medium;
-}
+
+
+

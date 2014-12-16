@@ -19,10 +19,9 @@ pre {
 }
 
 a {
-  color: red;
   &:hover {
-    color: red;
-    background-color: cyan;
+    color: #f00000;
+    
   }
 }
 
