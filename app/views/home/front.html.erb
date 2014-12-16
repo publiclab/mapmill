@@ -1,15 +1,48 @@
-<div class="col-md-6 sites_overview">
- <h2>Sites</h2>
-  <%= render 'sites/small_list' %>
-</div>
-
-<div class="col-md-6 upload_images">
-  <% if logged_in? %>
-    <input type="hidden" id="logged_in" value="1"/>
-  <% end %>
-  <div class="section_title">
-    To upload new images for a new site, start here:
+<div class="row">
+  <div class="col-md-5 col-sm-5 col-ld-5 circles_parent">
+   <div class="well">
+    <div class="row">
+      <div class="col-xs-4">
+        <div class='circle green'>
+          <div class='circle_contents'><i class="fa fa-arrow-up fa-3x"></i></div>
+        </div>
+        Upload
+      </div>
+      <div class="col-xs-4">
+        <div class='circle red'>
+          <div class='circle_contents'><i class="fa fa-bars fa-3x"></i></div>
+        </div>
+        Sort
+      </div>
+      <div class="col-xs-4">
+        <div class='circle'><div class='circle_contents'>Map Knitter</div></div>
+        Map
+      </div>
+    </div><!--end row-->
+   </div><!--end well-->
+ </div>
+ 
+ <div class="col-md-7 col-sm-7 col-lg-7 upload_images">
+  <div class='sites_form hidden-xs'>
+    <% if logged_in? %>
+      <input type="hidden" id="logged_in" value="1"/>
+    <% end %>
+    <div class="hidden-xs">
+      Create a set to upload images:
+    </div>
+    <%= render 'sites/form' %>
   </div>
-  <%= render 'sites/form' %>
+  <div class='well toggle-well well-white hidden-sm hidden-lg hidden-md'>
+    <button id='toggle_sites_form' class='btn btn-primary form-control'>Upload Images</button>
+  </div>
+</div> 
 
+ <div class="col-lg-5 col-md-5 col-sm-5 sites_overview">
+ <h3>Sets <span class='regular_text'>(<%= @sites.count%>)</span></h3>
+  <%= render 'sites/small_list' %>
+</div><!--end site_overview-->
 </div>
+
+
+  
+

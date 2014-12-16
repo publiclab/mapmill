@@ -56,4 +56,6 @@ gem 'blueimp-gallery'
 gem 'bootstrap-addons-rails'
 #gem 'jquery-fileupload-rails'
 gem 'passenger'
+gem 'font-awesome-rails'
+gem 'daemon_controller'
 

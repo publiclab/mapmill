@@ -19,3 +19,11 @@
 
 .*swp
 /test/integration/node_modules/**
+
+#rails specific
+*.sqlite3
+config/database.yml
+
+
+#this project
+config/initializers/aws.rb

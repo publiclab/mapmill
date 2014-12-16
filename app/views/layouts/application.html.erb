@@ -4,7 +4,6 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Mapmill - by Publiclab</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"  rel="stylesheet">
   <link href='http://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
@@ -13,41 +12,24 @@
   <link rel="stylesheet" href="css/bootstrap-image-gallery.min.css">
 -->
   <link href='/assets/datepicker3.css' rel='stylesheet' type='text/css'>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
 <body>
 
   <header class="top" role="header">
     <div class="container">
-     <div class="row">
-
-      <div class="col-xs-6 col-sm-4 col-md-3">
-        <h1 class="page_title"><a href="/" class="title_link">MapMill</a></h1>
-        <div class="page_sub_title">
-          by PublicLab
-        </div>
+      <div class="header">
+        <h1 class="page_title"><a href="/">MapMill</a></h1> 
+        <span class='hidden-xs'>by <a href="http://publiclab.org"> Public Lab</a></span>
+        <span class='menu'> <a href="http://publiclab.org/wiki/mapmill">About</a>  |   <a href="/show_login">Login</a></span>
       </div>
-
-      <div class="col-xs-6 col-sm-3 col-md-3">
-        <div class="site_desc">
-          <h4 class="site_desc_title">Sort Images</h4>
-          <h4 class="site_desc_title">Help Make Maps</h4>
-          <div class="learn_more"><a href="http://publiclab.org/wiki/mapmill">Learn More >></a></div>
-        </div>
-      </div>
-
-      <div class="col-xs-12 col-sm-5 col-md-6">
-        <div class="action_wrapper">
-          <%= link_to("Browse sites", sites_path, class: "header_action btn btn-success") %>
-        </div>
-      <% if @user %>
-        <div class="user_info">Logged in as <%= @user.email %><a class="logout" href="/logout">Logout</a></div>
-      <% end %>
-      </div>
-
-     </div>
+      <div class='log-line'>Share and sort aerial photos collaboratively, then make maps using <a href="http://mapknitter.org/">MapKnitter.org</a></div>
+      
     </div>
   </header>
+
+  
   <!--
   <hr>
   -->

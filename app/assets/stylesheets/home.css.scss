@@ -12,18 +12,54 @@
 }
 
 .site_name, .site_img_num {
-  display: inline-block;
+  display: block;
+}
+.site_img_num{
+  font-size: 10px;
 }
 
-.site_info {
-  border-bottom: 1px solid #428BCA;
-  margin-bottom: 25px;
+@media screen and (min-width: 768px) { 
+  .upload_images {
+    /*float right so that sites div moves up beneath well with circles;*/
+    float: right;
+  }
+  .sites_overview{
+    padding-right: 0;
+  }
+  .circles_parent{
+    padding-right: 0;
+  }
 }
 
-.site_details {
-  margin-left: 15px;
+.well{
+  background-color: #E9F7FB;
+  text-align: center;
+  margin-bottom: 0;
+}
+.upload_images > .well{
+  margin-top: 10px;
+}
+.circle {
+	border-radius: 50%;
+	width: 75px;
+	height: 75px; 
+	background-color: blue;
+  display: table;
+	margin: 10px auto 10px;
+}
+.green{
+	background-color: green;
+}
+.red{
+	background-color: red;
+}
+.circle_contents{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  color: white;
+  font-weight: bold;
+  
 }
 
-.upload_images {
-  margin-top: 33px;
-}
+
