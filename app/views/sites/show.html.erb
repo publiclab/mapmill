@@ -50,7 +50,7 @@
 
 <div class="site_details">
   <div id="links" class="row">
-        <% @site.images.each do |img| %>
+        <% @images.each do |img| %>
           <% 
             voting_disabled = "" 
             btn_disabled = ""
@@ -94,7 +94,9 @@
         <% end %>
   </div><!-- links row -->
 </div><!-- site_details -->
-
+<div class="pagination-parent">
+ <%= will_paginate @images, renderer: BootstrapPagination::Rails%>
+</div>
 <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
     <!-- The container for the modal slides -->
     <div class="slides"></div>

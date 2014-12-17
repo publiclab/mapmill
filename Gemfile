@@ -55,4 +55,6 @@ gem 'blueimp-gallery'
 gem 'bootstrap-addons-rails'
 #gem 'jquery-fileupload-rails'
 gem "font-awesome-rails"
+gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate-bootstrap'
 

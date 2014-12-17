@@ -73,6 +73,30 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 .sites-show-well-mobile button{
   margin-bottom: 4px;
 }
+$footer-height: 50px;
+
+body#mapmill-sites-upload{
+  /*make room for footer*/
+  margin-bottom: $footer-height;
+}
+footer {
+  position: fixed;
+  width: 100%;
+  height: $footer-height;
+  bottom: 0;
+  border-top: solid thin #666;
+  background-color: white;
+}
+footer .container{
+  padding-top: 5px;
+}
+.fileupload-buttonbar{
+  height: $footer-height;
+}
+body#mapmill-sites-upload h4{
+  display: inline;
+  margin: 0;
+}
 
 @media (min-width: $screen-xxs-min) {
   .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
@@ -113,20 +137,49 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
   .site_details .thumbnail  { height:200px !important;}
 }
 
-
+.pagination-parent{
+  width: 100%;
+  text-align: center;
+}
 #upload-area {
   width: 100%;
-  min-height: 400px;
+  height: 200px;
   border-radius: 20px;
   border: 2px dashed #428bca;
   margin-bottom: 15px;
   padding: 20px;
+  display: table;
+
+}
+#upload-area .row{
+  display: table-cell;
+  vertical-align: middle;
+  text-align: center;
+  
+}
+.upload-text{
+  color: black;
+  padding-bottom: 10px;
+}
+.upload-text input{
+  visibility: hidden;
+  width: 1px; 
+  height: 1px
 }
 
 #upload-area:hover {
   background-color: #eee;
 }
 
+#upload-candidates-container{
+  margin-left: 0;
+  border: solid thin cyan;
+  min-height: 100px;
+  width: 100%
+}
+.upload-candidate{
+  border: thin red solid;
+}
 
 .selected_img {
   border: 8px solid #428bca !important;
@@ -156,14 +209,6 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
   background-color: #ccc;
   opacity: 0.8;
   display: none;
-}
-
-.upload-buttons-section {
-  margin-top: 15px;
-}
-
-.progress-area {
-  margin-top: 48px;
 }
 
 .status-messages {

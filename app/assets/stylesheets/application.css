@@ -150,6 +150,9 @@ input[type=text] {
 .regular_text{
   font-size: medium;
 }
+.small_text{
+  font-size: small;
+}
 
 /*
 blueimp-gallery options
