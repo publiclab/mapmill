@@ -22,7 +22,7 @@ $(document).ready ->
   $.ajaxSetup headers:
     "X-CSRF-Token": $("meta[name=\"csrf-token\"]").attr("content")
 
-  $uploadList = $('#upload-list')
+  $uploadList = $('#upload-candidates-container')
   $url = $("#s3-data").data("url")
   upload_btn = $('#upload_selected')
   file_list = []
@@ -82,7 +82,10 @@ $(document).ready ->
     
     return
   )
-
+  # upload link triggers file upload dialog attached to the rest of the uploading code (?)
+  $('#href-upload').click () ->
+    $('#fileinput').trigger('click');
+  
   # trigger file upload browser on Browse click
   $('#browse').click () ->
     $('#fileupload').click()
@@ -104,7 +107,7 @@ $(document).ready ->
     dataType: 'xml',
     formData: $("#s3-data").data("fields"), 
     paramName: 'file',
-    dropZone: $('#upload-area'),
+    dropZone: $('body'),
     add: (e, data) ->
       for file in data.files
         tmp_tpl = $('<div class="col-xs-3 col-sm-3 col-md-3"><div class="thumbnail"><div class="caption"></div></div>')
@@ -127,10 +130,11 @@ $(document).ready ->
             canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
 
             #tpl = $('<div class="col-xs-6 col-sm-3 col-md-3"><div class="thumbnail"><div class="knob-progress"><input type="text" value="0" data-width="100" data-height="100"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div><img src="" alt="Upload thumbnail"/><div class="caption"></div><span></span></div></div>')
-            tpl = $('<div class="col-xs-6 col-sm-3 col-md-3"><div class="thumbnail"><div class="caption"></div><div class="abort_upload working"><span class="alert-warning glyphicon glyphicon-remove-circle"></span></div><div class="knob-outer"><div class="knob-progress"><input type="text" value="0" data-width="64" data-height="64"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div></div></div>')
+            tpl = $('<div class="col-xs-12 col-sm-4 col-md-3 upload-candidate"><div class="thumbnail"><div class="caption"></div><div class="abort_upload working"><span class="alert-warning glyphicon glyphicon-remove-circle"></span></div><div class="knob-outer"><div class="knob-progress"><input type="text" value="0" data-width="64" data-height="64"'+ ' data-fgColor="#0788a5" data-readOnly="1" data-bgColor="#3e4043" /></div></div></div><div class="candidate-buttons"><button class="btn btn-success">upload</button><button class="btn btn-danger pull-right">delete</button></div></div>')
             # add image source
             #tpl.find("img").get(0).src = reader.result 
-            tpl.find(".thumbnail").append(canvas)
+            #tpl.find(".thumbnail").append(canvas)
+            tpl.find(".thumbnail").css("background-image", "url(#{original})"); 
             tpl.find(".abort_upload").hide()
             #file.thumbnail = canvas.toDataURL()
             file.thumbnail = canvas
@@ -153,7 +157,7 @@ $(document).ready ->
                 
               return
             # Append the file name and file size
-            tpl.find(".caption").text(file.name).append "<i><br/>" + formatFileSize(file.size) + "</i>"
+            #tpl.find(".caption").text(file.name).append "<i><br/>" + formatFileSize(file.size) + "</i>"
             # Add the HTML to the UL element
             data.context = tpl.appendTo($uploadList)
             # Initialize the knob plugin
@@ -195,8 +199,7 @@ $(document).ready ->
           
           file_list.length = 0
         )
-
-
+      
     progress: (e, data) ->
      if data.context
         # Calculate the completion percentage of the upload
@@ -213,7 +216,7 @@ $(document).ready ->
       $(".progress-bar").css("background", "green")
       $(".progress-bar").css('width', progress + '%')
       $(".progress-bar").attr('aria-valuenow', progress)
-      $(".progress-bar").text(progress + '%')
+      $(".progress-bar").text("upload progress" +progress + '%')
 
     done: (e, data) ->
       #$("#upload-msg").append("<p class="status-success">Upload terminated!</p>")
@@ -273,7 +276,8 @@ $(document).ready ->
             $("#upload-msg").append('<p class="status-error"><i>Image ' + file.name + " failed to be associated to site! " + xhr.responseText + "</i></p>")
             return
           )
-          
+
+        data.context.find('.candidate-buttons').remove()
         data.context.find('.thumbnail').fadeOut(2000, "swing") ->
            $(this).remove()
           #create hidden field
@@ -304,7 +308,7 @@ $(document).ready ->
     image_id  = id.substr(9)
     set_quality(btn, image_id, 'set_good')
   
-  $('.image_controls .btn-warning').click () ->
+  $('.image_controls .btn-primary').click () ->
     btn       = $(this)
     id        = $(this).attr('id')
     #index 8 is after id 'btn_nok_'
@@ -404,5 +408,6 @@ $(document).ready ->
         # Gallery closed event handler
     )
 
-  $('#upload_more').click () ->
+  $('.upload_more').click () ->
     window.location.href = '/sites/' + $('#site_id').val() + "/upload"
+    

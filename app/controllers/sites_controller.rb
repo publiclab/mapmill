@@ -43,8 +43,10 @@ class SitesController < ApplicationController
       return
     end
     @votes = {}
-    @site.images.each do | img |
+    @images = @site.images.paginate(:page => params[:page], :per_page => 8)
+    @images.each do | img |
       @votes[img.id] = Vote.where(image: img)  
+    
     end
   end
 

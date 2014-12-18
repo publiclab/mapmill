@@ -131,7 +131,7 @@ $ ->
         form.submit()
   )
 $('#toggle_sites_form').click ->
-  $('.toggle-well').hide(500)
-  $('.sites_form').delay(300).hide().removeClass('hidden-xs').show(650)
-  console.log("whte");
+  $('.toggle-well').slideUp(200)
+  $('.sites_form').delay(500).hide().removeClass('hidden-xs').slideDown(700)
+  
     

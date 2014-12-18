@@ -58,4 +58,7 @@ gem 'bootstrap-addons-rails'
 gem 'passenger'
 gem 'font-awesome-rails'
 gem 'daemon_controller'
+gem "font-awesome-rails"
+gem 'will_paginate', '~> 3.0.5'
+gem 'will_paginate-bootstrap'
 
