@@ -36,7 +36,7 @@ $screen-xs-max:              ($screen-sm-min - 1) !default;
 $screen-sm-max:              ($screen-md-min - 1) !default;
 $screen-md-max:              ($screen-lg-min - 1) !default;
 
-.site_details .thumbnail {
+.site_details .thumbnail, .upload-candidate .thumbnail {
   margin-bottom: 5px;
   padding: 0;
   height: 140px;
@@ -78,6 +78,7 @@ $footer-height: 50px;
 body#mapmill-sites-upload{
   /*make room for footer*/
   margin-bottom: $footer-height;
+  
 }
 footer {
   position: fixed;
@@ -86,55 +87,23 @@ footer {
   bottom: 0;
   border-top: solid thin #666;
   background-color: white;
-}
-footer .container{
-  padding-top: 5px;
+  line-height: $footer-height;
 }
 .fileupload-buttonbar{
   height: $footer-height;
 }
-body#mapmill-sites-upload h4{
+body#mapmill-sites-upload h4, body#mapmill-sites-upload h3{
   display: inline;
   margin: 0;
 }
-
-@media (min-width: $screen-xxs-min) {
-  .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
-  .knob-progress {width: 64px; height: 64px} 
-  .site_details .thumbnail  { height:200px !important;}
+.upload-candidate{
+  margin-bottom: 20px;
 }
-
-@media (min-width: $screen-xs-min) {
-  .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
-  .knob-progress {width: 64px; height: 64px} 
-  /*.thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
-  /* .thumbnail .caption {word-wrap: break-word; font-size: 8px !important;}*/
-  .site_details .thumbnail  { height:200px !important;}
-  .sites-show-well-top .upload_more{ margin-top: 2px;}
+.upload-candidate button{
+  width: 49%;
 }
-
-@media (min-width: $screen-sm-min) {
-  .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important} 
-  .knob-progress {width: 100%; height: 100%} 
-  /*.knob-progress {width: 64px; height: 64px} */
-  .site_details .thumbnail  { height:150px !important;}
-}
-
-@media (min-width: $screen-md-min) {
-  .thumbnail canvas.canvas-thumbnail { height:95px !important; width: 126px !important} 
-  .knob-progress {width: 100%; height: 100%} 
-  .knob-outer { padding: 13px;}
-  /*.knob-progress {width: 64px; height: 64px} */ 
-  .site_details .thumbnail  { height:170px !important;}
-  .sites-show-well-top .upload_more{ margin-top: 28px !important;}
-}
-
-@media (min-width: $screen-lg-min) {
-  .thumbnail canvas.canvas-thumbnail { height:132px !important; width: 176px !important}
-  .knob-progress {width: 100%; height: 100%} 
-  .knob-outer { padding: 38px;}
-  /*.knob-progress {width: 64px; height: 64px} */
-  .site_details .thumbnail  { height:200px !important;}
+.candidate-buttons{
+ float: bottom;
 }
 
 .pagination-parent{
@@ -143,7 +112,7 @@ body#mapmill-sites-upload h4{
 }
 #upload-area {
   width: 100%;
-  height: 200px;
+  height: 100px;
   border-radius: 20px;
   border: 2px dashed #428bca;
   margin-bottom: 15px;
@@ -173,12 +142,16 @@ body#mapmill-sites-upload h4{
 
 #upload-candidates-container{
   margin-left: 0;
-  border: solid thin cyan;
-  min-height: 100px;
-  width: 100%
+  padding-top: 5px;
+  width: 100%;
+  clear: both;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  min-height: 20px;
 }
-.upload-candidate{
-  border: thin red solid;
+.upload-candidates-container-header{
+  padding-bottom: 5px;
+  clear: both;
 }
 
 .selected_img {
@@ -238,7 +211,7 @@ body#mapmill-sites-upload h4{
 
 .abort_upload {
     float:right;
-    margin-top:-42px;
+    margin-top:-20px;
     cursor:pointer;
     color: #fff;
     #border: 1px solid #AEAEAE;
@@ -287,5 +260,44 @@ body#mapmill-sites-upload h4{
   padding-bottom: 20px;
 }
 
+@media (min-width: $screen-xxs-min) {
+  .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
+  .knob-progress {width: 64px; height: 64px} 
+  .site_details .thumbnail, .upload-candidate .thumbnail{ height:200px !important;}
+  #upload-area {height: 200px;}
+}
 
+@media (min-width: $screen-xs-min) {
+  .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
+  .knob-progress {width: 64px; height: 64px} 
+  /*.thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
+  /* .thumbnail .caption {word-wrap: break-word; font-size: 8px !important;}*/
+  .site_details .thumbnail, .upload-candidate .thumbnail{ height:250px !important;}
+  .sites-show-well-top .upload_more{ margin-top: 2px;}
+  
+}
+
+@media (min-width: $screen-sm-min) {
+  .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important} 
+  .knob-progress {width: 100%; height: 100%} 
+  /*.knob-progress {width: 64px; height: 64px} */
+  .site_details .thumbnail, .upload-candidate .thumbnail{ height:150px !important;}
+}
+
+@media (min-width: $screen-md-min) {
+  .thumbnail canvas.canvas-thumbnail { height:95px !important; width: 126px !important} 
+  .knob-progress {width: 100%; height: 100%} 
+  .knob-outer { padding: 13px;}
+  /*.knob-progress {width: 64px; height: 64px} */ 
+  .site_details .thumbnail, .upload-candidate .thumbnail{ height:170px !important;}
+  .sites-show-well-top .upload_more{ margin-top: 28px !important;}
+}
+
+@media (min-width: $screen-lg-min) {
+  .thumbnail canvas.canvas-thumbnail { height:132px !important; width: 176px !important}
+  .knob-progress {width: 100%; height: 100%} 
+  .knob-outer { padding: 38px;}
+  /*.knob-progress {width: 64px; height: 64px} */
+  .site_details .thumbnail, .upload-candidate .thumbnail{ height:200px !important;}
+}
 
