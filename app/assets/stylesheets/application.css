@@ -10,6 +10,8 @@
  * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
  * file per style scope.
  *
+ *= require leaflet
+
  *= require jquery.fileupload
  *= require jquery.fileupload-ui
  *= require blueimp-gallery-all
@@ -18,6 +20,9 @@
  *= require_tree .
  *= require_self
  */
+
+//= depend_on_asset "layers.png"
+//= depend_on_asset "layers-2x.png"
 
 a {
   text-decoration: none !important;
@@ -135,4 +140,15 @@ blueimp-gallery options
 }
 .blueimp-gallery-controls > .detail_image_controls {
   display: block;
+}
+
+#map {
+  height: 100%; 
+  width: 100%;
+  margin-top: -40px;
+  position: absolute !important;
+}
+
+.map_img {
+  width: 200px;
 }

@@ -1,0 +1,82 @@
+<% @site.images.each do |img| 
+  lat = img.lat
+  lng = img.lng
+
+  if lat and lng
+    #lat and lng are BigDecimal, convert to float for display
+    lat = lat.to_f
+    lng = lng.to_f
+    #create lat long array
+    arr = [lat, lng]
+    #create a marker
+    if img.thumbnail
+      marker = {:latlng => arr, :popup => '<img class="map_img" src="' + img.thumbnail + '">'}
+      #add to list of markers
+      @markers.push(marker)
+    end
+
+    #Now calculate the center of the map
+    abs_lat = lat.abs
+    abs_lng = lng.abs
+
+    if @max_lat == 0 
+      @max_lat = abs_lat
+    end
+
+    if @max_lng == 0
+      @max_lng = abs_lng
+    end
+
+    if @min_lat == 0
+      @min_lat = abs_lat
+    end
+
+    if @min_lng == 0
+      @min_lng = abs_lng
+    end
+
+    if abs_lat < @min_lat
+      @min_lat = abs_lat
+    end
+
+    if abs_lat > @max_lat
+      @max_lat = abs_lat
+    end
+
+    if abs_lng < @min_lng
+      @min_lng = abs_lng
+    end
+
+    if abs_lng > @max_lng
+      @max_lng = abs_lng
+    end
+
+
+    @center_lat = @min_lat + (( @max_lat - @min_lat) / 2)
+    @center_lng = @min_lng + (( @max_lng - @min_lng) / 2)
+
+    if lat < 0
+      @center_lat = 0 - @center_lat
+    end
+
+    if lng < 0
+      @center_lng = 0 - @center_lng
+    end
+
+  end
+end %>
+
+
+<%=
+  #draw the map, the zoom is a wild guess, depends on how many pics are in the set...
+  map(:center => {
+    :latlng => [@center_lat,@center_lng],
+    :zoom => 12
+  },
+  :markers => @markers,
+  :tile_layer => "http://a.tile.osm.org/{z}/{x}/{y}.png",
+  :attribution => "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
+  :max_zoom => 18 
+  ) 
+%>
+

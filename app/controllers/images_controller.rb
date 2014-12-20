@@ -27,7 +27,7 @@ class ImagesController < ApplicationController
     votes = Vote.find_by_image(@image)
     if votes
       votes.each do | v |
-        if v.ip == request.remote_ip
+        if v.cookie == cookies["_mapmill_voting_"]
           @voting_disabled = true
         end
       end
@@ -72,7 +72,7 @@ class ImagesController < ApplicationController
 
   private
     def image_params
-      params.permit(:url, :thumbnail)
+      params.permit(:url, :thumbnail, :lat, :lng)
     end
 
     def set_quality(val)
@@ -82,7 +82,14 @@ class ImagesController < ApplicationController
       @image = Image.find(params[:id])
       @vote = @image.votes.create
       @vote.value = val 
-      @vote.ip = request.remote_ip
+
+      if cookies["_mapmill_voting_"]
+        @vote.cookie = cookies["_mapmill_voting_"]
+      else
+        @vote.cookie = SecureRandom.base64 
+        cookies["_mapmill_voting_"] = @vote.cookie
+      end
+
       if @vote.save!
         votes = Vote.find_by_image(@image) 
         sum = 0

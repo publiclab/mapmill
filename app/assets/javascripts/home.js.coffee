@@ -30,12 +30,23 @@ $ ->
       clearBtn: true,
       autoclose: true,
       forceIframeTransport: true,
-      todayBtn: "linked" 
+      todayBtn: "linked"
   })
 
+  $(document).keypress((e) ->
+    if e.which == 13
+      if validate_open_id()
+        form = $('#site_form')
+        open_id = $('#open_id_username').val()
+        form.append('<input type="hidden" name="open_id" value="' + encodeURI(open_id) + '"/>')
+        form.submit()
+      else
+        $('#open_id_input_group').addClass('has-error')
+        return false
+  )
 
-  $('#login_via_open_id_btn').click( ->
-      form = $('#site_form') 
+  $('#login_via_open_id_btn').click () ->
+      form = $('#site_form')
       logged_in = $('#logged_in').val()
       if logged_in != "1"
         bootbox.dialog({
@@ -129,4 +140,3 @@ $ ->
 
       else
         form.submit()
-  )

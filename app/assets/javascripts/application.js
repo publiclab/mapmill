@@ -14,21 +14,26 @@
 //= require jquery
 //= require jquery.ui.widget
 
-//= require blueimp-gallery-all
-//= require jquery.iframe-transport
 //= require jquery.fileupload
 //= require jquery.fileupload-ui
+//= require jquery.iframe-transport
 //= require jquery.fileupload-process
 //= require jquery.fileupload-image
 //= require jquery.fileupload-audio
 //= require jquery.fileupload-video
-//= require jquery.fileupload-jquery-ui
+// require jquery.fileupload-jquery-ui
 //= require jquery.fileupload-validate
 //= require jquery.knob
+//= require blueimp-gallery-all
 
 //= require bootstrap.min
 //= require bootbox.min 
 //= require bootstrap-datepicker
+
+//= require canvas-to-blob.min 
+
+//= require exif 
+//= require leaflet
 
 //= require turbolinks
 //= require_tree .

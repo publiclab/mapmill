@@ -47,13 +47,13 @@ gem 'spring',        group: :development
 ##########################
 
 #gem 's3_direct_upload'
-
-gem 'ruby-openid'
-gem 'open_id_authentication'
-gem 'aws-sdk'
-gem 'haml-rails'
-gem 'blueimp-gallery'
-gem 'bootstrap-addons-rails'
-#gem 'jquery-fileupload-rails'
-gem 'passenger'
-
+gem 'ruby-openid',            '2.5.0'
+gem 'open_id_authentication', '1.2.0'
+gem 'aws-sdk',                '1.53.0'
+gem 'haml-rails',             '0.5.3'
+gem 'blueimp-gallery',        '2.11.0.1'
+gem 'bootstrap-addons-rails', '0.1.2'
+gem 'leaflet-rails',          '0.7.4'
+gem 'passenger',              '4.0.53'
+gem 'mysql'
+#gem 'pg',                     '0.17.1'

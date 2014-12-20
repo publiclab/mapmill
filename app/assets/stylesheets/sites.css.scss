@@ -42,14 +42,15 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 
 @media (min-width: $screen-xxs-min) {
   .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
-  .knob-progress {width: 64px; height: 64px} 
+  /*.knob-progress {width: 100%; height: 100%} *
+  /*.knob-progress {width: 64px; height: 64px} */
   .image_controls { width:90% !important; margin-left:0 !important; }
   .image_controls .btn {font-size: 8.5px !important} 
 }
 
 @media (min-width: $screen-xs-min) {
   .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
-  .knob-progress {width: 64px; height: 64px} 
+  /*.knob-progress {width: 64px; height: 64px} */
   /*.thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
   /* .thumbnail .caption {word-wrap: break-word; font-size: 8px !important;}*/
   .image_controls {width: 90% !important; margin-left:0 !important; }
@@ -57,8 +58,8 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 }
 
 @media (min-width: $screen-sm-min) {
+  /*.knob-progress {width: 100%; height: 100%} *
   .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important} 
-  .knob-progress {width: 100%; height: 100%} 
   /*.knob-progress {width: 64px; height: 64px} */
   .image_controls {width: 90% !important; margin-left:0 !important; }
   .image_controls .btn {font-size: 10px !important} 
@@ -66,19 +67,18 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 
 @media (min-width: $screen-md-min) {
   .thumbnail canvas.canvas-thumbnail { height:95px !important; width: 126px !important} 
-  .knob-progress {width: 100%; height: 100%} 
+  /*.knob-progress {width: 100%; height: 100%} *
   .knob-outer { padding: 13px;}
   /*.knob-progress {width: 64px; height: 64px} */
-  .image_controls {width: 90% !important; margin-left:0 !important; }
+  /*.image_controls {width: 90% !important; margin-left:0 !important; }*/
   .image_controls .btn {font-size: 14px !important} 
 }
 
 @media (min-width: $screen-lg-min) {
   .thumbnail canvas.canvas-thumbnail { height:132px !important; width: 176px !important}
-  .knob-progress {width: 100%; height: 100%} 
   .knob-outer { padding: 38px;}
   /*.knob-progress {width: 64px; height: 64px} */
-  .image_controls {width: 90% !important; margin-left:0 !important; }
+  /*.image_controls {width: 90% !important; margin-left:0 !important; }*/
   .image_controls .btn {font-size: 14px !important} 
 }
 
@@ -120,15 +120,33 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
   text-align: center;
 }
 
-.knob-outer {
-  position: absolute;
-}
 
 .knob-progress {
   position: absolute;
-  background-color: #ccc;
-  opacity: 0.8;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-left: auto;
+  margin-right: auto;
+  width: 64px;
+  height: 64px;
+  //position: absolute;
   display: none;
+  z-index: 1000;
+  //margin: 0 auto;
+  //width: 75%;
+}
+
+.knob-progress canvas {
+  z-index: 10;
+}
+
+.knob-update {
+  background-color: #ccc;
+  opacity: 0.3;
 }
 
 .upload-buttons-section {
@@ -136,7 +154,12 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 }
 
 .progress-area {
-  margin-top: 48px;
+  margin-top: 34px;
+}
+
+.progress-bar {
+  height: 34px !important;
+  line-height: 34px !important;
 }
 
 .status-messages {
@@ -199,3 +222,21 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 .btn_disabled {
   pointer-events: none;
 }
+
+
+.generating_thumbnail {
+  text-align: center;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 20px;
+  float: left;
+  margin-left: 10px;
+}
+
+.loading_image {
+  background-image: url('/assets/loading.gif');
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 200px;
+}
+
