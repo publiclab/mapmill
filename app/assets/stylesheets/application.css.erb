@@ -1,0 +1,200 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require css/bootstrap.min
+ *= require leaflet
+ *= require css/datepicker
+
+ *= require css/jquery.fileupload
+ *= require css/jquery.fileupload-ui
+ *= require blueimp-gallery-all
+ *= bootstrap-addons-rails
+ *
+ *= require css/font-awesome.min
+ *= require_self
+ */
+
+@font-face {
+  font-family: 'FontAwesome';
+  src: url('fontawesome-webfont.eot?v=4.2.0');
+  src: url('fontawesome-webfont.eot?#iefix&v=4.2.0') format('embedded-opentype'),
+  url('fontawesome-webfont.woff?v=4.2.0') format('woff'),
+  url('fontawesome-webfont.ttf?v=4.2.0') format('truetype'),
+  url('fontawesome-webfont.svg?v=4.2.0#fontawesomeregular') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url('fonts/glyphicons-halflings-regular.eot');
+  src: url('fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
+       url('fonts/glyphicons-halflings-regular.woff') format('woff'),
+       url('fonts/glyphicons-halflings-regular.ttf') format('truetype'),
+       url('fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
+}
+
+@font-face {
+  font-family: 'Junction Light';
+  src: url('<%= asset_path("webfonts/junction-light.woff") %>') format('woff');
+}
+
+body {
+  background:#f8f8f8;
+  color: #666;
+}
+body a{
+  text-decoration: underline;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Junction Light';
+  font-weight:normal;
+}
+
+//= depend_on_asset "layers.png"
+//= depend_on_asset "layers-2x.png"
+
+a {
+  text-decoration: none !important;
+  color: #428BCA !important;
+}
+header a {
+  color: black;
+  text-decoration: none;
+}
+header {
+  margin-bottom: 10px;
+  padding-top: 20px;
+  padding-bottom: 12px;
+  line-height: 40px; 
+}
+/*bootstrap sm and below*/
+@media screen and (max-width: 767px){
+  header{
+    margin-bottom: 0px;
+    padding-bottom: 5px;
+  }
+}
+.menu{
+  margin: auto;
+  float: right !important;
+}
+.header{
+  border-bottom: 1px solid #ccc;
+  vertical-align: bottom;
+  font-size: 18px;
+  padding: 0 0 5px;
+  margin:8px 0 0;
+  font-family: 'Junction Light';
+}
+header h1 {
+  display: inline;
+  margin: 0px;
+}
+header h1 small {
+  font-size:50%;
+}
+header p {
+  font-size: 16px;
+  margin: 5px 0 0;
+  color: #666;
+  font-family: 'Junction Light';
+}
+
+footer {
+  padding:20px 20px 40px;
+  border-top:1px #ddd solid;
+  background:#eee;
+  margin-top:60px;
+}
+
+input[type=text] {
+  height: 32px;
+}
+
+.user_info {
+  font-size: 10px;
+  bottom: 0;
+  position: absolute;
+}
+
+.logout {
+  margin-left: 8px;
+}
+
+.session_info {
+  position: relative;
+  height: 100px;
+}
+
+.blue-header {
+ background-color: #428bca;
+}
+
+.input-desc {
+  font-size: 12px !important;
+  color: #555;
+}
+
+.site_details .image_controls {
+  /*position: absolute;
+  top: 182px;
+  width: 235px;
+  margin-left: 12px;*/
+}
+
+.assigned_quality {
+  border: 2px solid black !important;
+  color: blue !important;
+  font-weight: bold !important;
+}
+
+.assigned_quality_single {
+  border: 6px solid black !important;
+  color: blue !important;
+  font-weight: bold !important;
+}
+.header_action {
+  position: absolute;
+  bottom: 35%;
+  color: #fff !important;
+}
+.well-white {
+  background-color: #fff;
+  border-color: #ccc;
+}
+
+/*
+blueimp-gallery options
+*/
+.blueimp-gallery > .detail_image_controls {
+  position: absolute;
+  bottom: 50px;
+  width: 100%;
+  color: #fff;
+  display: block;
+}
+.blueimp-gallery-controls > .detail_image_controls {
+  display: block;
+}
+
+#map {
+  height: 100%; 
+  width: 100%;
+  margin-top: -40px;
+  position: absolute !important;
+}
+
+.map_img {
+  width: 200px;
+}

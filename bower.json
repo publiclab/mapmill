@@ -1,0 +1,25 @@
+{
+  "name": "MapKnitter",
+  "version": "0.1.0",
+  "dependencies": {
+    "fontawesome":                        "~4.2.0",
+    "bootstrap-css":                      "~3",
+    "jquery":                             "~2.1.3",
+    "jquery-ui":                          "~1.11.1",
+    "leaflet":                            "0.7.3",
+    "bootbox":                "makeusabrew/bootbox#~4.3.0",
+    "jquery.iframe-transport":            "1.0.0",
+    "exif-js":                            "thoferon/exif-js-versioned#~1.0.0",
+    "jquery-knob":                        "aterrien/jQuery-Knob#~1.2.11",
+    "bootstrap-image-gallery":            "blueimp/Bootstrap-Image-Gallery",
+    "blueimp-canvas-to-blob":             "~2.1.1",
+    "blueimp-gallery":                    "http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js",
+    "bootstrap-datepicker":               "eternicode/bootstrap-datepicker",
+    "junction":                           "theleagueof/junction",
+    "leaflet-google":                     "https://raw.githubusercontent.com/shramov/leaflet-plugins/master/layer/tile/Google.js",
+    "blueimp-file-upload":                "blueimp/jQuery-File-Upload#~9.8.1"
+  },
+  "resolutions": {
+    "blueimp-gallery": ">=2.12.0"
+  }
+}

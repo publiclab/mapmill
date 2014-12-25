@@ -3,36 +3,28 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Mapmill - by Publiclab</title>
-  <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"  rel="stylesheet">
-  <link href='http://fonts.googleapis.com/css?family=Love+Ya+Like+A+Sister' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
-<!--
-  <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-  <link rel="stylesheet" href="css/bootstrap-image-gallery.min.css">
--->
-  <link href='/assets/datepicker3.css' rel='stylesheet' type='text/css'>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <title>Mapmill image sorting | Public Lab</title>
+
+  <%= stylesheet_link_tag    'application', media: 'all' %>
+  <%= javascript_include_tag 'application' %>
+  <%# javascript_include_tag 'application', "data-turbolinks-track" => true  %>
+  <%= javascript_include_tag params[:controller] %>
+  <%= stylesheet_link_tag params[:controller] %>
+
   <%= csrf_meta_tags %>
 </head>
 <body id="mapmill-<%= params[:controller] %>-<%= params[:action] %>">
 
-  <header class="top" role="header">
+  <header role="header">
     <div class="container">
       <div class="header">
-        <h1 class="page_title"><a href="/">MapMill</a></h1> 
-        <span class='hidden-xs'>by <a href="http://publiclab.org"> Public Lab</a></span>
+        <h1 class="page_title"><a href="/">MapMill</a> <small class='hidden-xs'>by <a href="http://publiclab.org"> Public Lab</a></small></h1> 
         <span class='menu'> <a href="http://publiclab.org/wiki/mapmill">About</a>  |   <a href="/show_login">Login</a></span>
       </div>
-      <div class='log-line'>Share and sort aerial photos collaboratively, then make maps using <a href="http://mapknitter.org/">MapKnitter.org</a></div>
+      <p>Share and sort aerial photos collaboratively, then make maps using <a href="http://mapknitter.org/">MapKnitter.org</a></p>
       
     </div>
   </header>
-
-  
-  <!--
-  <hr>
-  -->
 
   <div class="content container">
     <% flash.each do |name, msg| -%>
@@ -41,11 +33,18 @@
     <%= yield %>
 
   </div>
-  <%= yield :footer %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-<!--
-  <script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-  <script src="js/bootstrap-image-gallery.min.js"></script>
--->
+
+  <footer class="footer">
+    <div class="row">
+      <div class="col-md-3">
+        <p>MapMill 2.0 is a project by <a href="http://publiclab.org">Public Lab</a>, and is <a href="https://github.com">open source software</a>.</p>
+        <p>Please report bugs and help develop this software <a href="https://github.com/publiclab/mapmill/issues">on Github</a>.</p>
+      </div>
+      <div class="col-md-3">
+        <p><a href="http://publiclab.org/wiki/mapmill">About MapMill</a></p>
+        <p>Consider donating to help keep MapMill online: <a href="http://publiclab.org/donate">Donate to Public Lab</a></p>
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

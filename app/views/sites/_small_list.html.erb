@@ -1,21 +1,11 @@
-
-  <div class="site_list">
-  <% @sites.each do |site| %>
- 
-
-      <% site.images.take(1).each do |img| %>
-          <div class="col-xs-6 col-sm-6 col-md-4">
-            <div class="thumbnail small">
-              <%= link_to image_tag(img.url, alt: img.url), site %>
-              <!--
-              <img src="<%= img.thumbnail %>" alt="">
-              -->
-            </div>
-            <div class="site_name"><a href="/sites/<%= site.id %>/"><%= site.name %></a></div>
-            <div class="site_img_num"><%= site.images.count %> images</div>
-          </div>
-      <% end %>
-
-
+<div class="site_list row">
+<% @sites.each do |site| %>
+  <% site.images.take(1).each do |img| %>
+      <div class="col-xs-6 col-sm-6 col-md-4">
+        <p><a href="/sites/<%= site.id %>"><img src="<%= img.thumbnail %>" class='img-rounded' /></a></p>
+        <h3><a href="/sites/<%= site.id %>/"><%= site.name %></a></h3>
+        <p><%= site.images.count %> images</p>
+      </div>
   <% end %>
-  </div>
+<% end %>
+</div>

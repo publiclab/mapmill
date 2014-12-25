@@ -5,25 +5,28 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 # Ignore bundler config.
-/.bundle
-
-/config/app_environment_vars.rb
+.bundle
+config/database.yml
+config/app_environment_vars.rb
 
 # Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
+db/*.sqlite3
+db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-/log/*.log
-/tmp
+log/*.log
+tmp
 
-.*swp
-/test/integration/node_modules/**
+*.swp
+test/integration/node_modules/**
 
 #rails specific
 *.sqlite3
 config/database.yml
 
-
 #this project
 config/initializers/aws.rb
+todo.txt
+
+#bower-controlled static assets
+vendor/assets/*/*

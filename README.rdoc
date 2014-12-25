@@ -1,28 +1,63 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is the new uploader for PublicLab's MapMill application.
 
-Things you may want to cover:
+All image processing is client side and images are stored in AWS S3.
+The aws-sdk gem is required.
 
-* Ruby version
+It uses the jquery-fileupload plugin to handle file uploads.
+See <a href="https://blueimp.github.io/jQuery-File-Upload/">https://blueimp.github.io/jQuery-File-Upload/</a>
 
-* System dependencies
+It also uses blueimp's gallery for as image gallery
+See <a href="https://blueimp.github.io/Gallery/">https://blueimp.github.io/Gallery/</a>
 
-* Configuration
+Run bundle install to install the required gems.
+Current version is configured with a postgresql database.
+Installing rvm for ruby management is recommended.
 
-* Database creation
+On Debian/Ubuntu if you need to install Postgres: `sudo apt-get install postgresql libpq-dev` 
 
-* Database initialization
+Versions used in development:
+<ul>
+  <li>Ruby: 2.1.2</li>
+  <li>Rails: 4.1.4</li>
+  <li>Postgres 9</li> 
+</ul>
 
-* How to run the test suite
+Create a database first, create a user and grant privileges to that user. Then run rake db:migrate to run all needed migrations.
 
-* Services (job queues, cache servers, search engines, etc.)
+In order to successfully configure AWS S3 stuff, edit the 
+app_environment_vars.rb 
+file in the config directory, and add bucket name, AWS access key and secret as needed.
+A .sample file is provided in the same directory.
 
-* Deployment instructions
+DO NOT CHECK IN THAT FILE INTO VERSION CONTROL, AS THIS WOULD SERIOUSLY COMPROMISE SECURITY, MAKING YOUR KEYS ACCESSIBLE TO THE WORLD.
 
-* ...
+/config/initializers/aws.rb contains needed initialization for AWS, which loads its values from the app_environment_vars.rb, but you should not need to edit this file.
 
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+The app only allows image upload after login. Login is only allowed with PublicLab's OpenID infrastructure.
+
+The front page contains the form for a site creation. We need to create a temporary object (Sitetmp) if the user is not logged in, in order to redirect to the OpenID provider, otherwise the form info gets lost when returning from the OpenID login process. A nonce is generated and sent as GET parameter for OpenID login. If Login went successful, the nonce is passed again and the real site object is created.
+
+Users can upload pictures, and rate its quality. Images are grouped in sets. Sets can be viewed and browsed. A map view is provided per set. If a user has rated an image, further voting is disabled. Vote tracking is done via cookie.
+
+ The upload works this way: 
+ <ul> 
+   <li> First images need to be selected via upload button</li>
+   <li> ...or, drag and drop</li>
+   <li> Images which really will be uploaded need to be selected first with the mouse</li>
+   <li> Click the upload button</li>
+   <li> After images have been successfully uploaded, a thumbnail is automatically generated</li>
+   <li> As this is all CLIENT SIDE, this implies:
+     <ul>
+       <li> The client sends the image to AWS S3 </li>
+       <li> If this went OK, a handle is returned. The client <strong> saves the image on the server</strong></li>
+       <li> The server returns an id for the new image to the client; the client generates a thumbnail and 
+            <strong>saves this thumbnail on AWS S3</strong></li>
+       <li> If this all went ok, the client associates the new thumbnail with the id of the image on the server</li>
+       <li> If that went ok, the process is finished</li>
+     </ul>
+ </ul>
+
+  

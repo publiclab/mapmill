@@ -11,13 +11,6 @@
   margin-top: 10px;
 }
 
-.site_name, .site_img_num {
-  display: block;
-}
-.site_img_num{
-  font-size: 10px;
-}
-
 @media screen and (min-width: 768px) { 
   .upload_images {
     /*float right so that sites div moves up beneath well with circles;*/
@@ -32,7 +25,8 @@
 }
 
 .well{
-  background-color: #E9F7FB;
+  border:1px solid #cbf;
+  background-color: #eee0ff;
   text-align: center;
   margin-bottom: 0;
 }
@@ -40,26 +34,24 @@
   margin-top: 10px;
 }
 .circle {
-	border-radius: 50%;
-	width: 75px;
-	height: 75px; 
-	background-color: blue;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px; 
+  background-color: #66c;
   display: table;
-	margin: 10px auto 10px;
+  margin: 10px auto 10px;
 }
 .green{
-	background-color: green;
+  background-color: #5a5;
 }
 .red{
-	background-color: red;
+  background-color: #f44;
 }
+
 .circle_contents{
   display: table-cell;
   vertical-align: middle;
   text-align: center;
   color: white;
   font-weight: bold;
-  
 }
-
-

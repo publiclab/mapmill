@@ -1,28 +1,21 @@
+<div class="site_list">
+<% @sites.each do |site| %>
 
-  <div class="site_list">
-  <% @sites.each do |site| %>
- 
-    <div class="site_info"> 
-      <div class="row">
-      <% site.images.take(3).each do |img| %>
-          <div class="col-xs-6 col-sm-3 col-md-3">
-            <div class="thumbnail">
-              <%= link_to image_tag(img.thumbnail, alt: img.url), site %>
-              <!--
-              <img src="<%= img.thumbnail %>" alt="">
-              -->
-            </div>
-          </div>
-      <% end %>
+  <div class="site_info"> 
+    <div class="row">
+    <% site.images.take(3).each do |img| %>
+      <div class="col-xs-6 col-sm-3 col-md-3">
+        <p><a href="/sites/<%= site.id %>"><img src="<%= img.thumbnail %>" class='img-rounded' /></a></p>
       </div>
-      <div class="row">
-        <div class="site_details">
-          <div class="site_name"><a href="/sites/<%= site.id %>/"><%= site.name %></a></div>
-          <div class="site_img_num"><%= site.images.count %> images</div>
-        </div>
-      </div>
-
+    <% end %>
     </div>
-
-  <% end %>
+    <div class="row">
+      <div class="site_details">
+        <div class="site_name"><a href="/sites/<%= site.id %>/"><%= site.name %></a></div>
+        <div class="site_img_num"><%= site.images.count %> images</div>
+      </div>
+    </div>
   </div>
+
+<% end %>
+</div>

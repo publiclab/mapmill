@@ -11,24 +11,19 @@
 // about supported directives.
 //
 
-//= require jquery
-//= require jquery.ui.widget
+//= require dist/jquery.min
+//= require ui/minified/widget.min
 
+//= require js/jquery.fileupload
+
+//= require dist/jquery.knob.min
 //= require blueimp-gallery-all
-//= require jquery.iframe-transport
-//= require jquery.fileupload
-//= require jquery.fileupload-ui
-//= require jquery.fileupload-process
-//= require jquery.fileupload-image
-//= require jquery.fileupload-audio
-//= require jquery.fileupload-video
-//= require jquery.fileupload-jquery-ui
-//= require jquery.fileupload-validate
-//= require jquery.knob
 
-//= require bootstrap.min
-//= require bootbox.min 
-//= require bootstrap-datepicker
+//= require dist/js/bootstrap.min
+//= require bootbox 
+//= require js/bootstrap-datepicker
 
-//= require turbolinks
-//= require_tree .
+//= require js/canvas-to-blob.min 
+
+//= require exif 
+//= require leaflet
