@@ -36,17 +36,6 @@ $screen-xs-max:              ($screen-sm-min - 1) !default;
 $screen-sm-max:              ($screen-md-min - 1) !default;
 $screen-md-max:              ($screen-lg-min - 1) !default;
 
-.sites-show-well-mobile{
-  text-align: center;
-  margin-top: 10px;
-  border-bottom: solid thin #aaa;
-  width:100%;
-  [class*="col-"] {
-		  padding-right: 1px;
-		  padding-left: 1px;
-	  }
-}
-
 @media (min-width: $screen-sm-min) {.thumbnail img { height:100px !important; }}
 @media (min-width: $screen-md-min) {.thumbnail img { height:150px !important; }}
 @media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}
@@ -55,8 +44,6 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
   .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
   /*.knob-progress {width: 100%; height: 100%} *
   /*.knob-progress {width: 64px; height: 64px} */
-  .image_controls { width:90% !important; margin-left:0 !important; }
-  .image_controls .btn {font-size: 8.5px !important} 
 }
 
 @media (min-width: $screen-xs-min) {
@@ -64,16 +51,12 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
   /*.knob-progress {width: 64px; height: 64px} */
   /*.thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
   /* .thumbnail .caption {word-wrap: break-word; font-size: 8px !important;}*/
-  .image_controls {width: 90% !important; margin-left:0 !important; }
-  .image_controls .btn {font-size: 8.5px !important} 
 }
 
 @media (min-width: $screen-sm-min) {
   /*.knob-progress {width: 100%; height: 100%} *
   .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important} 
   /*.knob-progress {width: 64px; height: 64px} */
-  .image_controls {width: 90% !important; margin-left:0 !important; }
-  .image_controls .btn {font-size: 10px !important} 
 }
 
 @media (min-width: $screen-md-min) {
@@ -184,6 +167,10 @@ footer.upload {
   height: 140px;
   background-size: cover;
   background-position: center center;
+  margin-bottom: 5px;
+  border-radius: 6px;
+}
+.upload-candidate .thumbnail {
   opacity:0.5;
 }
 .thumbnail.small img{
@@ -192,6 +179,9 @@ footer.upload {
 .thumbnail img{
   height: 100px;
   border:2px #444 solid;
+}
+.thumbnail .caption {
+  text-align: center;
 }
 
 .selected_img{
@@ -219,10 +209,6 @@ footer.upload {
 .subpanel {
   padding: 10px 10px 10px 0;
   margin-bottom: 20px;
-}
-  
-.thumbnail .caption {
-  text-align: center;
 }
 
 .knob-progress {
@@ -271,6 +257,7 @@ footer.upload {
   padding: 3px;
   height: 400px;
   overflow-y: auto;
+  margin-top:10px;
 }
 
 .status-messages p {
@@ -292,19 +279,19 @@ footer.upload {
 }
 
 .abort_upload {
-    float:right;
-    margin-top:-20px;
-    cursor:pointer;
-    color: #fff;
-    #border: 1px solid #AEAEAE;
-    border-radius: 6px;
-    #background: #428bca;
-    font-size: 31px;
-    font-weight: bold;
-    display: inline-block !important;
-    line-height: 0px;
-    padding: 4px;       
-    visibility: hidden;
+  float:right;
+  margin-top:-20px;
+  cursor:pointer;
+  color: #fff;
+  #border: 1px solid #AEAEAE;
+  border-radius: 6px;
+  #background: #428bca;
+  font-size: 31px;
+  font-weight: bold;
+  display: inline-block !important;
+  line-height: 0px;
+  padding: 4px;       
+  visibility: hidden;
 }
 
 .voting_disabled {
@@ -316,7 +303,6 @@ footer.upload {
     -ms-filter: sepia(100%);
     -o-filter: sepia(100%);
     filter: sepia(100%);
-    
 }
 
 .voting_disabled_android {
@@ -326,19 +312,15 @@ footer.upload {
 .btn_disabled {
   pointer-events: none;
 }
-.sites-show-well-top{
-  text-align: left;
-}
+
 .sites-show-well-top h3{
   color: black;
 }
-
-.sites-show-well-top p{
-  margin-top: 3px;
+.sites-show-well-mobile{
+  text-align: center;
 }
 
-
-.image-grid-cell{
+.image_controls .row {
   padding-bottom: 20px;
 }
 

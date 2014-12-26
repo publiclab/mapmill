@@ -1,12 +1,12 @@
 <% 
-  upload_more_button = "<a href='/sites/#{@site.id}/upload'><button class='btn-lg btn-success'><i class='fa fa-arrow-circle-up fa-lg'></i>&nbsp Upload <span class='hidden-xs'>images</span></button></a>"
+  upload_more_button = "<a href='/sites/#{@site.id}/upload'><button class='btn-lg btn-success'><i class='fa fa-arrow-circle-up fa-lg'></i> Upload <span class='hidden-xs'>images</span></button></a>"
   log_in_message = 'You must be <a href="/show_login">logged in</a> to add images'
-  fullscreen_button = '<button class="btn-lg btn-primary" id="full-screen"><i class="fa fa-square-o fa-lg"></i>&nbsp Full screen</button>'
+  fullscreen_button = '<button class="btn-lg btn-primary" id="full-screen"><i class="fa fa-square-o fa-lg"></i> Full screen</button>'
 %>
 <div class='well well-white'>
   <div class='row sites-show-well-top'>
   
-   <div class='col-sm-3'>
+    <div class='col-sm-3'>
       <h3>How to sort</h3>
       <p>Rate each image based on sharpness, exposure, and angle.</p>
       <p><a href="#">See an example</a></p>
@@ -26,7 +26,7 @@
     
     <div class='col-sm-3 hidden-xs'>
       <h3>Map</h3>
-      <button href="/sites/<%= @site.id %>/map" id="show_map" class="btn-lg btn-success"><i class="fa fa-map-marker"></i> View map</button>
+      <button onclick="window.location = '/sites/<%= @site.id %>/map'" id="show_map" class="btn-lg btn-success"><i class="fa fa-map-marker"></i> View map</button>
       <p><small>See geocoded images (if any) <br />displayed on a map</small></p>
     </div>
 
@@ -38,6 +38,7 @@
   <%= fullscreen_button.html_safe %>
   &nbsp; <%= log_in_message.html_safe %> 
 </div>
+<hr />
 
 <div class="site_information">
   <%= hidden_field_tag 'site_id', @site.id %>
@@ -55,102 +56,50 @@
 
 <div class="site_details">
   <div id="links" class="row">
-        <% @images.each do |img| %>
-          <% 
-            voting_disabled = "" 
-            btn_disabled = ""
-            votes_for_img = @votes[img.id]
-            votes_for_img.each do | v |
-              if v.cookie == @cookie
-                voting_disabled = "voting_disabled"
-                btn_disabled = "btn_disabled"
-              end
-            end
-          %>
-          <div class="col-xs-12 col-sm-4 col-md-3 image-grid-cell">
-          <a href="<%= img.url %>" title="" data-gallery >
-            <div class="thumbnail" style="background-image: url('<%= img.url %>');">
-              <%= hidden_field_tag 'img_' + img.id.to_s , img.id %>
-                <!--<img src="<%= img.url %>" alt="<%= img.id %>">-->
-              </div>
-            </a>
-            <div class="image_controls">
-              <div class="row <%= voting_disabled %>">
-              
-                <div class="col-xs-4">
-                  <button id="btn_good_<%= img.id %>" type="button" class="btn btn-success <%= btn_disabled %>">
-                    good 
-                  </button>
-                </div>
-                <div class="col-xs-4 ">
-                  <button id="btn_nok_<%= img.id %>" type="button" class="btn btn-primary <%= btn_disabled %>">
-                    ok
-                  </button>
-                </div>
-                <div class="col-xs-4">
-                  <button id="btn_bad_<%= img.id %>" type="button" class="btn btn-danger <%= btn_disabled %>">   
-                    bad
-                  </button>
-                </div>
-                
-              </div><!-- row -->
-            </div><!-- image_controls -->
-          </div><!-- bootstrap grid cell --> 
-        <% end %>
+    <% @images.each do |img| %>
+      <% 
+        voting_disabled = "" 
+        btn_disabled = ""
+        votes_for_img = @votes[img.id]
+        votes_for_img.each do | v |
+          if v.cookie == @cookie
+            voting_disabled = "voting_disabled"
+            btn_disabled = "btn_disabled"
+          end
+        end
+      %>
+      <div class="col-xs-12 col-sm-4 col-md-3">
+        <a href="<%= img.url %>" title="" data-gallery >
+          <div class="thumbnail" style="background-image: url('<%= img.url %>');">
+            <%= hidden_field_tag 'img_' + img.id.to_s , img.id %>
+          </div>
+        </a>
+        <div class="image_controls">
+          <div class="row <%= voting_disabled %>" style="width:100%">
+          
+            <div class="col-xs-4">
+              <button id="btn_good_<%= img.id %>" type="button" class="btn btn-success <%= btn_disabled %>">
+                good 
+              </button>
+            </div>
+            <div class="col-xs-4 ">
+              <button id="btn_nok_<%= img.id %>" type="button" class="btn btn-primary <%= btn_disabled %>">
+                ok
+              </button>
+            </div>
+            <div class="col-xs-4">
+              <button id="btn_bad_<%= img.id %>" type="button" class="btn btn-danger <%= btn_disabled %>">   
+                bad
+              </button>
+            </div>
+            
+          </div><!-- row -->
+        </div><!-- image_controls -->
+      </div><!-- bootstrap grid cell --> 
+    <% end %>
   </div><!-- links row -->
 </div><!-- site_details -->
 <div class="pagination-parent">
  <%= will_paginate @images, renderer: BootstrapPagination::Rails%>
 </div>
-<div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
-    <!-- The container for the modal slides -->
-    <div class="slides"></div>
-    <!-- Controls for the borderless lightbox -->
-            <div class="detail_image_controls">
-              <div class="btn-group btn-group-justified">
-                <div class="btn-group">
-                  <button id="btn_good" type="button" class="btn btn-success detail_control ">
-                    <span class="glyphicon glyphicon-ok"></span> good 
-                  </button>
-                </div>
-                <div class="btn-group">
-                  <button id="btn_nok" type="button" class="btn btn-warning detail_control">
-                    <span class="glyphicon glyphicon-flag"></span> not ok
-                  </button>
-                </div>
-                <div class="btn-group">
-                  <button id="btn_bad" type="button" class="btn btn-danger detail_control">   
-                    <span class="glyphicon glyphicon-remove"></span> bad
-                  </button>
-                </div><!-- btn-group -->
-              </div><!-- btn-group-justified -->
-            </div><!-- image_controls -->
-    <h3 class="title"></h3>
-    <a class="prev">‹</a>
-    <a class="next">›</a>
-    <a class="close">×</a>
-    <a class="play-pause"></a>
-    <ol class="indicator"></ol>
-    <!-- The modal dialog, which will be used to wrap the lightbox content -->
-    <div class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" aria-hidden="true">&times;</button>
-                    <h4 class="modal-title"></h4>
-                </div>
-                <div class="modal-body next"></div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default pull-left prev">
-                        <i class="glyphicon glyphicon-chevron-left"></i>
-                        Previous
-                    </button>
-                    <button type="button" class="btn btn-primary next">
-                        Next
-                        <i class="glyphicon glyphicon-chevron-right"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+<%= render :partial => 'sites/fullscreen' %>
