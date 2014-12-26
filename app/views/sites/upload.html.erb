@@ -1,145 +1,105 @@
 <div id="failure" class="alert alert-danger" role="alert" style="display:none">Oooops - looks as something didn't go well...
-<button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-  </div>
-
+  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+</div>
 
 <!--<h2 style="display: inline-block; margin-right: 20px"><%= @site.name %>: Upload Page</h2><div class="site_img_num"><%= @site.images.count %> images</div><a style="margin-left: 20px; padding: 10px; margin-bottom: 10px; color: white !important" class="btn btn-primary" href="/sites/<%= @site.id%>">List View of images</a>-->
- 
 
 <div style="display:none" id="s3-data" data-host='<%= @s3_post_data[:host] %>' data-fields='<%= @s3_direct_post.fields.to_json.html_safe %>' data-url="<%= @s3_post_data[:url] %>"></div>
-<input type="hidden" id="site_id" value="<%= @site.id %>"/>
-<input type="hidden" id="site_name" value="<%= @site.name %>"/>
-<div class="upload_section">
-  <div id="upload-status"></div>
-  <div id="upload-area">    
-    <div class="row">
-    <h4 class="upload-text">1) Drag & drop to add images, or <a href="#" id="href-upload">choose images</a></h4>
-      <div id="upload-list">
-      </div><!-- upload-list-->
-    </div><!-- row -->
-  </div><!-- upload-area -->
-</div><!-- upload-section -->
+  <input type="hidden" id="site_id" value="<%= @site.id %>"/>
+  <input type="hidden" id="site_name" value="<%= @site.name %>"/>
+  <div class="upload_section">
+    <div id="upload-status"></div>
+    <div id="upload-area">    
+      <div class="row">
+      <h3 class="upload-text">1) Drag & drop to add images, or <a href="#" id="href-upload">choose images</a></h3>
+        <div id="upload-list">
+        </div><!-- upload-list-->
+      </div><!-- row -->
+    </div><!-- upload-area -->
+  </div><!-- upload-section -->
 
-<h4 class="upload-text">2) Filter: Select some images:</h4> <span class="small_text">This is a chance to filter out some images before you start using A LOT of bandwidth!</span>
-<!-- The global progress state -->
-<div id="no-files" class="alert alert-warning" role="alert" style="display:none">Please do select some files to be uploaded!</div>
-<div class='upload-candidates-container-header'>
-  <h3>Images (#)</h3> <!--<a href="">by order selected</a> | <a href="">by timestamp</a> | <a href="">by file size</a> |--> <a href="">auto-select sharp images</a>
-  <div class="dropdown pull-right">
-  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-    sort
-    <span class="caret"></span>
-  </button>
-  <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">by order selected</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">by timestamp</a></li>
-    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">by file size</a></li>
-  </ul>
-</div>
-</div>
+  <h3 class="upload-text">2) Filter: choose some to upload <small>Filter out some images before using A LOT of bandwidth!</small></h3>
 
-<<<<<<< HEAD
-<div id='upload-candidates-container' class='row'></div>
-<div class="progress-section fade">
-  <!-- The global progress bar -->
-  <div class="progress-area">
-      Upload overall progress status:<br />
-    <div class="progress-bar progress-bar-success" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar">0%</div>
-=======
-      <div id="upload-status">
-      </div>
+  <!-- The global progress state -->
+  <div id="no-files" class="alert alert-warning" role="alert" style="display:none">Please do select some files to be uploaded!</div>
 
-      <div id="upload-area">
-        Drag and drop the files you want to upload...  
-        <div class="row">
-          <div id="upload-list">
-          </div><!-- upload-list-->
-        </div><!-- row -->
-      </div><!-- upload-area -->
+  <div class='upload-candidates-container-header'>
+    <div class="dropdown pull-right">
+      <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+        sort
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">by order selected</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">by timestamp</a></li>
+        <li role="presentation"><a role="menuitem" tabindex="-1" href="#">by file size</a></li>
+      </ul>
+    </div>
+    <h3>Images <small><!--<a href="">by order selected</a> | <a href="">by timestamp</a> | <a href="">by file size</a> | <a href="">auto-select sharp images</a>--></small></h3>
 
-    </div><!-- upload-section -->
-  
-
-    <form enctype="multipart/form-data" method="POST" id="fileupload">
-        <!-- Redirect browsers with JavaScript disabled to the origin page -->
-        <noscript>&lt;input type="hidden" name="redirect" value="http://localhost"&gt;</noscript>
-        <div class="row fileupload-buttonbar">
-            <div class="col-lg-7">
-                <!-- The fileinput-button span is used to style the file input field as button -->
-                <span class="btn btn-success fileinput-button">
-                    <i class="glyphicon glyphicon-plus"></i>
-                    <span>...or browse for images</span>
-                    <input style="width: 100%" type="file" multiple="" name="files[]">
-                </span>
-                <br />
-
-                <div id="no-files" class="alert alert-warning" role="alert" style="display:none">Please do select some files to be uploaded!
-                  <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                </div>
-
-                <div class="upload-buttons-section">
-                        <button id="upload_selected" class="btn btn-primary start" type="submit">
-                            <i class="glyphicon glyphicon-upload"></i>
-                            <span>Start upload</span>
-                        </button>
-                        <button id="cancel_upload" class="btn btn-warning cancel" type="reset">
-                            <i class="glyphicon glyphicon-ban-circle"></i>
-                            <span>Cancel upload</span>
-                        </button>
-                        <button id="clear_files" class="btn btn-danger delete" type="button">
-                            <i class="glyphicon glyphicon-trash"></i>
-                            <span>Clear file list</span>
-                        </button>
-                </div>
-            </div>
-            <!-- The global progress state -->
-            <div class="col-lg-5 progress-section fade">
-                <!-- The global progress bar -->
-              <div class="progress-area">
-                  Upload overall progress status:<br />
-                  <div class="progress progress-bar progress-bar-success" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar">
-                  0%
-                </div>
-              </div>
-            </div>
-        </div>
-    </form>
-  </div><!-- col-md-10 -->
-
-  <div class="col-md-2 col-sm-2">
-      <div id="upload-msg" class="status-messages"> </div>
->>>>>>> fablife
+    <div id='upload-candidates-container' class='row'></div>
   </div>
-</div>
-<!--</div> mystery div end, remove later if no problems-->
+
+  <form enctype="multipart/form-data" method="POST" id="fileupload">
+    <!-- Redirect browsers with JavaScript disabled to the origin page -->
+    <noscript>&lt;input type="hidden" name="redirect" value="http://localhost"&gt;</noscript>
+    <div class="row fileupload-buttonbar">
+      <div class="col-lg-7">
+ 
+        <div id="no-files" class="alert alert-warning" role="alert" style="display:none">Please do select some files to be uploaded!
+          <button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        </div>
+ 
+        <div class="upload-buttons-section">
+        </div>
+      </div>
+      
+      <!-- The global progress state -->
+      <div class="col-lg-5 progress-section fade">
+        <!-- The global progress bar -->
+        <div class="progress-area">
+          Upload overall progress status:<br />
+          <div class="progress progress-bar progress-bar-success" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar">
+            0%
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <div id="upload-msg" class="status-messages"> </div>
+
+</div><!-- col-md-10 -->
+
 <!--this form has to do with the file upload functionality-->
 <form enctype="multipart/form-data" method="POST" id="fileupload">
   <!-- Redirect browsers with JavaScript disabled to the origin page -->
   <noscript>&lt;input type="hidden" name="redirect" value="http://localhost"&gt;</noscript>
     <!-- The fileinput-button span is used to style the file input field as button -->
   <span class="btn btn-success fileinput-button hidden">
-      <i class="glyphicon glyphicon-plus"></i>
-      <span>...or browse for images</span>
-      <input style="width: 100%" type="file" multiple="" name="files[]" id="fileinput">
+    <i class="glyphicon glyphicon-plus"></i>
+    <span>...or browse for images</span>
+    <input style="width: 100%" type="file" multiple="" name="files[]" id="fileinput">
   </span>      
 </form>
 
 <!--<div id="upload-msg" class="status-messages"> </div>-->
 
 <% content_for :footer do %>
-  <footer>
-    <div class='container'>
-      <button id="upload_selected" class="btn btn-success start" type="submit">
-          <i class="glyphicon glyphicon-upload"></i>
-          <span class='hidden-xs'>Start upload</span>
-          <span class='visible-xs-inline'>Upload</span>
-      </button>
-      <h4 class='upload-text hidden-xs'>3) Finally, upload them! </h4> 
-      <div class="pull-right"> # <span class='hidden-xs'>images </span>selected 
-        | <a href=""><span class='hidden-xs'>select </span>all</a> 
-        | <a href=""><span class='hidden-xs'>deselect all</span><span class='visible-xs-inline'>none</span></a> 
-      </div>
-    </div>                
+  <footer class="upload">
+    <button id="upload_selected" class="btn btn-lg btn-success start" type="submit">
+      <i class="glyphicon glyphicon-upload"></i>
+      <span class='hidden-xs'>Start upload</span>
+      <span class='visible-xs-inline'>Upload</span>
+    </button>
+    <button id="cancel_upload" class="btn btn-warning cancel hidden" type="reset">
+      <i class="glyphicon glyphicon-ban-circle"></i>
+      <span>Cancel upload</span>
+    </button>
+    <div class="pull-right"> # <span class='hidden-xs'>images </span>selected 
+      | <a href=""><span class='hidden-xs'>select </span>all</a> 
+      | <a href=""><span class='hidden-xs'>deselect all</span><span class='visible-xs-inline'>none</span></a> 
+    </div>
+    <h4 style="padding-left:10px;display:inline;" class='upload-text hidden-xs'>3) Finally, upload them! </h4> 
   </footer>
 <% end %>
-

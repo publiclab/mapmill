@@ -1,45 +1,46 @@
 <% 
-  upload_more_button = '<button class="btn btn-success upload_more"><i class="fa fa-arrow-circle-up fa-lg"></i>&nbsp Upload <span class="hidden-xs">images</span> </button>'
-  log_in_message = '<p>You must be <a href="/show_login">logged in</a> to add images</p>'
-  fullscreen_button = '<button class="btn btn-primary" id="full-screen"><i class="fa fa-square-o fa-lg"></i>&nbsp Full screen</button>'
+  upload_more_button = "<a href='/sites/#{@site.id}/upload'><button class='btn-lg btn-success'><i class='fa fa-arrow-circle-up fa-lg'></i>&nbsp Upload <span class='hidden-xs'>images</span></button></a>"
+  log_in_message = 'You must be <a href="/show_login">logged in</a> to add images'
+  fullscreen_button = '<button class="btn-lg btn-primary" id="full-screen"><i class="fa fa-square-o fa-lg"></i>&nbsp Full screen</button>'
 %>
 <div class='well well-white'>
   <div class='row sites-show-well-top'>
   
-   <div class='col-sm-4'>
+   <div class='col-sm-3'>
       <h3>How to sort</h3>
-      <p class='regular_text'>Rate each image based on sharpness, exposure, and angle.</p>
-      <a href="#">Click to see an example</a>
+      <p>Rate each image based on sharpness, exposure, and angle.</p>
+      <p><a href="#">See an example</a></p>
     </div>
     
-    <div class='col-sm-4 hidden-xs'>
-      <h3>Add images to this set</h3>      
+    <div class='col-sm-3 hidden-xs'>
+      <h3>Add images</h3>      
       <%= upload_more_button.html_safe %>
-      <%= log_in_message.html_safe %>
+      <p><small><%= log_in_message.html_safe %></small></p>
     </div>
     
-    <div class='col-sm-4 hidden-xs'>
+    <div class='col-sm-3 hidden-xs'>
       <h3>Powersort!</h3>
-      <p>Use hotkeys 1, 2, & 3 to sort</p>
       <%= fullscreen_button.html_safe %>
-      <p>Go to full screen to see image details</p>
+      <p><small>Use hotkeys 1, 2, &amp; 3 to sort</small></p>
     </div>
     
+    <div class='col-sm-3 hidden-xs'>
+      <h3>Map</h3>
+      <button href="/sites/<%= @site.id %>/map" id="show_map" class="btn-lg btn-success"><i class="fa fa-map-marker"></i> View map</button>
+      <p><small>See geocoded images (if any) <br />displayed on a map</small></p>
+    </div>
+
   </div>
 </div>
+
 <div class="sites-show-well-mobile hidden-sm hidden-md hidden-lg">
-<%= upload_more_button.html_safe %>
-<%= fullscreen_button.html_safe %>
-<%= log_in_message.html_safe %> 
+  <%= upload_more_button.html_safe %>
+  <%= fullscreen_button.html_safe %>
+  &nbsp; <%= log_in_message.html_safe %> 
 </div>
 
-
 <div class="site_information">
-<h2 style="display: inline-block; margin-right: 20px"><%= @site.name %></h2><div class="site_img_num"><%= @site.images.count %> images</div>
-<button style="margin-left: 20px; padding: 10px; margin-bottom: 10px" onclick="window.location.href='/sites/<%= @site.id %>/upload'" id="upload_more" class="btn btn-primary">Upload more pictures for this site</button>
-<button style="margin-left: 20px; padding: 10px; margin-bottom: 10px" onclick="window.location.href='/sites/<%= @site.id %>/map'" id="show_map" class="btn btn-success">View map</button>
-          
- <%= hidden_field_tag 'site_id', @site.id %>
+  <%= hidden_field_tag 'site_id', @site.id %>
 </div>
 
 <!--<div class="alert alert-info" role="alert">
@@ -47,9 +48,10 @@
 </div>-->
 
 <div id="select_first" class="alert alert-warning" role="alert" style="display: none">
-   You have tried to change the quality of an image without selecting one first! Please select an image
+   You have tried to change a rating without selecting an image! Please select an image first.
 </div>
-<h2><%= @site.name %> <span class='regular_text'>(<%= @site.images.count %> images) &nbsp <a href="">by rank<span class="hidden-xs">ing</span></a> | <a href="">by <span class="hidden-xs"># of </span>votes</a></span></h2>
+
+<h2><%= @site.name %> <small><%= @site.images.count %> images &nbsp <a href="">by rank<span class="hidden-xs">ing</span></a> | <a href="">by <span class="hidden-xs"># of </span>votes</a></span></small></h2>
 
 <div class="site_details">
   <div id="links" class="row">
@@ -87,7 +89,7 @@
                 </div>
                 <div class="col-xs-4">
                   <button id="btn_bad_<%= img.id %>" type="button" class="btn btn-danger <%= btn_disabled %>">   
-                     bad
+                    bad
                   </button>
                 </div>
                 

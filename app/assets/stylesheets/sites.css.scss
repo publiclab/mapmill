@@ -36,30 +36,6 @@ $screen-xs-max:              ($screen-sm-min - 1) !default;
 $screen-sm-max:              ($screen-md-min - 1) !default;
 $screen-md-max:              ($screen-lg-min - 1) !default;
 
-.site_details .thumbnail, .upload-candidate .thumbnail {
-  margin-bottom: 5px;
-  padding: 0;
-  height: 140px;
-  background-size: cover;
-  background-position: center center;
-}
-.thumbnail.small img{
-  height: 110px !important;
-}
-.thumbnail img{
-  height: 100px;
-}
-.image_controls .btn{
-  width: 100%;
-}
-.image_controls .row{
-	  margin-left: 0;
-    width:100%;
-	  [class*="col-"] {
-		  padding-right: 1px;
-		  padding-left: 1px;
-	  }
-}
 .sites-show-well-mobile{
   text-align: center;
   margin-top: 10px;
@@ -120,29 +96,28 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 .sites-show-well-mobile button{
   margin-bottom: 4px;
 }
-$footer-height: 50px;
+$footer-height: 80px;
 
+body {
+  padding-bottom: 100px;
+}
 body#mapmill-sites-upload{
   /*make room for footer*/
   margin-bottom: $footer-height;
-  
 }
-footer {
+footer.upload {
   position: fixed;
   width: 100%;
-  height: $footer-height;
+  height: 80px;
   bottom: 0;
-  border-top: solid thin #666;
+  padding: 2px 10px;
   background-color: white;
   line-height: $footer-height;
 }
 .fileupload-buttonbar{
   height: $footer-height;
 }
-body#mapmill-sites-upload h4, body#mapmill-sites-upload h3{
-  display: inline;
-  margin: 0;
-}
+
 .upload-candidate{
   margin-bottom: 20px;
 }
@@ -188,10 +163,10 @@ body#mapmill-sites-upload h4, body#mapmill-sites-upload h3{
 
 #upload-candidates-container{
   margin-left: 0;
-  padding-top: 5px;
+  padding: 10px;
   width: 100%;
   clear: both;
-  border: 1px solid #ddd;
+  border: 1px solid #bbb;
   border-radius: 4px;
   min-height: 20px;
 }
@@ -199,9 +174,41 @@ body#mapmill-sites-upload h4, body#mapmill-sites-upload h3{
   padding-bottom: 5px;
   clear: both;
 }
+.upload-candidates-container-header .dropdown{
+  margin-bottom: 5px;
+}
 
-.selected_img {
-  border: 8px solid #428bca !important;
+.site_details .thumbnail, .upload-candidate .thumbnail {
+  margin-bottom: 5px;
+  padding: 0;
+  height: 140px;
+  background-size: cover;
+  background-position: center center;
+  opacity:0.5;
+}
+.thumbnail.small img{
+  height: 110px !important;
+}
+.thumbnail img{
+  height: 100px;
+  border:2px #444 solid;
+}
+
+.selected_img{
+  border:2px #fa3 solid;
+  background:none;
+}
+
+.image_controls .btn{
+  width: 100%;
+}
+.image_controls .row{
+  margin-left: 0;
+  width:100%;
+  [class*="col-"] {
+    padding-right: 1px;
+    padding-left: 1px;
+  }
 }
 
 .upload-actions {
@@ -215,10 +222,8 @@ body#mapmill-sites-upload h4, body#mapmill-sites-upload h3{
 }
   
 .thumbnail .caption {
-  font-size: 10px;
   text-align: center;
 }
-
 
 .knob-progress {
   position: absolute;
