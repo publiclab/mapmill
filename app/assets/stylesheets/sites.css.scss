@@ -41,26 +41,20 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 @media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}
 
 @media (min-width: $screen-xxs-min) {
-  .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
   /*.knob-progress {width: 100%; height: 100%} *
   /*.knob-progress {width: 64px; height: 64px} */
 }
 
 @media (min-width: $screen-xs-min) {
-  .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
   /*.knob-progress {width: 64px; height: 64px} */
-  /*.thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
-  /* .thumbnail .caption {word-wrap: break-word; font-size: 8px !important;}*/
 }
 
 @media (min-width: $screen-sm-min) {
   /*.knob-progress {width: 100%; height: 100%} *
-  .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important} 
   /*.knob-progress {width: 64px; height: 64px} */
 }
 
 @media (min-width: $screen-md-min) {
-  .thumbnail canvas.canvas-thumbnail { height:95px !important; width: 126px !important} 
   /*.knob-progress {width: 100%; height: 100%} *
   .knob-outer { padding: 13px;}
   /*.knob-progress {width: 64px; height: 64px} */
@@ -69,13 +63,12 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 }
 
 @media (min-width: $screen-lg-min) {
-  .thumbnail canvas.canvas-thumbnail { height:132px !important; width: 176px !important}
   .knob-outer { padding: 38px;}
   /*.knob-progress {width: 64px; height: 64px} */
   /*.image_controls {width: 90% !important; margin-left:0 !important; }*/
   .image_controls .btn {font-size: 14px !important} 
-
 }
+
 .sites-show-well-mobile button{
   margin-bottom: 4px;
 }
@@ -146,7 +139,7 @@ footer.upload {
 
 #upload-candidates-container{
   margin-left: 0;
-  padding: 10px;
+  padding: 25px 10px;
   width: 100%;
   clear: both;
   border: 1px solid #bbb;
@@ -164,17 +157,23 @@ footer.upload {
 .site_details .thumbnail, .upload-candidate .thumbnail {
   margin-bottom: 5px;
   padding: 0;
-  height: 140px;
+  height: 200px;
   background-size: cover;
   background-position: center center;
   margin-bottom: 5px;
   border-radius: 6px;
 }
-.upload-candidate .thumbnail {
+#upload-candidates-container .thumbnail {
   opacity:0.5;
+  height: 300px;
+  overflow: hidden;
 }
 .thumbnail.small img{
   height: 110px !important;
+}
+
+canvas.canvas-thumbnail {
+  width:100%;
 }
 .thumbnail img{
   height: 100px;
@@ -184,7 +183,8 @@ footer.upload {
   text-align: center;
 }
 
-.selected_img{
+#upload-candidates-container .selected_img {
+  opacity:1;
   border:2px #fa3 solid;
   background:none;
 }
@@ -254,7 +254,7 @@ footer.upload {
 
 .status-messages {
   background-color: #EEE;
-  padding: 3px;
+  padding: 10px;
   height: 400px;
   overflow-y: auto;
   margin-top:10px;
@@ -325,45 +325,28 @@ footer.upload {
 }
 
 @media (min-width: $screen-xxs-min) {
-  .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
   .knob-progress {width: 64px; height: 64px} 
-  .site_details .thumbnail, .upload-candidate .thumbnail{ height:200px !important;}
   #upload-area {height: 200px;}
 }
 
 @media (min-width: $screen-xs-min) {
-  .thumbnail canvas.canvas-thumbnail { height:72px !important; width: 96px !important} 
   .knob-progress {width: 64px; height: 64px} 
-  /*.thumbnail canvas.canvas-thumbnail { height:100% !important; width: 100% !important}
-  /* .thumbnail .caption {word-wrap: break-word; font-size: 8px !important;}*/
-  .site_details .thumbnail, .upload-candidate .thumbnail{ height:250px !important;}
   .sites-show-well-top .upload_more{ margin-top: 2px;}
-  
 }
 
 @media (min-width: $screen-sm-min) {
-  .thumbnail canvas.canvas-thumbnail { height:64px !important; width: 86px !important} 
   .knob-progress {width: 100%; height: 100%} 
-  /*.knob-progress {width: 64px; height: 64px} */
-  .site_details .thumbnail, .upload-candidate .thumbnail{ height:150px !important;}
 }
 
 @media (min-width: $screen-md-min) {
-  .thumbnail canvas.canvas-thumbnail { height:95px !important; width: 126px !important} 
   .knob-progress {width: 100%; height: 100%} 
   .knob-outer { padding: 13px;}
-  /*.knob-progress {width: 64px; height: 64px} */ 
-  .site_details .thumbnail, .upload-candidate .thumbnail{ height:170px !important;}
-  .sites-show-well-top .upload_more{ margin-top: 28px !important;}
+  .sites-show-well-top .upload_more { margin-top: 28px !important;}
 }
 
 @media (min-width: $screen-lg-min) {
-  .thumbnail canvas.canvas-thumbnail { height:132px !important; width: 176px !important}
   .knob-progress {width: 100%; height: 100%} 
   .knob-outer { padding: 38px;}
-  /*.knob-progress {width: 64px; height: 64px} */
-  .site_details .thumbnail, .upload-candidate .thumbnail{ height:200px !important;}
-
 }
 
 .generating_thumbnail {

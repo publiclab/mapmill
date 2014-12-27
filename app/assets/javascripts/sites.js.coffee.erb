@@ -189,8 +189,9 @@ $(document).ready ->
               tmp_tpl.remove()
               #create a canvas as thumbnail holder
               canvas = document.createElement("canvas")
-              canvas.width = img.width * scale
-              canvas.height = img.height * scale
+              ratio = img.width / img.height
+              canvas.width = 500
+              canvas.height = img.height / ratio
               canvas.className = "canvas-thumbnail"
               canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
               #this is the template for the image in the upload view
