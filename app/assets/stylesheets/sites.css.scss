@@ -40,31 +40,12 @@ $screen-md-max:              ($screen-lg-min - 1) !default;
 @media (min-width: $screen-md-min) {.thumbnail img { height:150px !important; }}
 @media (min-width: $screen-lg-min) {.thumbnail img { height:200px !important; }}
 
-@media (min-width: $screen-xxs-min) {
-  /*.knob-progress {width: 100%; height: 100%} *
-  /*.knob-progress {width: 64px; height: 64px} */
-}
-
-@media (min-width: $screen-xs-min) {
-  /*.knob-progress {width: 64px; height: 64px} */
-}
-
-@media (min-width: $screen-sm-min) {
-  /*.knob-progress {width: 100%; height: 100%} *
-  /*.knob-progress {width: 64px; height: 64px} */
-}
-
 @media (min-width: $screen-md-min) {
-  /*.knob-progress {width: 100%; height: 100%} *
-  .knob-outer { padding: 13px;}
-  /*.knob-progress {width: 64px; height: 64px} */
   /*.image_controls {width: 90% !important; margin-left:0 !important; }*/
   .image_controls .btn {font-size: 14px !important} 
 }
 
 @media (min-width: $screen-lg-min) {
-  .knob-outer { padding: 38px;}
-  /*.knob-progress {width: 64px; height: 64px} */
   /*.image_controls {width: 90% !important; margin-left:0 !important; }*/
   .image_controls .btn {font-size: 14px !important} 
 }
@@ -116,7 +97,7 @@ footer.upload {
   margin-bottom: 15px;
   padding: 20px;
   display: table;
-
+  background:#f3f0ff;
 }
 #upload-area .row {
   display: table-cell;
@@ -144,7 +125,7 @@ footer.upload {
   clear: both;
   border: 1px solid #bbb;
   border-radius: 4px;
-  min-height: 20px;
+  min-height: 100px;
 }
 .upload-candidates-container-header{
   padding-bottom: 5px;
@@ -182,6 +163,10 @@ canvas.canvas-thumbnail {
 .thumbnail .caption {
   text-align: center;
 }
+.thumbnail .status {
+  text-align: center;
+  padding-bottom:8px;
+}
 
 #upload-candidates-container .selected_img {
   opacity:1;
@@ -211,45 +196,12 @@ canvas.canvas-thumbnail {
   margin-bottom: 20px;
 }
 
-.knob-progress {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  margin-top: auto;
-  margin-bottom: auto;
-  margin-left: auto;
-  margin-right: auto;
-  width: 64px;
-  height: 64px;
-  //position: absolute;
-  display: none;
-  z-index: 1000;
-  //margin: 0 auto;
-  //width: 75%;
-}
-
-.knob-progress canvas {
-  z-index: 10;
-}
-
-.knob-update {
-  background-color: #ccc;
-  opacity: 0.3;
-}
-
 .upload-buttons-section {
   margin-top: 15px;
 }
 
 .progress-area {
   margin-top: 34px;
-}
-
-.progress-bar {
-  height: 34px !important;
-  line-height: 34px !important;
 }
 
 .status-messages {
@@ -263,7 +215,7 @@ canvas.canvas-thumbnail {
 .status-messages p {
   font-size: 10px;
   margin: 0px 0px 4px;
-  font-family: "Fixed, monospace"; 
+  font-family: Fixed, monospace; 
 }
 
 .status-success {
@@ -276,22 +228,6 @@ canvas.canvas-thumbnail {
 
 .status-warning {
   color: #F0AD4E;
-}
-
-.abort_upload {
-  float:right;
-  margin-top:-20px;
-  cursor:pointer;
-  color: #fff;
-  #border: 1px solid #AEAEAE;
-  border-radius: 6px;
-  #background: #428bca;
-  font-size: 31px;
-  font-weight: bold;
-  display: inline-block !important;
-  line-height: 0px;
-  padding: 4px;       
-  visibility: hidden;
 }
 
 .voting_disabled {
@@ -325,43 +261,20 @@ canvas.canvas-thumbnail {
 }
 
 @media (min-width: $screen-xxs-min) {
-  .knob-progress {width: 64px; height: 64px} 
   #upload-area {height: 200px;}
 }
 
 @media (min-width: $screen-xs-min) {
-  .knob-progress {width: 64px; height: 64px} 
   .sites-show-well-top .upload_more{ margin-top: 2px;}
 }
 
-@media (min-width: $screen-sm-min) {
-  .knob-progress {width: 100%; height: 100%} 
-}
-
 @media (min-width: $screen-md-min) {
-  .knob-progress {width: 100%; height: 100%} 
-  .knob-outer { padding: 13px;}
   .sites-show-well-top .upload_more { margin-top: 28px !important;}
 }
 
-@media (min-width: $screen-lg-min) {
-  .knob-progress {width: 100%; height: 100%} 
-  .knob-outer { padding: 38px;}
+.thumbnail .loading {
+  padding: 30px 0;
+  text-align:center;
+  font-size: 20px;
+  color:#666;
 }
-
-.generating_thumbnail {
-  text-align: center;
-  font-size: 12px;
-  font-weight: bold;
-  margin-top: 20px;
-  float: left;
-  margin-left: 10px;
-}
-
-.loading_image {
-  background-image: url('/assets/loading.gif');
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 200px;
-}
-
