@@ -58,6 +58,8 @@ $(document).ready ->
   upload_btn = $('#upload_selected')
   #this is the actual container of all files to be uploaded
   file_list = []
+  currently_uploading = []
+  simultaneous_upload = 10 # max # to upload at the same time
 
   $('.select-all').click ->
     for img in $('.thumbnail')
