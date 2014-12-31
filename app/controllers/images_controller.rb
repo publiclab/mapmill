@@ -83,6 +83,7 @@ class ImagesController < ApplicationController
       @vote = @image.votes.create
       @vote.value = val 
 
+      # store vote id via cookie
       if cookies["_mapmill_voting_"]
         @vote.cookie = cookies["_mapmill_voting_"]
       else
@@ -90,6 +91,7 @@ class ImagesController < ApplicationController
         cookies["_mapmill_voting_"] = @vote.cookie
       end
 
+      # update image "quality" by averaging votes
       if @vote.save!
         votes = Vote.find_by_image(@image) 
         sum = 0

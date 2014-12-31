@@ -61,13 +61,13 @@ $(document).ready ->
 
   $('.select-all').click ->
     for img in $('.thumbnail')
-      if !$(this).hasClass 'selected_img'
-        $('.thumbnail').trigger('click')
+      if !$(img).hasClass 'selected_img'
+        $(img).trigger('click')
 
   $('.select-none').click ->
     for img in $('.thumbnail')
-      if !$(this).hasClass 'selected_img'
-        $('.thumbnail').trigger('click')
+      if $(img).hasClass 'selected_img'
+        $(img).trigger('click')
 
   # bind key events for image traversing (j,k) and classification (1,2,3)
   # 1 = image good

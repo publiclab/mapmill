@@ -10,7 +10,6 @@
     "bootbox":                "makeusabrew/bootbox#~4.3.0",
     "jquery.iframe-transport":            "1.0.0",
     "exif-js":                            "thoferon/exif-js-versioned#~1.0.0",
-    "jquery-knob":                        "aterrien/jQuery-Knob#~1.2.11",
     "bootstrap-image-gallery":            "blueimp/Bootstrap-Image-Gallery",
     "blueimp-canvas-to-blob":             "~2.1.1",
     "blueimp-gallery":                    "http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js",

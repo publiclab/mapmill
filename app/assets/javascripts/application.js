@@ -15,8 +15,6 @@
 //= require ui/minified/widget.min
 
 //= require js/jquery.fileupload
-
-//= require dist/jquery.knob.min
 //= require blueimp-gallery-all
 
 //= require dist/js/bootstrap.min

@@ -1,11 +1,22 @@
-<div class="site_list row">
-<% @sites.each do |site| %>
-  <% site.images.take(1).each do |img| %>
+<div class="site_list">
+  <% @sites.each do |site| %>
+  <div class="row">
+    <% if site.images.length == 0 %>
       <div class="col-xs-6 col-sm-6 col-md-4">
-        <p><a href="/sites/<%= site.id %>"><img src="<%= img.thumbnail %>" class='img-rounded' /></a></p>
-        <h3><a href="/sites/<%= site.id %>/"><%= site.name %></a></h3>
-        <p><%= site.images.count %> images</p>
+        <a href="/sites/<%= site.id %>" style="display:block;padding:30px 80px;background:#ccc;border-radius:4px;">No images</a>
       </div>
+    <% else %>
+      <% site.images.take(3).each do |img| %>
+        <div class="col-xs-6 col-sm-6 col-md-4">
+          <p><a href="/sites/<%= site.id %>/"><img width="100%" src="<%= img.thumbnail %>" class='img-rounded' /></a></p>
+        </div>
+      <% end %>
+    <% end %>
+    <div class="col-md-12" style="clear:left;padding-top:1px;">
+      <h3><a href="/sites/<%= site.id %>/"><%= site.name %></a></h3>
+      <p><%= site.images.count %> images</p>
+      <hr />
+  </div>
+  </div>
   <% end %>
-<% end %>
 </div>

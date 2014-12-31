@@ -75,7 +75,7 @@
       %>
       <div class="col-xs-12 col-sm-4 col-md-3">
         <a href="<%= img.url %>" title="" data-gallery >
-          <div class="thumbnail" style="background-image: url('<%= img.url %>');">
+          <div class="thumbnail" style="background-image: url('<%= img.thumbnail %>');">
             <%= hidden_field_tag 'img_' + img.id.to_s , img.id %>
           </div>
         </a>

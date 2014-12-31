@@ -57,12 +57,12 @@ $ ->
           #
           # @required String|Element
           #/
-          message: '<div class="alert alert-warning">Note: Only <a href="http://publiclab.org">Publiclab</a> is currently supported as OpenID provider!</div><div class="alert alert-info">Please enter your OpenID endpoint, you will then be redirected to publiclab.org to complete the login procedure. The OpenID is <strong>case sensitive!</strong></div><div class="input-group" id="open_id_input_group"><span class="input-group-addon glyphicon glyphicon-user input-desc">&nbsp;OpenID</span><input id="open_id_username" type="text" class="form-control" placeholder="Username"></div><div class="open_id_endpoint"><label class="open_id_part">http://publiclab.org/people/</label><label class="open_id_part" id="open_id_part_username"></label><label class="open_id_part">/identity</label>'
+          message: '<div class="alert alert-info">You must be logged in to create a new site.</div><div><label><p>Use your <a href="http://publiclab.org/">PublicLab.org</a> username to log in. Logins are <i>case-sensitive</i>.</p><p>If you don\'t have one, <a href="http://publiclab.org/signup"> sign up there first</a>!</label></p><input id="open_id_username" type="text" class="form-control" placeholder="Username"></div><div class="open_id_endpoint"></div>'
           #
           # @optional String|Element
           # adds a header to the dialog and places this text in an h4
           #/
-          title: "Login with OpenID",
+          title: "Log in",
           #
           # @optional Function
           # allows the user to dismisss the dialog by hitting ESC, which
@@ -80,7 +80,7 @@ $ ->
           # @default: true
           # whether the dialog should be have a backdrop or not
           #/
-          backdrop: true,
+          backdrop: false,
           #
           # @optional Boolean
           # @default: true
@@ -117,7 +117,7 @@ $ ->
               # @required String
               # this button's label
               #/
-              label: "Take me there"
+              label: "Log in"
               #
               # @optional String
               # an additional class to apply to the button
