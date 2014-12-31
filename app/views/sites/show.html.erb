@@ -82,20 +82,23 @@
         <div class="image_controls">
           <div class="row <%= voting_disabled %>" style="width:100%">
           
-            <div class="col-xs-4">
+            <div class="col-xs-3">
               <button id="btn_good_<%= img.id %>" type="button" class="btn btn-success <%= btn_disabled %>">
                 good 
               </button>
             </div>
-            <div class="col-xs-4 ">
+            <div class="col-xs-3 ">
               <button id="btn_nok_<%= img.id %>" type="button" class="btn btn-primary <%= btn_disabled %>">
                 ok
               </button>
             </div>
-            <div class="col-xs-4">
+            <div class="col-xs-3">
               <button id="btn_bad_<%= img.id %>" type="button" class="btn btn-danger <%= btn_disabled %>">   
                 bad
               </button>
+            </div>
+            <div class="col-xs-3">
+              <a href="<%= img.url %>" class="btn"><i class="fa fa-download"></i></a>
             </div>
             
           </div><!-- row -->
