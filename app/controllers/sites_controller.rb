@@ -69,19 +69,14 @@ class SitesController < ApplicationController
   def show
     # If an image has been voted, we need to disable voting, this is done via cookie
     @cookie = cookies["_mapmill_voting_"]
-    begin
-     if params[:sort] == 'rank'
-       @site = Image.ranked_by_vote.where(site_id:params[:id])
-     else
-       @site = Site.find(params[:id])
-     end
-   rescue
-      flash[:danger] = "The requested site does not exist in the system."
-      redirect_to sites_path 
-      return
+    @site = Site.find(params[:id])
+    if params[:sort] == 'rank'
+      @images = Image.ranked_by_vote.where(site_id:params[:id])
+    else
+      @images = @site.images if @site.images.length > 0
     end
+    @images = @images.paginate(:page => params[:page], :per_page => 8)
     @votes = {}
-    @images = @site.images.paginate(:page => params[:page], :per_page => 8)
     @images.each do | img |
       @votes[img.id] = Vote.where(image: img)  
     end

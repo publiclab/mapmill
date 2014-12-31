@@ -36,7 +36,8 @@
 <div class="sites-show-well-mobile hidden-sm hidden-md hidden-lg">
   <%= upload_more_button.html_safe %>
   <%= fullscreen_button.html_safe %>
-  &nbsp; <%= log_in_message.html_safe %> 
+  <button onclick="window.location = '/sites/<%= @site.id %>/map'" id="show_map" class="btn-lg btn-success"><i class="fa fa-map-marker"></i> View map</button>
+  <% unless logged_in? %><p><%= log_in_message.html_safe %></p><% end %> 
 </div>
 <hr />
 
@@ -52,9 +53,10 @@
    You have tried to change a rating without selecting an image! Please select an image first.
 </div>
 
-<h2><%= @site.name %> <small><%= @site.images.count %> images 
-  <!--&nbsp <a href="">by rank<span class="hidden-xs">ing</span></a> 
-  | <a href="">by <span class="hidden-xs"># of </span>votes</a></span>-->
+<h2><%= @site.name %> <small><%= @site.images.count %> images
+  &nbsp; <a href="/sites/<%= @site.id %>">by upload order</a> 
+  | <a href="/sites/<%= @site.id %>?sort=rank">by rank<span class="hidden-xs">ing</span></a> 
+  <!--| <a href="">by <span class="hidden-xs"># of </span>votes</a></span>-->
   </small></h2>
 
 <br />
