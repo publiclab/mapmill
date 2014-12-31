@@ -12,7 +12,8 @@ It also uses blueimp's gallery for as image gallery
 See <a href="https://blueimp.github.io/Gallery/">https://blueimp.github.io/Gallery/</a>
 
 Run bundle install to install the required gems.
-Current version is configured with a postgresql database.
+Run bower install to install the required static dependencies.
+Current version is configured with a mysql database.
 Installing rvm for ruby management is recommended.
 
 On Debian/Ubuntu if you need to install Postgres: `sudo apt-get install postgresql libpq-dev` 
