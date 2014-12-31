@@ -45,7 +45,7 @@ class SessionController < ApplicationController
             @user.save!
           rescue ActiveRecord::RecordInvalid => invalid
             puts invalid
-            failed_login "User can not be associated to local account. Probably the account already exists with different case!" 
+            failed_login "User can not be associated to local account. Be sure to use the correct capitalization for your username!" 
             return
           end
         end

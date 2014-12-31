@@ -15,7 +15,7 @@
     <div class='col-sm-3 hidden-xs'>
       <h3>Add images</h3>      
       <%= upload_more_button.html_safe %>
-      <p><small><%= log_in_message.html_safe %></small></p>
+      <% unless logged_in? %><p><small><%= log_in_message.html_safe %></small></p><% end %>
     </div>
     
     <div class='col-sm-3 hidden-xs'>
@@ -54,8 +54,10 @@
 </div>
 
 <h2><%= @site.name %> <small><%= @site.images.count %> images
-  &nbsp; <a href="/sites/<%= @site.id %>">by upload order</a> 
-  | <a href="/sites/<%= @site.id %>?sort=rank">by rank<span class="hidden-xs">ing</span></a> 
+  <% if params[:sort] == 'rank' %>&nbsp; <a href="/sites/<%= @site.id %>">by upload order</a><% else %>
+  &nbsp; <span>by upload order</span><% end %> 
+  <% unless params[:sort] == 'rank' %>| <a href="/sites/<%= @site.id %>?sort=rank">by rank<span class="hidden-xs">ing</span></a><% else %> 
+  | <span>by rank<span class="hidden-xs">ing</span></span><% end %> 
   <!--| <a href="">by <span class="hidden-xs"># of </span>votes</a></span>-->
   </small></h2>
 
@@ -100,7 +102,10 @@
               </button>
             </div>
             <div class="col-xs-3">
-              <a href="<%= img.url %>" class="btn"><i class="fa fa-download"></i></a>
+              <p style="padding:8px 12px;color:#444;">
+                 <small><%= img.average_vote %>/<%= img.vote_count %>
+                 &nbsp; <a href="<%= img.url %>" style="color:#444;"><i class="fa fa-download"></i></a>
+              </small></p>
             </div>
             
           </div><!-- row -->
