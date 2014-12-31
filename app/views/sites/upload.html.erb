@@ -89,13 +89,14 @@
       <span class='hidden-xs'>Start upload</span>
       <span class='visible-xs-inline'>Upload</span>
     </button>
+    &nbsp;<span class="file-count">0</span> <span class='hidden-xs'>images </span>selected 
+      | <a class="select-all"><span class='hidden-xs'>select </span>all</a> 
+      | <a class="select-none"><span class='hidden-xs'>deselect all</span><span class='visible-xs-inline'>none</span></a>
     <button id="cancel_upload" class="btn btn-warning cancel hidden" type="reset">
       <i class="glyphicon glyphicon-ban-circle"></i>
       <span>Cancel upload</span>
     </button>
-    <div class="pull-right"> <span class="file-count">0</span> <span class='hidden-xs'>images </span>selected 
-      | <a class="select-all"><span class='hidden-xs'>select </span>all</a> 
-      | <a class="select-none"><span class='hidden-xs'>deselect all</span><span class='visible-xs-inline'>none</span></a> 
+    <div class="pull-right">  
       <a style="margin-left:15px;" class="btn btn-lg btn-primary" href="/sites/<%= @site.id %>">View gallery</a>
     </div>
     <h4 style="padding-left:10px;display:inline;" class='upload-text hidden-xs'>3) Finally, upload them! </h4> 

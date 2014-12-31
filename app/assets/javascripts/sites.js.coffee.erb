@@ -63,11 +63,14 @@ $(document).ready ->
     for img in $('.thumbnail')
       if !$(img).hasClass 'selected_img'
         $(img).trigger('click')
+    $('.file-count').html(file_list.length)
 
   $('.select-none').click ->
     for img in $('.thumbnail')
       if $(img).hasClass 'selected_img'
         $(img).trigger('click')
+    $('.file-count').html(file_list.length)
+
 
   # bind key events for image traversing (j,k) and classification (1,2,3)
   # 1 = image good
@@ -210,10 +213,10 @@ $(document).ready ->
               file.thumbnail = canvas
               # add click handler to thumbnails so they can be selected
               tpl.find('.thumbnail').click ->
+                $('.file-count').html(file_list.length+1)
                 if $(this).hasClass 'selected_img'
                   $(this).removeClass 'selected_img'
                   idx = file_list.indexOf(file)
-                  $('.file-count').html(file_list.length)
                   if idx > -1
                     file_list.splice(idx, 1)
                   $("#upload-msg").append('<p class="status-info">Image ' + file.name + " removed from upload queue</p>")
