@@ -27,10 +27,9 @@
   <noscript>&lt;input type="hidden" name="redirect" value="http://localhost"&gt;</noscript>
 </form>
 
-<div class="container">
-  <h3 class="upload-text">2) Filter: click to select images, then press upload <small>Filter out some images before using A LOT of bandwidth!</small></h3>
+<h3 class="upload-text">2) Filter: click to select images, then press upload <small>Filter out some images before using A LOT of bandwidth!</small></h3>
 
-  <div id="no-files" class="alert alert-warning" role="alert" style="display:none">Please do select some files to be uploaded!</div>
+<div id="no-files" class="alert alert-warning" role="alert" style="display:none">Please do select some files to be uploaded!</div>
 
 <!--
 <div class='upload-candidates-container-header'>
@@ -49,38 +48,36 @@
 </div>
 -->
 
-  <div id='upload-candidates-container' class='container'></div>
+<div id='upload-candidates-container' class='container'></div>
 
-  <div class='row'>
-    <div id="no-files" class="alert alert-warning" role="alert" style="display:none">Please do select some files to be uploaded!
-      <button type="button" class="close" data-dismiss="alert">
-        <span aria-hidden="true">&times;</span>
-        <span class="sr-only">Close</span>
-      </button>
+<div class='row'>
+  <div id="no-files" class="alert alert-warning" role="alert" style="display:none">Please do select some files to be uploaded!
+    <button type="button" class="close" data-dismiss="alert">
+      <span aria-hidden="true">&times;</span>
+      <span class="sr-only">Close</span>
+    </button>
+  </div>
+</div>
+<div class='row'>
+  <!-- The global progress bar -->
+  <div class="progress-area" style="display:none;">
+    Upload overall progress status:<br />
+    <div class="progress progress-bar" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar">
+      0%
     </div>
   </div>
-  <div class='row'>
-    <!-- The global progress bar -->
-    <div class="progress-area" style="display:none;">
-      Upload overall progress status:<br />
-      <div class="progress progress-bar" aria-valuemax="100" aria-valuemin="0" aria-valuenow="0" role="progressbar">
-        0%
-      </div>
-    </div>
-  </div>
-
-  <div class='row'>
-    <hr style="clear:both;" />
-    <p style="text-align:center;"><button class="btn btn-sm" onClick="$('.status-messages').toggle()">Activity log</button>
-    <hr style="clear:both;" />
-  </div>
- 
-  <div id="upload-msg" class="status-messages" style="display:none;">
-    <p><b>If you have trouble with MapMill, please <a href="https://github.com/publiclab/mapmill/issues/new">file an issue on Github</a> or contact the Public Lab web working group at <a href="mailto:web@publiclab.org">web@publiclab.org</a>.</b></p>
-    <p style="text-align:center;">====================================================</p>
-</div>
 </div>
 
+<div class='row'>
+  <hr style="clear:both;" />
+  <p style="text-align:center;"><button class="btn btn-sm" onClick="$('.status-messages').toggle()">Activity log</button>
+  <hr style="clear:both;" />
+</div>
+
+<div id="upload-msg" class="status-messages" style="display:none;">
+  <p><b>If you have trouble with MapMill, please <a href="https://github.com/publiclab/mapmill/issues/new">file an issue on Github</a> or contact the Public Lab web working group at <a href="mailto:web@publiclab.org">web@publiclab.org</a>.</b></p>
+  <p style="text-align:center;">====================================================</p>
+</div>
 
 <% content_for :footer do %>
   <footer class="upload">
