@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204161312) do
+ActiveRecord::Schema.define(version: 20141231221152) do
 
   create_table "images", force: true do |t|
     t.string   "url"
@@ -20,19 +20,19 @@ ActiveRecord::Schema.define(version: 20141204161312) do
     t.integer  "site_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "quality",                             default: 0
+    t.decimal  "quality",                             default: 0.0
     t.decimal  "lat",        precision: 10, scale: 6
     t.decimal  "lng",        precision: 10, scale: 6
   end
 
-  add_index "images", ["site_id"], name: "index_images_on_site_id", using: :btree
+  add_index "images", ["site_id"], name: "index_images_on_site_id"
 
   create_table "sites", force: true do |t|
     t.string   "name"
     t.date     "date"
     t.text     "description"
-    t.float    "lat",         limit: 24
-    t.float    "lon",         limit: 24
+    t.float    "lat"
+    t.float    "lon"
     t.date     "updated"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -61,6 +61,6 @@ ActiveRecord::Schema.define(version: 20141204161312) do
     t.string   "cookie"
   end
 
-  add_index "votes", ["image_id"], name: "index_votes_on_image_id", using: :btree
+  add_index "votes", ["image_id"], name: "index_votes_on_image_id"
 
 end

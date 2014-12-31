@@ -40,7 +40,7 @@ $(document).ready ->
     $('.voting_disabled').addClass('voting_disabled_android')
 
   #disable voting
-  $('.voting_disabled').mouseover ->
+  $('.voting_disabled .col-xs-3').mouseover ->
     $(this).attr('title','You have already voted for this image')
 
   $('.voting_disabled').click (e) ->
@@ -253,9 +253,9 @@ $(document).ready ->
             else
               $('#no-files').hide()
             if (file_list.indexOf(file) > -1)
-              $('#cancel_files').prop('disabled', true)
-              $('.selected_img .abort-upload').show()
-              $('.progress').show()
+              data.context.find('#cancel_files').prop('disabled', true)
+              data.context.find('.selected_img .abort-upload').show()
+              data.context.find('.progress').show()
               # Finally upload
               jqXHR = data.submit()
           )
@@ -286,6 +286,9 @@ $(document).ready ->
           #$('#upload-status').text(progress)
           # Update the hidden input field and trigger a change
           data.context.find("input").val(progress).change()
+          data.context.find(".progress-bar").css('width', progress + '%')
+          data.context.find(".progress-bar").attr('aria-valuenow', progress)
+          data.context.find(".progress-bar").text(progress + '%')
           # The Upload finished, display "Generating thumbnail" 
           if progress is 100
             data.context.find('.thumbnail').css('opacity',0.4)
@@ -301,9 +304,9 @@ $(document).ready ->
       progressall: (e, data) ->
         $(".progress-area").show()
         progress = parseInt(data.loaded / data.total * 100, 10)
-        $(".progress-bar").css('width', progress + '%')
-        $(".progress-bar").attr('aria-valuenow', progress)
-        $(".progress-bar").text(progress + '%')
+        $(".progress-area .progress-bar").css('width', progress + '%')
+        $(".progress-area .progress-bar").attr('aria-valuenow', progress)
+        $(".progress-area .progress-bar").text(progress + '%')
 
       #Callback for a single file when finished
       done: (e, data) ->

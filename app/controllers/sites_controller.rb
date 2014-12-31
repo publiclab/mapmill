@@ -71,11 +71,11 @@ class SitesController < ApplicationController
     @cookie = cookies["_mapmill_voting_"]
     @site = Site.find(params[:id])
     if params[:sort] == 'rank'
-      @images = Image.ranked_by_vote.where(site_id:params[:id])
+      @images = Image.where(site_id:params[:id]).order('quality desc')
     else
       @images = @site.images if @site.images.length > 0
     end
-    @images = @images.paginate(:page => params[:page], :per_page => 8)
+    @images = @images.paginate(:page => params[:page], :per_page => 24)
     @votes = {}
     @images.each do | img |
       @votes[img.id] = Vote.where(image: img)  

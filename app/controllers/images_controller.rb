@@ -39,7 +39,6 @@ class ImagesController < ApplicationController
     end
   end
 
-
   def set_thumbnail
     if only_xhr
       return
@@ -59,15 +58,15 @@ class ImagesController < ApplicationController
   end
 
   def set_good
-    set_quality(1)
-  end
-
-  def set_nok
     set_quality(2)
   end
 
+  def set_nok
+    set_quality(1)
+  end
+
   def set_bad
-    set_quality(3)
+    set_quality(0)
   end
 
   private
@@ -100,17 +99,7 @@ class ImagesController < ApplicationController
             sum += vote.value
           end
           cnt = votes.length 
-          avg = sum.fdiv(cnt)
-          case avg
-          when 0..1.5 
-            @image.good!
-          when 1.5..2.5
-            @image.nok!
-          when 2.5..3
-            @image.bad!
-          else
-            #nothing
-          end 
+          @image.quality = 1.00*sum/cnt
           @image.save
         else
           msg = "Error accessing votes: No votes found!"

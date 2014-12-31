@@ -36,7 +36,7 @@
 <div class="sites-show-well-mobile hidden-sm hidden-md hidden-lg">
   <%= upload_more_button.html_safe %>
   <%= fullscreen_button.html_safe %>
-  <button onclick="window.location = '/sites/<%= @site.id %>/map'" id="show_map" class="btn-lg btn-success"><i class="fa fa-map-marker"></i> View map</button>
+  <button onclick="window.location = '/sites/<%= @site.id %>/map'" id="show_map" class="btn-lg btn-success"><i class="fa fa-map-marker"></i> Map</button>
   <% unless logged_in? %><p><%= log_in_message.html_safe %></p><% end %> 
 </div>
 <hr />
@@ -102,9 +102,9 @@
               </button>
             </div>
             <div class="col-xs-3">
-              <p style="padding:8px 12px;color:#444;">
-                 <small><%= img.average_vote %>/<%= img.vote_count %>
-                 &nbsp; <a href="<%= img.url %>" style="color:#444;"><i class="fa fa-download"></i></a>
+              <p style="font-size:12px;padding:2px 6px;color:#444;text-align:center;">
+                <small><span title="Vote count/average"><%= img.vote_count %>:<%= img.average_vote %>%</span><br />
+                <a title="Download full resolution image" href="<%= img.url %>" style="color:#444;"><i class="fa fa-download"></i></a>
               </small></p>
             </div>
             
