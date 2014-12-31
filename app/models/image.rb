@@ -8,7 +8,11 @@ class Image < ActiveRecord::Base
     self.votes.collect(&:value).each do |v|
       sum += v
     end
-    sum / self.votes.length
+    if self.votes.length > 0
+      sum / self.votes.length
+    else
+      0
+    end
   end
 
   def vote_count
