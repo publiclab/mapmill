@@ -53,12 +53,11 @@ $(document).ready ->
 
   #some variables
   $uploadList = $('#upload-candidates-container')
-  #$uploadList = $('#upload-list')
   $url = $("#s3-data").data("url")
   upload_btn = $('#upload_selected')
   #this is the actual container of all files to be uploaded
-  file_list = []
-  currently_uploading = []
+  file_list = [] # actually uploading
+  queue = [] # waiting in line to start upload
   simultaneous_upload = 10 # max # to upload at the same time
 
   $('.select-all').click ->
@@ -73,6 +72,9 @@ $(document).ready ->
         $(img).trigger('click')
     $('.file-count').html(file_list.length)
 
+#####################
+# keypress handling for hotkeys
+#####################
 
   # bind key events for image traversing (j,k) and classification (1,2,3)
   # 1 = image good
@@ -135,10 +137,23 @@ $(document).ready ->
     
     return
   )
-  # upload link triggers file upload dialog attached to the rest of the uploading code (?)
+  # upload link triggers file upload dialog attached to the rest of the uploading code
   $('#href-upload').click () ->
-    $('#fileinput').trigger('click');
-  
+    $('#fileinput').trigger('click')
+
+  $('#upload-area').bind('dragover', (e) ->
+    e.preventDefault()
+    $('#upload-area').addClass('hover')
+  )
+	
+  $('#upload-area').bind('dragleave', (e) ->
+    $('#upload-area').removeClass('hover')
+  )
+
+  $('#upload-area').bind('drop', (e) ->
+    $('#upload-area').removeClass('hover')
+  )
+
   # trigger file upload browser on Browse click
   $('#browse').click () ->
     $('#fileupload').click()
@@ -158,6 +173,7 @@ $(document).ready ->
       type: 'POST',
       autoUpload: false,
       acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+      limitConcurrentUploads: 10,
       maxFileSize: 9000000,
       dataType: 'xml',
       formData: $("#s3-data").data("fields"),
@@ -173,8 +189,6 @@ $(document).ready ->
           reader = new FileReader()
           #when finished
           reader.onloadend = ->
-            #scale to calculate thumbnail size
-            scale = 0.15
             original = reader.result
             img = new Image()
             img.src = original
@@ -207,12 +221,17 @@ $(document).ready ->
               canvas.width = 500
               canvas.height = 500 / ratio
               canvas.className = "canvas-thumbnail"
+              
+	      # here, we should introduce queuing so we don't 
+	      # hit the client with a bazillion canvas resize 
+	      # actions at once
               canvas.getContext("2d").drawImage img, 0, 0, canvas.width, canvas.height
               #this is the template for the image in the upload view
               tpl = $('<div class="col-xs-6 col-sm-3 col-md-3 working"><div class="thumbnail"><div class="caption"></div><div class="progress" style="display:none;"><div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"><span class="sr-only">45% Complete</span></div></div><div class="status"><a class="abort-upload" style="display:none;"><i class="fa fa-remove"></i> cancel</i></a></div></div></div>')
 	      # add image source
               tpl.find(".thumbnail").append(canvas)
               file.thumbnail = canvas
+              
               # add click handler to thumbnails so they can be selected
               tpl.find('.thumbnail').click ->
                 $('.file-count').html(file_list.length+1)
@@ -224,7 +243,9 @@ $(document).ready ->
                   $("#upload-msg").append('<p class="status-info">Image ' + file.name + " removed from upload queue</p>")
                 else
                   $(this).addClass 'selected_img'
-                  file_list.push(file)
+                  queue.push(file)
+                  if queue.length < simultaneous_upload
+                    file_list.push(file)
                   $("#upload-msg").append('<p class="status-info">Image ' + file.name + " added to upload queue</p>")
                 
                 if file_list.length > 0
@@ -249,11 +270,6 @@ $(document).ready ->
           
           # Click "Start Upload"
           $('#upload_selected').on('click', () ->
-            #when an image gets selected, remove eventual old "No files" messages
-            if (file_list.length < 1)
-              $('#no-files').fadeIn()
-            else
-              $('#no-files').hide()
             if (file_list.indexOf(file) > -1)
               data.context.find('#cancel_files').prop('disabled', true)
               data.context.find('.selected_img .abort-upload').show()
@@ -399,6 +415,7 @@ $(document).ready ->
             site_id: site
             url: $('#s3-data').data('url') + key
 
+          # post for thumbnail images, generated in canvas
           $.ajax({
             url: "/sites/" + site + "/images",
             type: 'POST',
@@ -444,6 +461,10 @@ $(document).ready ->
 
   $(document).on "drop dragover", (e) ->
       e.preventDefault()
+
+#####################
+# image voting
+#####################
 
   # Click handlers when selecting image quality
   $('.image_controls .btn-success').click () ->
@@ -502,7 +523,11 @@ $(document).ready ->
         console.log errorThrown
 
   current_img = 0
-  
+
+#####################
+# fullscreen mode
+#####################
+
   # Click handlers for setting the image quality in the detailed dialog view
   $('#blueimp-gallery .detail_image_controls .btn-success').click () ->
     set_quality $(this), current_img, 'set_good'

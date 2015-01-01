@@ -99,6 +99,11 @@ footer.upload {
   vertical-align: middle;
   text-align: center;
 }
+
+#upload-area.hover {
+  background-color: #dddde8;
+}
+
 .upload-text{
   color: black;
   padding-bottom: 10px;
@@ -107,10 +112,6 @@ footer.upload {
   visibility: hidden;
   width: 1px; 
   height: 1px
-}
-
-#upload-area:hover {
-  background-color: #eee;
 }
 
 #upload-candidates-container{
