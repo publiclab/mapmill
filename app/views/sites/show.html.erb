@@ -115,6 +115,6 @@
   </div><!-- links row -->
 </div><!-- site_details -->
 <div class="pagination-parent">
- <%= will_paginate @images, renderer: BootstrapPagination::Rails%>
+ <%= will_paginate @images, renderer: BootstrapPagination::Rails if @images != [] %>
 </div>
 <%= render :partial => 'sites/fullscreen' %>
