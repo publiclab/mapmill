@@ -75,7 +75,8 @@ class SitesController < ApplicationController
     else
       @images = @site.images if @site.images.length > 0
     end
-    @images = @images.paginate(:page => params[:page], :per_page => 24)
+    @images = @images.paginate(:page => params[:page], :per_page => 24) unless @images.nil?
+    @images ||= []
     @votes = {}
     @images.each do | img |
       @votes[img.id] = Vote.where(image: img)  
