@@ -1,11 +1,13 @@
 == README
 
-MapMill 2.0 is a complete rewrite of MapMill -- an application developed during the BP oil spill, which enables large groups of people to sort through and rank very large image collections (1000s of images). 
+MapMill 2 is a complete rewrite of MapMill -- an application developed during the BP oil spill, which enables large groups of people to sort through and rank very large image collections (1000s of images). 
 
 The new version now allows any user with a http://PublicLab.org user account to create new image sets and upload new images. To make this afforable to run, all image processing is performed on the client side and images are stored in AWS S3 cloud storage.
 
-MapMill 2.0 uses the jquery-fileupload plugin to handle file uploads. See <a href="https://blueimp.github.io/jQuery-File-Upload/">https://blueimp.github.io/jQuery-File-Upload/</a>
+MapMill 2 uses the jquery-fileupload plugin to handle file uploads. See <a href="https://blueimp.github.io/jQuery-File-Upload/">https://blueimp.github.io/jQuery-File-Upload/</a>
 It also uses blueimp's gallery for as image gallery. See <a href="https://blueimp.github.io/Gallery/">https://blueimp.github.io/Gallery/</a>
+
+Thanks to Fabio Barone (http://publiclab.org/profile/faboolous) and Melissa Nunes (http://publiclab.org/profile/MelissaN) for their work on this new version of MapMill.
 
 == Installation
 
@@ -36,7 +38,7 @@ The front page contains the form for a site creation. We need to create a tempor
 
 Users can upload pictures, and rate its quality. Images are grouped in sets. Sets can be viewed and browsed. A map view is provided per set. If a user has rated an image, further voting is disabled. Vote tracking is done via cookie.
 
- The upload works this way: 
+The upload works like this: 
 
 * First images need to be selected via upload button
 * ...or, drag and drop
@@ -54,4 +56,7 @@ Users can upload pictures, and rate its quality. Images are grouped in sets. Set
 
 Join the Public Lab developers mailing list "plots-dev" at http://publiclab.org/wiki/developers
 
+We are hoping to add image sorting and analysis scripts to help users select in-focus images (perhaps based on file size). 
+
+See outstanding bugs and feature requests at https://github.com/publiclab/mapmill/issues
 
