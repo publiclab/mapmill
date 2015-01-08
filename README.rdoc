@@ -1,41 +1,34 @@
 == README
 
-This is the new uploader for PublicLab's MapMill application.
+MapMill 2.0 is a complete rewrite of MapMill -- an application developed during the BP oil spill, which enables large groups of people to sort through and rank very large image collections (1000s of images). 
 
-All image processing is client side and images are stored in AWS S3.
-The aws-sdk gem is required.
+The new version now allows any user with a http://PublicLab.org user account to create new image sets and upload new images. To make this afforable to run, all image processing is performed on the client side and images are stored in AWS S3 cloud storage.
 
-It uses the jquery-fileupload plugin to handle file uploads.
-See <a href="https://blueimp.github.io/jQuery-File-Upload/">https://blueimp.github.io/jQuery-File-Upload/</a>
+MapMill 2.0 uses the jquery-fileupload plugin to handle file uploads. See <a href="https://blueimp.github.io/jQuery-File-Upload/">https://blueimp.github.io/jQuery-File-Upload/</a>
+It also uses blueimp's gallery for as image gallery. See <a href="https://blueimp.github.io/Gallery/">https://blueimp.github.io/Gallery/</a>
 
-It also uses blueimp's gallery for as image gallery
-See <a href="https://blueimp.github.io/Gallery/">https://blueimp.github.io/Gallery/</a>
+== Installation
 
-Run bundle install to install the required gems.
-Run bower install to install the required static dependencies.
-Current version is configured with a mysql database.
+Run `bundle install` to install the required gems.
+Run `bower install` to install the required static dependencies.
+The current version is configured with a mysql database.
 Installing rvm for ruby management is recommended.
 
-On Debian/Ubuntu if you need to install Postgres: `sudo apt-get install postgresql libpq-dev` 
+MapMill 2 uses:
 
-Versions used in development:
-<ul>
-  <li>Ruby: 2.1.2</li>
-  <li>Rails: 4.1.4</li>
-  <li>Postgres 9</li> 
-</ul>
+* Ruby: 2.1.2
+* Rails: 4.1.4
+* Mysql 2
 
 Create a database first, create a user and grant privileges to that user. Then run rake db:migrate to run all needed migrations.
 
-In order to successfully configure AWS S3 stuff, edit the 
-app_environment_vars.rb 
-file in the config directory, and add bucket name, AWS access key and secret as needed.
-A .sample file is provided in the same directory.
+In order to successfully configure AWS S3 stuff, edit the file `config/app_environment_vars.rb` file in the config directory, and add bucket name, AWS access key and secret as needed. A .sample file is provided in the same directory.
 
 DO NOT CHECK IN THAT FILE INTO VERSION CONTROL, AS THIS WOULD SERIOUSLY COMPROMISE SECURITY, MAKING YOUR KEYS ACCESSIBLE TO THE WORLD.
 
 /config/initializers/aws.rb contains needed initialization for AWS, which loads its values from the app_environment_vars.rb, but you should not need to edit this file.
 
+== Usage
 
 The app only allows image upload after login. Login is only allowed with PublicLab's OpenID infrastructure.
 
@@ -44,21 +37,21 @@ The front page contains the form for a site creation. We need to create a tempor
 Users can upload pictures, and rate its quality. Images are grouped in sets. Sets can be viewed and browsed. A map view is provided per set. If a user has rated an image, further voting is disabled. Vote tracking is done via cookie.
 
  The upload works this way: 
- <ul> 
-   <li> First images need to be selected via upload button</li>
-   <li> ...or, drag and drop</li>
-   <li> Images which really will be uploaded need to be selected first with the mouse</li>
-   <li> Click the upload button</li>
-   <li> After images have been successfully uploaded, a thumbnail is automatically generated</li>
-   <li> As this is all CLIENT SIDE, this implies:
-     <ul>
-       <li> The client sends the image to AWS S3 </li>
-       <li> If this went OK, a handle is returned. The client <strong> saves the image on the server</strong></li>
-       <li> The server returns an id for the new image to the client; the client generates a thumbnail and 
-            <strong>saves this thumbnail on AWS S3</strong></li>
-       <li> If this all went ok, the client associates the new thumbnail with the id of the image on the server</li>
-       <li> If that went ok, the process is finished</li>
-     </ul>
- </ul>
 
-  
+* First images need to be selected via upload button
+* ...or, drag and drop
+* Images which really will be uploaded need to be selected first with the mouse
+* Click the upload button
+* After images have been successfully uploaded, a thumbnail is automatically generated
+* As this is all CLIENT SIDE, this implies:
+  *  The client sends the image to AWS S3
+  * If this went OK, a handle is returned. The client **saves the image on the server**
+  * The server returns an id for the new image to the client; the client generates a thumbnail and **saves this thumbnail on AWS S3**
+  * If this all went ok, the client associates the new thumbnail with the id of the image on the server
+  * If that went ok, the process is finished
+
+== Contributors
+
+Join the Public Lab developers mailing list "plots-dev" at http://publiclab.org/wiki/developers
+
+
