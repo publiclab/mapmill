@@ -95,7 +95,7 @@ L.circle([<%= marker[:latlng][0] %>, <%= marker[:latlng][1] %>], 50, {
   color: '<%= marker[:color] %>',
   fillColor: '<%= marker[:color] %>',
   fillOpacity: 0.5
-}).addTo(map).bindPopup("<%= marker[:popup] %>");
+}).addTo(map).bindPopup("<%=raw marker[:popup] %>");
 <% end %>
 })()
 </script>
