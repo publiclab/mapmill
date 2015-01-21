@@ -11,6 +11,14 @@
     #create a marker
     if img.thumbnail
       marker = {:latlng => arr, :popup => '<img class="map_img" src="' + img.thumbnail + '">'}
+      marker[:rating] = img.average_vote
+
+      marker[:color] = 'red'
+      marker[:color] = 'orange' if img.average_vote > 20
+      marker[:color] = 'yellow' if img.average_vote > 40
+      marker[:color] = 'green'  if img.average_vote > 60
+      marker[:color] = 'blue'   if img.average_vote > 80
+
       #add to list of markers
       @markers.push(marker)
     end
@@ -73,10 +81,21 @@ end %>
     :latlng => [@center_lat,@center_lng],
     :zoom => 12
   },
-  :markers => @markers,
+  #:markers => @markers,
   :tile_layer => "http://a.tile.osm.org/{z}/{x}/{y}.png",
   :attribution => "&copy; <a href=\"http://osm.org/copyright\">OpenStreetMap</a> contributors",
   :max_zoom => 18 
   ) 
 %>
 
+<script>
+(function(){
+<% @markers.each do |marker| %>
+L.circle([<%= marker[:latlng][0] %>, <%= marker[:latlng][1] %>], 200, {
+  color: '<%= marker[:color] %>',
+  fillColor: '<%= marker[:color] %>',
+  fillOpacity: 0.5
+}).addTo(map).bindPopup("<%= marker[:popup] %>");
+<% end %>
+})()
+</script>
