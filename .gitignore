@@ -25,7 +25,6 @@ test/integration/node_modules/**
 config/database.yml
 
 #this project
-config/initializers/aws.rb
 todo.txt
 
 #bower-controlled static assets
