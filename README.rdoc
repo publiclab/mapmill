@@ -10,9 +10,10 @@ It also uses blueimp's gallery for as image gallery. See <a href="https://blueim
 Thanks to Fabio Barone (http://publiclab.org/profile/faboolous) and Melissa Nunes (http://publiclab.org/profile/MelissaN) for their work on this new version of MapMill.
 
 
+
 == Installation
 
-Run `bundle install` to install the required gems.
+Run `bundle install` to install the required gems. (See 'Windows Note' if installing on Windows.)
 Run `bower install` to install the required static dependencies.
 The current version is configured with a sqlite database.
 Installing rvm for ruby management is recommended.
@@ -34,6 +35,19 @@ DO NOT CHECK IN THAT FILE INTO VERSION CONTROL, AS THIS WOULD SERIOUSLY COMPROMI
 `config/initializers/aws.rb` contains needed initialization for AWS, which loads its values from the `app_environment_vars.rb`, but you should not need to edit this file.
 
 
+
+== Windows Note
+
+For some Windows installations you will need to update SSL certificates.  You can do so by running the following commands:
+
+gem sources -r https://rubygems.org/
+gem sources -a http://rubygems.org/
+gem update --system
+gem sources -a https://rubygems.org/
+gem sources -r http://rubygems.org/
+
+
+
 == Running with local S3
 
 It is possible to run a local S3 (such as fakes3) so you do not need to connect to AWS.  This can be accomlished by adding the following lines to your `config/app_environment_vars.rb` file (example values provided):
@@ -42,7 +56,12 @@ ENV['S3_DEV_PROTOCOL']='http'
 ENV['S3_DEV_HOST']='localhost'
 ENV['S3_DEV_PORT']='10001'
 
+To install fakes3, run 'gem install fakes3'.
+
+You will also need to make '[bucketname].localhost' point to '127.0.0.1' (by editing yout hosts file, /etc/hosts or C:\Windows\System32\Drivers\etc\hosts).
+
 To avoid problems with cross-domain errors, you'll need to disable these checks in your browser. If you are using Chrome, this can be done by running it with `google-chrome --disable-web-security`.
+
 
 
 == Usage
@@ -66,6 +85,7 @@ The upload works like this:
   * The server returns an id for the new image to the client; the client generates a thumbnail and **saves this thumbnail on AWS S3**
   * If this all went ok, the client associates the new thumbnail with the id of the image on the server
   * If that went ok, the process is finished
+
 
 
 == Contributors
