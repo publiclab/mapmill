@@ -20,8 +20,8 @@ Installing rvm for ruby management is recommended.
 
 MapMill 2 uses:
 
-* Ruby: 2.1.2
-* Rails: 4.1.4
+* Ruby: 2.1.5
+* Rails: 4.1.8
   * Mysql 2 (optional)
 
 The default `config/database.yml.sqlite3` uses SQLite.  Copy this to `config/database.yml` (and make changes to use MySQL if desired).
@@ -36,18 +36,6 @@ DO NOT CHECK IN THAT FILE INTO VERSION CONTROL, AS THIS WOULD SERIOUSLY COMPROMI
 
 
 
-== Windows Note
-
-For some Windows installations you will need to update SSL certificates.  You can do so by running the following commands:
-
-gem sources -r https://rubygems.org/
-gem sources -a http://rubygems.org/
-gem update --system
-gem sources -a https://rubygems.org/
-gem sources -r http://rubygems.org/
-
-
-
 == Running with local S3
 
 It is possible to run a local S3 (such as fakes3) so you do not need to connect to AWS.  This can be accomlished by adding the following lines to your `config/app_environment_vars.rb` file (example values provided):
@@ -58,7 +46,7 @@ ENV['S3_DEV_PORT']='10001'
 
 To install fakes3, run 'gem install fakes3'.
 
-You will also need to make '[bucketname].localhost' point to '127.0.0.1' (by editing yout hosts file, /etc/hosts or C:\Windows\System32\Drivers\etc\hosts).
+You will also need to make '[bucketname].localhost' point to '127.0.0.1' (by editing yout hosts file).
 
 To avoid problems with cross-domain errors, you'll need to disable these checks in your browser. If you are using Chrome, this can be done by running it with `google-chrome --disable-web-security`.
 
