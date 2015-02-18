@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
-source 'https://rails-assets.org'
+#source 'https://rails-assets.org'
 
-ruby '2.1.2'
+ruby '2.1.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.4'
@@ -26,6 +26,9 @@ gem 'turbolinks'
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0',          group: :doc
+
+# seems required on Windows
+gem 'tzinfo-data'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring',        group: :development
@@ -62,5 +65,5 @@ gem 'will_paginate-bootstrap'
 
 gem 'leaflet-rails',          '0.7.4'
 gem 'passenger',              '4.0.53'
-gem 'mysql'
+#gem 'mysql'
 #gem 'pg',                     '0.17.1'

@@ -103,8 +103,14 @@ class SitesController < ApplicationController
 
     # AWS S3 parameters which will be encoded in the jquery fileupload widget
     # This is important stuff as it is the security part allowing the upload to succeed
-    @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read)
-    @s3_post_data = {url: @s3_direct_post.url, fields: @s3_direct_post.fields.to_json.html_safe, host: @s3_direct_post.url.host}
+    s3_secure = (S3_DEV_PROTOCOL != 'http')
+    @s3_direct_post = S3_BUCKET.presigned_post(key: "uploads/#{SecureRandom.uuid}/${filename}", success_action_status: 201, acl: :public_read, secure: s3_secure)
+    if S3_DEV_HOST
+      s3_url = S3_DEV_PROTOCOL + '://' + S3_BUCKET.name() + '.' + S3_DEV_HOST + ':' + S3_DEV_PORT + '/'
+    else
+      s3_url = @s3_direct_post.url
+    end
+    @s3_post_data = {url: s3_url, fields: @s3_direct_post.fields.to_json.html_safe, host: @s3_direct_post.url.host}
   end
 
   ##############################################################

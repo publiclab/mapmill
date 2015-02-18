@@ -2,33 +2,55 @@
 
 MapMill 2 is a complete rewrite of MapMill -- an application developed during the BP oil spill, which enables large groups of people to sort through and rank very large image collections (1000s of images). 
 
-The new version now allows any user with a http://PublicLab.org user account to create new image sets and upload new images. To make this afforable to run, all image processing is performed on the client side and images are stored in AWS S3 cloud storage.
+The new version now allows any user with a http://PublicLab.org user account to create new image sets and upload new images. To make this affordable to run, all image processing is performed on the client side and images are stored in AWS S3 cloud storage.
 
-MapMill 2 uses the jquery-fileupload plugin to handle file uploads. See <a href="https://blueimp.github.io/jQuery-File-Upload/">https://blueimp.github.io/jQuery-File-Upload/</a>
+MapMill 2 uses the jquery-file-upload plugin to handle file uploads. See <a href="https://blueimp.github.io/jQuery-File-Upload/">https://blueimp.github.io/jQuery-File-Upload/</a>
 It also uses blueimp's gallery for as image gallery. See <a href="https://blueimp.github.io/Gallery/">https://blueimp.github.io/Gallery/</a>
 
 Thanks to Fabio Barone (http://publiclab.org/profile/faboolous) and Melissa Nunes (http://publiclab.org/profile/MelissaN) for their work on this new version of MapMill.
 
+
+
 == Installation
 
-Run `bundle install` to install the required gems.
+Run `bundle install` to install the required gems. (See 'Windows Note' if installing on Windows.)
 Run `bower install` to install the required static dependencies.
-The current version is configured with a mysql database.
+The current version is configured with a sqlite database.
 Installing rvm for ruby management is recommended.
 
 MapMill 2 uses:
 
-* Ruby: 2.1.2
-* Rails: 4.1.4
-* Mysql 2
+* Ruby: 2.1.5
+* Rails: 4.1.8
+  * Mysql 2 (optional)
 
-Create a database first, create a user and grant privileges to that user. Then run rake db:migrate to run all needed migrations.
+The default `config/database.yml.sqlite3` uses SQLite.  Copy this to `config/database.yml` (and make changes to use MySQL if desired).
+
+Create a database first (rake db:create), create a user and grant privileges to that user. Then run rake db:migrate to run all needed migrations.
 
 In order to successfully configure AWS S3 stuff, edit the file `config/app_environment_vars.rb` file in the config directory, and add bucket name, AWS access key and secret as needed. A .sample file is provided in the same directory.
 
 DO NOT CHECK IN THAT FILE INTO VERSION CONTROL, AS THIS WOULD SERIOUSLY COMPROMISE SECURITY, MAKING YOUR KEYS ACCESSIBLE TO THE WORLD.
 
-/config/initializers/aws.rb contains needed initialization for AWS, which loads its values from the app_environment_vars.rb, but you should not need to edit this file.
+`config/initializers/aws.rb` contains needed initialization for AWS, which loads its values from the `app_environment_vars.rb`, but you should not need to edit this file.
+
+
+
+== Running with local S3
+
+It is possible to run a local S3 (such as fakes3) so you do not need to connect to AWS.  This can be accomlished by adding the following lines to your `config/app_environment_vars.rb` file (example values provided):
+
+ENV['S3_DEV_PROTOCOL']='http'
+ENV['S3_DEV_HOST']='localhost'
+ENV['S3_DEV_PORT']='10001'
+
+To install fakes3, run 'gem install fakes3'.
+
+You will also need to make '[bucketname].localhost' point to '127.0.0.1' (by editing yout hosts file).
+
+To avoid problems with cross-domain errors, you'll need to disable these checks in your browser. If you are using Chrome, this can be done by running it with `google-chrome --disable-web-security`.
+
+
 
 == Usage
 
@@ -46,11 +68,13 @@ The upload works like this:
 * Click the upload button
 * After images have been successfully uploaded, a thumbnail is automatically generated
 * As this is all CLIENT SIDE, this implies:
-  *  The client sends the image to AWS S3
+  * The client sends the image to AWS S3
   * If this went OK, a handle is returned. The client **saves the image on the server**
   * The server returns an id for the new image to the client; the client generates a thumbnail and **saves this thumbnail on AWS S3**
   * If this all went ok, the client associates the new thumbnail with the id of the image on the server
   * If that went ok, the process is finished
+
+
 
 == Contributors
 
