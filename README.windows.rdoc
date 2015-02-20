@@ -8,30 +8,30 @@ This file contains some notes on getting MapMill up and running on Windows.
 
 You can use the Ruby 2.1 installer from this site:
 
-http://railsinstaller.org/ ->
-https://s3.amazonaws.com/railsinstaller/Windows/railsinstaller-3.1.0.exe
+  http://railsinstaller.org/ ->
+  https://s3.amazonaws.com/railsinstaller/Windows/railsinstaller-3.1.0.exe
 
 You will want to install Git with this installer.
 
 For some Windows installations you will need to update SSL certificates after installing Ruby.  You can do so by running the following commands:
 
-gem sources -r https://rubygems.org/
-gem sources -a http://rubygems.org/
-gem update --system
-gem sources -a https://rubygems.org/
-gem sources -r http://rubygems.org/
+  gem sources -r https://rubygems.org/
+  gem sources -a http://rubygems.org/
+  gem update --system
+  gem sources -a https://rubygems.org/
+  gem sources -r http://rubygems.org/
 
 
 In order to get npm for installing bower, you can use this installer:
 
-http://nodejs.org/ ->
-http://nodejs.org/dist/v0.12.0/x64/node-v0.12.0-x64.msi
+  http://nodejs.org/ ->
+  http://nodejs.org/dist/v0.12.0/x64/node-v0.12.0-x64.msi
 
 Note that other versions (ie v0.10.36) encounter issues on Windows 8.1.
 
 You may need to manually add "C:\Program Files\nodejs" to your PATH environment variable before running npm and bower:
 
-npm install -g bower
+  npm install -g bower
 
 You may also need to run your terminal as an administrator.
 
