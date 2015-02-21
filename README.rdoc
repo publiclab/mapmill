@@ -36,6 +36,27 @@ DO NOT CHECK IN THAT FILE INTO VERSION CONTROL, AS THIS WOULD SERIOUSLY COMPROMI
 
 
 
+== S3 CORS Configuration Sample
+
+If you are using AWS S3, you can use this CORS configuration:
+
+<CORSConfiguration>
+    <CORSRule>
+        <AllowedOrigin>http://localhost:3000</AllowedOrigin>
+        <AllowedMethod>GET</AllowedMethod>
+        <AllowedMethod>POST</AllowedMethod>
+        <MaxAgeSeconds>3000</MaxAgeSeconds>
+        <AllowedHeader>x-csrf-token</AllowedHeader>
+        <AllowedHeader>x-requested-with</AllowedHeader>
+        <AllowedHeader>x-amz-request-id</AllowedHeader>
+        <AllowedHeader>content-type</AllowedHeader>
+        <AllowedHeader>content-range</AllowedHeader>
+        <AllowedHeader>content-disposition</AllowedHeader>
+        <AllowedHeader>content-description</AllowedHeader>
+    </CORSRule>
+</CORSConfiguration>
+
+
 == Running with local S3
 
 It is possible to run a local S3 (such as fakes3) so you do not need to connect to AWS.  This can be accomlished by adding the following lines to your `config/app_environment_vars.rb` file (example values provided):
