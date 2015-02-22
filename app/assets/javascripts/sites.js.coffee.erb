@@ -244,7 +244,7 @@ $(document).ready ->
                 else
                   $(this).addClass 'selected_img'
                   queue.push(file)
-                  if queue.length < simultaneous_upload
+                  if queue.length > simultaneous_upload
                     file_list.push(file)
                   $("#upload-msg").append('<p class="status-info">Image ' + file.name + " added to upload queue</p>")
                 
