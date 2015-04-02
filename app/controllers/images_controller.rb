@@ -27,7 +27,7 @@ class ImagesController < ApplicationController
     votes = Vote.find_by_image(@image)
     if votes
       votes.each do | v |
-        if v.cookie == cookies["_mapmill_voting_"]
+        if v.cookie == get_cookie_id()
           @voting_disabled = true
         end
       end
@@ -38,7 +38,7 @@ class ImagesController < ApplicationController
       format.js {render :json => response, status: :ok}
     end
   end
-
+  
   def set_thumbnail
     if only_xhr
       return
@@ -73,23 +73,29 @@ class ImagesController < ApplicationController
     def image_params
       params.permit(:url, :thumbnail, :lat, :lng)
     end
-
-    def set_quality(val)
+	
+	def get_cookie_id
+		ckey = "_mapmill_voting_"
+		if cookies[ckey]
+			return cookies[ckey]
+		else
+			cookie_id = SecureRandom.base64 
+			cookies[ckey] = cookie_id
+			return cookie_id
+		end
+	end
+	
+	def set_quality(val)
       if only_xhr
         return
       end      
       @image = Image.find(params[:id])
       @vote = @image.votes.create
       @vote.value = val 
-
+	  
       # store vote id via cookie
-      if cookies["_mapmill_voting_"]
-        @vote.cookie = cookies["_mapmill_voting_"]
-      else
-        @vote.cookie = SecureRandom.base64 
-        cookies["_mapmill_voting_"] = @vote.cookie
-      end
-
+      @vote.cookie = get_cookie_id()
+     
       # update image "quality" by averaging votes
       if @vote.save!
         votes = Vote.find_by_image(@image) 
