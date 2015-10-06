@@ -19,7 +19,7 @@
 
 //= require dist/js/bootstrap.min
 //= require bootbox 
-//= require js/bootstrap-datepicker
+//= require dist/js/bootstrap-datepicker
 
 //= require js/canvas-to-blob.min 
 
