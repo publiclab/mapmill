@@ -3,9 +3,9 @@
 one:
   username: Fabio
   email: fabio.barone.co@gmail.com 
-  identity_url: http://www.mdeinteligente.co/identity/fabio 
+  identity_url: https://www.mdeinteligente.co/identity/fabio 
 
 two:
   username: Someone
   email: someone@somewhere.com 
-  identity_url: http://www.mdeinteligente.co/identity/someone
+  identity_url: https://www.mdeinteligente.co/identity/someone

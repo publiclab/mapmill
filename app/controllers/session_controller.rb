@@ -2,7 +2,7 @@ require 'uri'
 
 class SessionController < ApplicationController
 
-  @@openid_url_base  = "http://publiclab.org/people/"
+  @@openid_url_base  = "https://publiclab.org/people/"
   @@openid_url_suffix = "/identity"
 
 
