@@ -45,6 +45,7 @@ class SessionController < ApplicationController
             @user.save!
           rescue ActiveRecord::RecordInvalid => invalid
             puts invalid
+            flash[:warning] = @user.errors.full_messages.join(', ')
             failed_login "User can not be associated to local account. Be sure to use the correct capitalization for your username!" 
             return
           end
