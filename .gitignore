@@ -22,7 +22,7 @@ test/integration/node_modules/**
 
 #rails specific
 *.sqlite3
-config/database.yml
+config/secrets.yml
 
 #this project
 todo.txt
